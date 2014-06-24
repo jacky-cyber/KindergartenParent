@@ -218,10 +218,12 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    ZJHomeModel *model  = _oneDayData[indexPath.row];
     
+    NSString *typeImageName = [NSString stringWithFormat:@"type_%@",model.type];
     
-    cell.typeImg.image = [UIImage imageNamed:@"cookbook"];
-    cell.titleLb.text = @"本周食谱已更新";
+    cell.typeImg.image = [UIImage imageNamed:typeImageName];
+    cell.titleLb.text = model.content;
     cell.timeLb.text = @"一天前";
     cell.contentLb.text = @"您好，你的孩子已经服药了，早上没有忘记吃药，请您放心，吃药了，吃了";
     return cell;
@@ -236,24 +238,41 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //[self.navigationController pushViewController:[[ZJHomeDetialViewController alloc] init] animated:YES];
-    if (indexPath.row == 0) {
-        [self pushController:[ZJWeekReportsViewController class] withInfo:nil withTitle:@"每周一报"];
-    }else
-    if (indexPath.row == 1) {
-        [self pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:@"详情"];
-    }else if (indexPath.row == 2) {
-        [self pushController:[ZJSignInViewController class] withInfo:nil withTitle:@"详情"];
-    }else if(indexPath.row == 3){
-       [self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"月评"];
-    }else if(indexPath.row == 4){
-        [self pushController:[ZJDrugStatusController class] withInfo:nil withTitle:@"服药通知"];
-    }else if(indexPath.row == 5){
-        [self pushController:[ZJDayReportViewController class] withInfo:nil withTitle:@"每日一报"];
-    }
     
-    else{
+    ZJHomeModel *model  = _oneDayData[indexPath.row];
+    
+    
+//    通知类型
+//    1	系统消息
+//    2	幼儿园通知
+//    3	本周食谱
+//    4	每日一报
+//    5	每周一报
+//    6	医务室通知
+//    7	荣誉榜
+//    8	老师通知
+//    9	生日提醒
+//    10	活动通知
+//    11	签到/签退
+//    12	月评
+    if ([model.type isEqualToString:@"5"]) {
+        [self pushController:[ZJWeekReportsViewController class] withInfo:nil withTitle:@"每周一报"];
+    }else if ([model.type isEqualToString:@"3"]) {
+        [self pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:@"本周食谱"];
+    }else if ([model.type isEqualToString:@"11"]) {
+        [self pushController:[ZJSignInViewController class] withInfo:nil withTitle:@"详情"];
+    }else if([model.type isEqualToString:@"12"]){
+       [self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"月评"];
+    }else if([model.type isEqualToString:@"6"]){
+        [self pushController:[ZJDrugStatusController class] withInfo:nil withTitle:@"服药通知"];
+    }else if([model.type isEqualToString:@"4"]){
+        [self pushController:[ZJDayReportViewController class] withInfo:nil withTitle:@"每日一报"];
+    }else if([model.type isEqualToString:@"7"]){
+        [self pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
+    }else if([model.type isEqualToString:@"1"]){
         [self pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"详情"];
     }
+
 }
 
 #pragma mark 修改头像

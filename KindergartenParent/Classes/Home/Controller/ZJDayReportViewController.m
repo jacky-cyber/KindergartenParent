@@ -39,6 +39,9 @@
     //加载数据
     _dataDict = [[NSDictionary alloc] init];
     [self loadData];
+    
+    
+    [self.view addSubview:_tableView];
 }
 -(void)loadData
 {
