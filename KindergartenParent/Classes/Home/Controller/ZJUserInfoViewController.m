@@ -9,9 +9,12 @@
 #import "ZJUserInfoViewController.h"
 #import "ZJUserInfoModel.h"
 #import "ZJEditPwdViewController.h"
-@interface ZJUserInfoViewController ()
+#import "ZJEditUserViewController.h"
+@interface ZJUserInfoViewController ()<EditUserInfoViewControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
 {
     ZJUserInfoModel *_userModel;//用户模型
+    
+    NSArray *_titleArr;//title数组
 }
 @property (weak, nonatomic) IBOutlet UIView *footView;
 @property (weak, nonatomic) IBOutlet UIImageView *prifileImg;
@@ -46,11 +49,19 @@
     
     
     //设置头像
-    [_prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
-    
+    [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
+    self.prifileImg.layer.cornerRadius = 5;
+    self.prifileImg.layer.masksToBounds = YES;
+    self.prifileImg.userInteractionEnabled = YES;
+    //单击头像
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(updateProfileAction:)];
+    [self.prifileImg addGestureRecognizer:tap];
     //加载个人信息
-    [self loadData];
+    //[self loadData];
 
+    
+     [self addSubViews];
 }
 #pragma mark 加载个人信息
 -(void)loadData
@@ -82,7 +93,7 @@
     //备注高度
 
     CGFloat remarkH = [_userModel.remark getHeightByWidth:200 font:kFont(14)];
-    NSArray *titleArr = @[@"昵       称",@"学生姓名",@"家长姓名",@"联系电话",@"家庭住址",@"过  敏  史",@"备注信息",@"修改密码"];
+    _titleArr = @[@"昵       称",@"学生姓名",@"家长姓名",@"联系电话",@"家庭住址",@"过  敏  史",@"备注信息",@"修改密码"];
     
     //所有parentView高度
     CGFloat temp = 0;
@@ -159,7 +170,7 @@
         UILabel *titleLable = [[UILabel alloc] init];
         titleLable.frame = CGRectMake(0, (H(parentView)-20)/2,60, 20);
         titleLable.font = kFont(14);
-        titleLable.text = titleArr[i];
+        titleLable.text = _titleArr[i];
         [parentView addSubview:titleLable];
         
         //按钮
@@ -217,10 +228,107 @@
     MyLog(@"%d",sender.tag);
     if (sender.tag == 8) {
         [self pushController:[ZJEditPwdViewController class] withInfo:_userModel.username withTitle:@"修改密码"];
+    }else{
+        
+        ZJEditUserViewController *controller = [[ZJEditUserViewController alloc] init];
+
+        // 1. 设置标题
+        controller.contentTitle = sender.titleLabel.text;
+        // 2. 传递内容标签
+       controller.contentLable = _titleArr[sender.tag-1];
+        // 3. 设置代理
+        controller.delegate = self;
+        [self.navigationController pushViewController:controller animated:YES];
+        //[self pushController:[ZJEditPwdViewController class] withInfo:_userModel.username withTitle:@"修改密码"];
+    }
+    
+}
+
+
+#pragma mark 修改个人信息
+
+-(void)editUserInfoViewControllerDidFinished:(NSString *)contentStr withLabel:(NSString *)labelStr
+{
+    
+//   _titleArr = @[@"昵       称",@"学生姓名",@"家长姓名",@"联系电话",@"家庭住址",@"过  敏  史",@"备注信息",@"修改密码"];
+    
+    if ([labelStr isEqualToString:_titleArr[4]]) {
+        _userModel.address = contentStr;  
+    }else if ([labelStr isEqualToString:_titleArr[0]]){
+        _userModel.nickname = contentStr;
+    }
+    else if ([labelStr isEqualToString:_titleArr[5]]){
+         _userModel.guominshi = contentStr;
+    }
+    else if ([labelStr isEqualToString:_titleArr[6]]){
+         _userModel.remark = contentStr;
     }
     
     
-    NSLog(@"^^^^");
+    //现将俯视图删除，然后重新布局
+    NSArray *arr = [_footView subviews];
+    for (UIView *view in arr) {
+        [view removeFromSuperview];
+    }
+    [self addSubViews];
+    MyLog(@"%@----%@",contentStr,labelStr);
+}
+
+
+//修改头像
+
+#pragma mark 修改头像
+-(void)updateProfileAction:(UITapGestureRecognizer*)tapGeture
+{
+
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"选择照片", nil];
+    
+    [sheet showInView:self.view];
+    
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    NSLog(@"%d", buttonIndex);
+    if (buttonIndex == 2) {
+        return;
+    }
+    
+    UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+    
+    if (buttonIndex == 0) {
+        NSString *deviceModel=[UIDevice currentDevice].model;
+        if ([deviceModel isEqualToString:@"iPhone Simulator"]) {
+            [SVProgressHUD showErrorWithStatus:@"模拟器不支持拍照" duration:2];
+            return;
+        }
+        controller.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else{
+        controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    controller.allowsEditing = YES;
+    controller.delegate = self;
+    
+    [self presentViewController:controller animated:YES completion:nil];
+    
+    
+}
+#pragma mark UIImagePickerController代理方法
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    // 提示：UIImage不能为空
+    // NSData *data = UIImagePNGRepresentation(self.imageView.image);
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    //UIImage *img = [UIImage imageNamed:@"some.png"];
+    //_imageData = UIImageJPEGRepresentation(image, 1.0);
+    
+    UIButton *btn = (UIButton*)[self.view viewWithTag:1];
+    [btn setImage:image forState:UIControlStateNormal];
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning

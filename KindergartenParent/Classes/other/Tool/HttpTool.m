@@ -24,10 +24,14 @@
         [allParams setDictionary:params];
     }
     MyLog(@"%@",allParams);
-    NSURLRequest *post = [client requestWithMethod:method path:urlString parameters:allParams];
-    MyLog(@"%@",post);
+    NSMutableURLRequest *request = [client requestWithMethod:method path:urlString parameters:allParams];
+    
+    
+    MyLog(@"%@",request);
+    //设置超时
+    [request setTimeoutInterval:10];
     // 2.创建AFJSONRequestOperation对象
-    NSOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:post
+    NSOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         if (success == nil) return;
         success(JSON);

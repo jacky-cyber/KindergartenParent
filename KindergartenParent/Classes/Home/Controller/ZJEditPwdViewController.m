@@ -23,15 +23,15 @@
     [super viewDidLoad];
     
     
-    UIBarButtonItem *sendBtn = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(sendAction)];
-    [sendBtn setTitleTextAttributes:@{
-                                      UITextAttributeTextColor :[UIColor colorWithRed:0.000 green:0.678 blue:0.424 alpha:1.000],
-                                      UITextAttributeFont : [UIFont systemFontOfSize:14]
-                                      } forState:UIControlStateNormal];
-    //[sendBtn setImage:[UIImage imageNamed:@"signin_submit"]];
-    [sendBtn setBackgroundImage:[UIImage imageNamed:@"nav_rightbackbround_image"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    self.navigationItem.rightBarButtonItem = sendBtn;
-
+    //导航
+    
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 4, 80, 25);
+    [btnR addTarget:self action:@selector(sendAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [btnR setImage:[UIImage imageNamed:@"editpwd_save"] forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
     
     //重新设置textfield高度边框颜色
     [self setupTextFiel:_oldPwd];

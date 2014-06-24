@@ -176,6 +176,7 @@
 		4B24808819590DC900C520A9 /* zao_07@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FE919590DC900C520A9 /* zao_07@2x.png */; };
 		4B24808919590DC900C520A9 /* zhong1_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FEA19590DC900C520A9 /* zhong1_09@2x.png */; };
 		4B24808A19590DC900C520A9 /* zhong_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FEB19590DC900C520A9 /* zhong_09@2x.png */; };
+		4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B24808D1959796100C520A9 /* ZJHomeModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -464,6 +465,8 @@
 		4B247FE919590DC900C520A9 /* zao_07@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zao_07@2x.png"; sourceTree = "<group>"; };
 		4B247FEA19590DC900C520A9 /* zhong1_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhong1_09@2x.png"; sourceTree = "<group>"; };
 		4B247FEB19590DC900C520A9 /* zhong_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhong_09@2x.png"; sourceTree = "<group>"; };
+		4B24808C1959796100C520A9 /* ZJHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeModel.h; sourceTree = "<group>"; };
+		4B24808D1959796100C520A9 /* ZJHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -636,11 +639,6 @@
 				4B247ECB19590DC900C520A9 /* ZJCourseViewController.m */,
 				4B247ECC19590DC900C520A9 /* ZJDayReportViewController.h */,
 				4B247ECD19590DC900C520A9 /* ZJDayReportViewController.m */,
-				4B247ECE19590DC900C520A9 /* ZJEditPwdViewController.h */,
-				4B247ECF19590DC900C520A9 /* ZJEditPwdViewController.m */,
-				4B247ED019590DC900C520A9 /* ZJEditPwdViewController.xib */,
-				4B247ED119590DC900C520A9 /* ZJEditUserViewController.h */,
-				4B247ED219590DC900C520A9 /* ZJEditUserViewController.m */,
 				4B247ED319590DC900C520A9 /* ZJHomeDetialViewController.h */,
 				4B247ED419590DC900C520A9 /* ZJHomeDetialViewController.m */,
 				4B247ED519590DC900C520A9 /* ZJHomeDetialViewController.xib */,
@@ -652,6 +650,11 @@
 				4B247EDB19590DC900C520A9 /* ZJUserInfoViewController.h */,
 				4B247EDC19590DC900C520A9 /* ZJUserInfoViewController.m */,
 				4B247EDD19590DC900C520A9 /* ZJUserInfoViewController.xib */,
+				4B247ED119590DC900C520A9 /* ZJEditUserViewController.h */,
+				4B247ED219590DC900C520A9 /* ZJEditUserViewController.m */,
+				4B247ECE19590DC900C520A9 /* ZJEditPwdViewController.h */,
+				4B247ECF19590DC900C520A9 /* ZJEditPwdViewController.m */,
+				4B247ED019590DC900C520A9 /* ZJEditPwdViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -665,6 +668,8 @@
 				4B247EE219590DC900C520A9 /* ZJCourseModel.m */,
 				4B247EE319590DC900C520A9 /* ZJUserInfoModel.h */,
 				4B247EE419590DC900C520A9 /* ZJUserInfoModel.m */,
+				4B24808C1959796100C520A9 /* ZJHomeModel.h */,
+				4B24808D1959796100C520A9 /* ZJHomeModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1404,6 +1409,7 @@
 				4B24801F19590DC900C520A9 /* AFHTTPRequestOperation.m in Sources */,
 				4B24804019590DC900C520A9 /* SDWebImageDecoder.m in Sources */,
 				4B24803A19590DC900C520A9 /* NSObject+MJMember.m in Sources */,
+				4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */,
 				4B247FF119590DC900C520A9 /* ZJCookBooksViewController.m in Sources */,
 				4B24805619590DC900C520A9 /* ZJSetingCell.m in Sources */,
 				4B247E8F19590D9200C520A9 /* main.m in Sources */,
@@ -1649,6 +1655,7 @@
 				4B247EB319590D9200C520A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4B247EB419590D9200C520A9 /* Build configuration list for PBXNativeTarget "KindergartenParentTests" */ = {
 			isa = XCConfigurationList;
@@ -1657,6 +1664,7 @@
 				4B247EB619590D9200C520A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

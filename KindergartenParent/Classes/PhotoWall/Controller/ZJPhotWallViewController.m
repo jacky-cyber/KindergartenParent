@@ -32,6 +32,10 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.sectionFooterHeight = 0;
+    //设置背景，ios6里面不然就很乱
+    UIView *backView = [[UIView alloc] init];
+    backView.backgroundColor = [UIColor whiteColor];
+    [_tableView setBackgroundView:backView];
     [self.view addSubview:_tableView];
     
     
@@ -160,12 +164,19 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    //设置背景，ios6里面不然就很乱
+    UIView *backView = [[UIView alloc] init];
+    [cell setBackgroundView:backView];
+    
+    
     //自定义View
     
     NSLog(@"%@",NSStringFromCGRect(cell.frame));
-    
+    if (ISIOS7) {
+        
+    }
     UIView *view = [ZJUIMethods creatView:CGRectMake(kMargin, 0, 300, 100) bgColor:[UIColor colorWithWhite:0.969 alpha:1.000]];
-    [cell.contentView addSubview:view];
+    [cell addSubview:view];
     CGRect viewFrame = view.frame;
     
     NSString *name = @"<a href='a'>果果果果</a> 的家长:<font color='gray'>的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长</font>";

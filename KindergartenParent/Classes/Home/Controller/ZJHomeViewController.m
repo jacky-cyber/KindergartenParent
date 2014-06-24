@@ -18,6 +18,7 @@
 #import "ZJDrugStatusController.h"
 #import "ZJMonthCommentViewController.h"
 #import "ZJWeekReportsViewController.h"
+#import "ZJHomeModel.h"
 #define kFoodtH 0
 
 @interface ZJHomeViewController ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
@@ -27,6 +28,8 @@
     
     ZJUserInfoModel *_uinfo;
     UIView *headView;//
+    
+    NSMutableArray *_oneDayData;//一天的数据
 }
 @end
 
@@ -80,7 +83,32 @@
     [self loadNotifi];
     
     [self loadHeadView];
+    
+    //加载数据
+    [self loadData];
 }
+
+-(void)loadData
+{
+    _oneDayData = [NSMutableArray arrayWithCapacity:12];
+    
+    
+    
+    for (int i = 1; i<12; i++) {
+        ZJHomeModel *model1 = [[ZJHomeModel alloc] init];
+        model1.nid = @"110";
+        model1.type = [NSString stringWithFormat:@"%d",i];
+        model1.content = @"系统消息";
+        model1.createtime = @"2014-06-01 18:18:00";
+        model1.createuid = @"123";
+        [_oneDayData addObject:model1];
+
+    }
+    
+}
+
+
+
 -(void)loadHeadView
 {
     //设置头像
@@ -173,7 +201,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 14;
+    return _oneDayData.count;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -189,6 +217,8 @@
         cell = [[ZJHomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[ZJHomeCell ID]];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
     
     cell.typeImg.image = [UIImage imageNamed:@"cookbook"];
     cell.titleLb.text = @"本周食谱已更新";
