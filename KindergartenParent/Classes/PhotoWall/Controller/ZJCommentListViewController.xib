@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZJCommentListViewController">
+            <connections>
+                <outlet property="commentTextField" destination="dKG-Tb-KV8" id="uJS-LL-Fwe"/>
+                <outlet property="inputViewConstraint" destination="xe8-8S-9gU" id="6mJ-r4-oWT"/>
+                <outlet property="tableView" destination="JCP-lR-faQ" id="ZiD-55-ENW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JCP-lR-faQ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="521"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="lAI-5U-0US"/>
+                        <outlet property="delegate" destination="-1" id="XLb-Bd-P1T"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bes-eM-a3l">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dKG-Tb-KV8">
+                            <rect key="frame" x="10" y="7" width="250" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Pc-MI-iwN">
+                            <rect key="frame" x="268" y="10" width="45" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="comm_send">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="sendCommentAction:" destination="-1" eventType="touchUpInside" id="Quz-c5-b8V"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.625031502016129" green="1" blue="0.63101688508064513" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="bOG-Wb-hXh"/>
+                        <constraint firstAttribute="width" constant="320" id="mXg-c1-Z5e"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="bes-eM-a3l" secondAttribute="bottom" id="1Sa-wv-Y1b"/>
+                <constraint firstItem="JCP-lR-faQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2nD-jq-Gxk"/>
+                <constraint firstItem="bes-eM-a3l" firstAttribute="top" secondItem="JCP-lR-faQ" secondAttribute="bottom" constant="3" id="7gG-Zv-Tam"/>
+                <constraint firstItem="JCP-lR-faQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="S9Q-El-Ght"/>
+                <constraint firstAttribute="trailing" secondItem="JCP-lR-faQ" secondAttribute="trailing" id="oeO-3k-8Sl"/>
+                <constraint firstItem="bes-eM-a3l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="s0q-Tm-fBw"/>
+                <constraint firstAttribute="trailing" secondItem="bes-eM-a3l" secondAttribute="trailing" id="tg7-FF-j9a"/>
+                <constraint firstAttribute="bottom" secondItem="bes-eM-a3l" secondAttribute="bottom" id="xe8-8S-9gU"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ut0-FM-d8K">
+            <rect key="frame" x="0.0" y="0.0" width="73" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+            <state key="normal" title="Button">
+                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+            </state>
+        </button>
+    </objects>
+    <resources>
+        <image name="comm_send" width="46" height="29"/>
+    </resources>
+</document>
