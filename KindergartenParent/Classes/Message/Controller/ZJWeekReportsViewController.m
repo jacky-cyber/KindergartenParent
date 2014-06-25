@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     
+    
     CGFloat height = H(self.view)-kNavH;
     if (ISIOS7) {
         height -=20;
@@ -36,16 +37,20 @@
     [self.view addSubview:_scrollView];
     
     
+    //初始化模型数据
+    [self addModelData];
+}
+
+-(void)ldView
+{
+    
+    
     //添加标题背景
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, kMarginH, 280, 70)];
     imageView.image = [UIImage imageNamed:@"weekReport_bg"];
     [_scrollView addSubview:imageView];
     
-    
-    
-    //初始化模型数据
-    [self addModelData];
     
     ZJWeekReportView *jiankan = [[ZJWeekReportView alloc] init];
     jiankan.frame = CGRectMake(20, 110, 280, 50);
@@ -139,28 +144,28 @@
     NSLog(@"%@--%f----%f",view,YH(view),YH(language));
     //_scrollView.backgroundColor = [UIColor grayColor];
     _scrollView.contentSize = CGSizeMake(320, YH(view)+10);
-    
+
 }
 
 #pragma mark 添加模型数据
 -(void)addModelData
 {
     _model = [[ZJWeekReportModel alloc] init];
-    
-    _model.health = @"自己能平稳的端饭端菜，不会洒出或者掉在地上";
-    _model.sport = @"我爱体育，我爱体育，我爱体育，我爱体育，我爱体育，";
-    _model.english = @"my name is han mei mei ,i'm 18, i'm come frome beijing";
-    _model.yuwen = @"一直小鸭子，洗呀洗澡澡，哈哈，嘎嘎";
-    
-    _model.math = @"1+1=2,2+2=3,3+3=4";
-    _model.music = @"一闪一闪亮晶晶，漫天都是小信息";
-    _model.kexue = @"奥特曼大战怪兽，保卫地球";
-    _model.paint = @"梵高的映像派不错，呵呵";
-    _model.kaoqin = @"签到";
-    _model.shehui = @"我们今天去父老来来过马路了，不错";
-    _model.eat = @"吃了三个馒头";
-    _model.drink = @"喝了五瓶水";
-    _model.jiayuangongyu = @"老师和家长要共同养育，一定要，老师和家长要共同养育，一定要老师和家长要共同养育，一定要老师和家长要共同养育，一定要";
+//    
+//    _model.health = @"自己能平稳的端饭端菜，不会洒出或者掉在地上";
+//    _model.sport = @"我爱体育，我爱体育，我爱体育，我爱体育，我爱体育，";
+//    _model.english = @"my name is han mei mei ,i'm 18, i'm come frome beijing";
+//    _model.yuwen = @"一直小鸭子，洗呀洗澡澡，哈哈，嘎嘎";
+//    
+//    _model.math = @"1+1=2,2+2=3,3+3=4";
+//    _model.music = @"一闪一闪亮晶晶，漫天都是小信息";
+//    _model.kexue = @"奥特曼大战怪兽，保卫地球";
+//    _model.paint = @"梵高的映像派不错，呵呵";
+//    _model.kaoqin = @"签到";
+//    _model.shehui = @"我们今天去父老来来过马路了，不错";
+//    _model.eat = @"吃了三个馒头";
+//    _model.drink = @"喝了五瓶水";
+//    _model.jiayuangongyu = @"老师和家长要共同养育，一定要，老师和家长要共同养育，一定要老师和家长要共同养育，一定要老师和家长要共同养育，一定要";
     
     //    @interface ZJWeekReportModel : NSObject
     //    @property(nonatomic,strong) NSString *title;
@@ -177,6 +182,29 @@
     //    @property(nonatomic,strong) NSString *biaoxian;
     //    @property(nonatomic,strong) NSString *jiayuangongyu;
     //    @property(nonatomic,strong) NSString *userid;
+    [SVProgressHUD showWithStatus:@"加载数据中" maskType:SVProgressHUDMaskTypeBlack];
+    [HttpTool getWithPath:@"weekreport" params:@{@"id":@"1"} success:^(id JSON) {
+        ///NSLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] ==0) {
+            [_model setKeyValues:JSON[@"data"]];
+            //加载界面
+            [self ldView];
+            [SVProgressHUD showSuccessWithStatus:@"请求成功" duration:1];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"网络连接错误" duration:1];
+    }];
+
+//    [HttpTool getWithPath:@"weekreport" params:@{@"id":@"1"} success:^(id JSON) {
+//        MyLog(@"Data:%@",JSON);
+//        
+//        
+//        
+//    } failure:^(NSError *error) {
+//        
+//    }];
     
 }
 

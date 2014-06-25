@@ -18,6 +18,8 @@
 #import "ZJDrugStatusController.h"
 #import "ZJMonthCommentViewController.h"
 #import "ZJWeekReportsViewController.h"
+#import "ZJActivityViewController.h"
+#import "ZJSystemMsgViewController.h"
 #import "ZJHomeModel.h"
 #define kFoodtH 0
 
@@ -112,20 +114,29 @@
 -(void)loadHeadView
 {
     //设置头像
-    UIButton *profileImgbtn = [[UIButton alloc] init];
-    profileImgbtn.tag = 1;
-    profileImgbtn.frame = CGRectMake(20, H(headView)*0.8-45, 60, 60);
+    UIImageView *prifileImg = [[UIImageView alloc] init];
+    prifileImg.tag = 1;
+    prifileImg.frame = CGRectMake(20, H(headView)*0.8-45, 60, 60);
     
+    //设置头像
+    [prifileImg setImageWithURL:[NSURL URLWithString:[LoginUser sharedLoginUser].profilImg] placeholderImage:nil];
+    prifileImg.layer.cornerRadius = 5;
+    prifileImg.layer.masksToBounds = YES;
+    prifileImg.userInteractionEnabled = YES;
+    //单击头像
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(updateProfileAction)];
+    [prifileImg addGestureRecognizer:tap];
     
-    [profileImgbtn setImage:[UIImage imageNamed:@"201277441619594489.jpg"] forState:UIControlStateNormal];
-    [profileImgbtn addTarget:self action:@selector(updateProfileAction) forControlEvents:UIControlEventTouchUpInside];
-    profileImgbtn.layer.cornerRadius = 10;
-    profileImgbtn.layer.masksToBounds = YES;
-    [headView addSubview:profileImgbtn];
+//    [profileImgbtn setImage:[UIImage imageNamed:@"201277441619594489.jpg"] forState:UIControlStateNormal];
+//    [profileImgbtn addTarget:self action:@selector(updateProfileAction) forControlEvents:UIControlEventTouchUpInside];
+//    profileImgbtn.layer.cornerRadius = 10;
+//    profileImgbtn.layer.masksToBounds = YES;
+    [headView addSubview:prifileImg];
     //设置家长名字
     //NSString *nickname = [LoginUser sharedLoginUser].nickname;
     UILabel *parentName = [[UILabel alloc] init];
-    parentName.frame = CGRectMake(XW(profileImgbtn),H(headView)*0.8-25,100,25);
+    parentName.frame = CGRectMake(XW(prifileImg),H(headView)*0.8-25,100,25);
     parentName.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.200];
     
     
@@ -270,7 +281,11 @@
     }else if([model.type isEqualToString:@"7"]){
         [self pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
     }else if([model.type isEqualToString:@"1"]){
-        [self pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"详情"];
+        [self pushController:[ZJSystemMsgViewController class] withInfo:nil withTitle:@"系统通知"];
+    }else if([model.type isEqualToString:@"10"]){
+        [self pushController:[ZJActivityViewController class] withInfo:nil withTitle:@"通知详情"];
+    }else if([model.type isEqualToString:@"2"]){
+        [self pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"通知详情"];
     }
 
 }

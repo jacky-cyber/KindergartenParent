@@ -42,7 +42,7 @@
 
 - (void)viewDidLoad
 {
-
+    
     [super viewDidLoad];
     self.title = @"添加服药单";
     
@@ -63,7 +63,7 @@
     NSString *YaoNumLabelText = @"服用剂量: 九胃泰药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花葵花葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵";
     NSString *YaoTimeLabelText = @"服药时间: 早，中，晚";
     NSString *YaoCareLabelText = @"注意事项: 九胃泰葵花葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵";
- 
+    
     
     //发送
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -78,19 +78,19 @@
     
     //上层*************************
     
-    UILabel *labelU = [[UILabel alloc]initWithFrame:CGRectMake(19, 20, 280, 1)];
+    UILabel *labelU = [[UILabel alloc]initWithFrame:CGRectMake(19, 18, 281, 1)];
     labelU.backgroundColor = [UIColor redColor];
     [self.view addSubview:labelU];
     
-    UILabel *labelD = [[UILabel alloc]initWithFrame:CGRectMake(19, 300, 280, 1)];
+    UILabel *labelD = [[UILabel alloc]initWithFrame:CGRectMake(19, 305, 281, 1)];
     labelD.backgroundColor = [UIColor redColor];
     [self.view addSubview:labelD];
     
-    UILabel *labelL = [[UILabel alloc]initWithFrame:CGRectMake(19, 20, 1, 280)];
+    UILabel *labelL = [[UILabel alloc]initWithFrame:CGRectMake(19, 18, 1, 287)];
     labelL.backgroundColor = [UIColor redColor];
     [self.view addSubview:labelL];
     
-    UILabel *labelR = [[UILabel alloc]initWithFrame:CGRectMake(300, 20, 1, 280)];
+    UILabel *labelR = [[UILabel alloc]initWithFrame:CGRectMake(300, 18, 1, 287)];
     labelR.backgroundColor = [UIColor redColor];
     [self.view addSubview:labelR];
     
@@ -101,7 +101,7 @@
     [self.view addSubview:_timeLabel];
     
     //学生信息
-    UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 280, 75)];
+    UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 280, 73)];
     
     infobg.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
     for (int i= 0; i<4; i++)
@@ -111,24 +111,26 @@
         label.font = kFont12;
         label.textColor = [UIColor grayColor];
         label.text = [stuArray objectAtIndex:i];
+        label.backgroundColor = [UIColor clearColor];
         [infobg addSubview:label];
         
         
     }
     [self.view addSubview:infobg];
-
+    
     
     
     
     UILabel *fuyaodan = [[UILabel alloc]initWithFrame:CGRectMake(25, 110, 100, 40)];
     fuyaodan.text = @"服药单";
     fuyaodan.font = kFont14;
+    fuyaodan.backgroundColor = [UIColor clearColor];
     [self.view addSubview:fuyaodan];
     
     UILabel *labelD2 = [[UILabel alloc]initWithFrame:CGRectMake(25, 140, 270, 1)];
     labelD2.backgroundColor = [UIColor redColor];
     [self.view addSubview:labelD2];
-
+    
     _YaoNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 141, 230, 40)];
     _YaoNameLabel.text = YaoNameLabelText;
     _YaoNameLabel.font = kFont13;
@@ -165,7 +167,7 @@
         imageH.image = [UIImage imageNamed:@"huitiao_10"];
         [self.view addSubview:imageH];
         
-
+        
         
     }
     
@@ -287,7 +289,7 @@
         _threeBtnLabel.hidden = NO;
         _titleName.text = @"服药时间";
         k = 2;
-       
+        
     }
     else if (btn.tag == 3)
     {
@@ -347,7 +349,7 @@
 }
 -(void)btnBack
 {
-   
+    
     _label.hidden = YES;
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.5];
@@ -356,18 +358,18 @@
     _threeBtnLabel.hidden = YES;
     _imageBg.frame = CGRectMake(0, 0, 320, 0);
     [UIView commitAnimations];
-
+    
 }
 -(void)btnadd
 {
-   
+    
     if (k == 0)
     {
         _YaoNameLabel.text = [NSString stringWithFormat:@"药物名称：%@",_contentView.text];
     }
     else if(k == 1)
     {
-         _YaoNumLabel.text = [NSString stringWithFormat:@"服用剂量：%@",_contentView.text];
+        _YaoNumLabel.text = [NSString stringWithFormat:@"服用剂量：%@",_contentView.text];
     }
     else if(k == 2)
     {
@@ -404,7 +406,7 @@
     
     else if(k == 3)
     {
-         _YaoCareLabel.text = [NSString stringWithFormat:@"注意事项：%@",_contentView.text];
+        _YaoCareLabel.text = [NSString stringWithFormat:@"注意事项：%@",_contentView.text];
     }
     [self btnBack];
 }
@@ -413,8 +415,8 @@
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     _contentView.text = @"";
-
-
+    
+    
     return YES;
     
 }
@@ -434,3 +436,4 @@
 
 
 @end
+  

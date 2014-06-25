@@ -41,7 +41,7 @@
     [self loadData];
     
     
-    [self.view addSubview:_tableView];
+    //[self.view addSubview:_tableView];
 }
 -(void)loadData
 {
@@ -96,6 +96,9 @@
         textLabel.backgroundColor = [UIColor clearColor];
         textLabel.font = kFont(14);
         //设置显示
+        
+        MyLog(@"%-----@",_dataDict);
+        
         if (indexPath.row == 0) {
             textLabel.text = _dataDict[@"sleeptime"];
         }else if(indexPath.row == 1){

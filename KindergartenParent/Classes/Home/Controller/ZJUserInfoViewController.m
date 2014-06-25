@@ -42,10 +42,10 @@
     
     //设置模型
     //_userModel = self.userInfo;
-    _userModel.profileimg = @"http://img.icoin.cn/_files/201405/13/fd25c3295ddc4873a81567e1120fb91b.jpg";
-    _userModel.address = @"这是我的地址，地址地址地址地址地址这是我的地址，地址地址地址地址地址这是我的地址，地址地址地址地址地址";
-    _userModel.guominshi = @"没有过敏史,非常健康";
-    _userModel.remark = @"孩子不吃饭，快用江中牌，孩子不吃饭，快用江中牌孩子不吃饭，快用江中牌，孩子不吃饭，快用江中牌";
+   // _userModel.profileimg = @"http://img.icoin.cn/_files/201405/13/fd25c3295ddc4873a81567e1120fb91b.jpg";
+//    _userModel.address = @"这是我的地址，地址地址地址地址地址这是我的地址，地址地址地址地址地址这是我的地址，地址地址地址地址地址";
+//    _userModel.guominshi = @"没有过敏史,非常健康";
+//    _userModel.remark = @"孩子不吃饭，快用江中牌，孩子不吃饭，快用江中牌孩子不吃饭，快用江中牌，孩子不吃饭，快用江中牌";
     
     
     //设置头像
@@ -58,10 +58,10 @@
                                    initWithTarget:self action:@selector(updateProfileAction:)];
     [self.prifileImg addGestureRecognizer:tap];
     //加载个人信息
-    //[self loadData];
+    [self loadData];
 
     
-     [self addSubViews];
+     //[self addSubViews];
 }
 #pragma mark 加载个人信息
 -(void)loadData

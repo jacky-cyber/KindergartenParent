@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0B6E50195A92FC0053BC9E /* ZJActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */; };
+		4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */; };
 		4B247E8319590D9200C520A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B247E8219590D9200C520A9 /* Foundation.framework */; };
 		4B247E8519590D9200C520A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B247E8419590D9200C520A9 /* CoreGraphics.framework */; };
 		4B247E8719590D9200C520A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B247E8619590D9200C520A9 /* UIKit.framework */; };
@@ -190,6 +192,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B0B6E4D195A92FC0053BC9E /* ZJActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJActivityViewController.h; sourceTree = "<group>"; };
+		4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJActivityViewController.m; sourceTree = "<group>"; };
+		4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJActivityViewController.xib; sourceTree = "<group>"; };
 		4B247E7F19590D9200C520A9 /* KindergartenParent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KindergartenParent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B247E8219590D9200C520A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4B247E8419590D9200C520A9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -655,6 +660,9 @@
 				4B247ECE19590DC900C520A9 /* ZJEditPwdViewController.h */,
 				4B247ECF19590DC900C520A9 /* ZJEditPwdViewController.m */,
 				4B247ED019590DC900C520A9 /* ZJEditPwdViewController.xib */,
+				4B0B6E4D195A92FC0053BC9E /* ZJActivityViewController.h */,
+				4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */,
+				4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1318,6 +1326,7 @@
 				4B24807D19590DC900C520A9 /* bj_27@2x.png in Resources */,
 				4B24807919590DC900C520A9 /* img06@2x.png in Resources */,
 				4B247FFD19590DC900C520A9 /* ZJUserInfoViewController.xib in Resources */,
+				4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */,
 				4B24807B19590DC900C520A9 /* nav_menu_icon@2x.png in Resources */,
 				4B24800219590DC900C520A9 /* ZJCookBookTableViewCell.xib in Resources */,
 				4B24806E19590DC900C520A9 /* tianjia_05@2x.png in Resources */,
@@ -1363,6 +1372,7 @@
 				4B24803E19590DC900C520A9 /* SDImageCache.m in Sources */,
 				4B24803B19590DC900C520A9 /* RTLabel.m in Sources */,
 				4B24803C19590DC900C520A9 /* MKAnnotationView+WebCache.m in Sources */,
+				4B0B6E50195A92FC0053BC9E /* ZJActivityViewController.m in Sources */,
 				4B247FFC19590DC900C520A9 /* ZJUserInfoViewController.m in Sources */,
 				4B247FEC19590DC900C520A9 /* ZJADDViewController.m in Sources */,
 				4B24800A19590DC900C520A9 /* ZJAboutMeViewController.m in Sources */,

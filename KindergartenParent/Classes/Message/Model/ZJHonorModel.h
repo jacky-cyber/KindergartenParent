@@ -13,4 +13,9 @@
 @property(nonatomic,copy) NSString *sun;
 @property(nonatomic,copy) NSString *praise;
 @property(nonatomic,copy) NSString *flower;
+
+//date = "2014-06-01";
+//flower = 0;
+//praise = 2;
+//sun = 2;
 @end

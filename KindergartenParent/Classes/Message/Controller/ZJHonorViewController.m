@@ -30,29 +30,48 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [self.view addSubview:_tableView];
     //_tableView.rowHeight = 100;
     _dataArr = [NSMutableArray array];
     
     
-    for (int i = 0; i< 10; i++) {
-        ZJHonorModel *model1  = [[ZJHonorModel alloc] init];
-        NSInteger suijisun = arc4random()%10;
-        NSString *suijisunStr= [NSString stringWithFormat:@"%d",suijisun];
-        
-        NSInteger suijif = arc4random()%10;
-        NSString *suijifStr= [NSString stringWithFormat:@"%d",suijif];
-        
-        NSInteger suijip = arc4random()%10;
-        NSString *suijipStr= [NSString stringWithFormat:@"%d",suijip];
-        model1.date = @"2014-07-11";
-        model1.sun = suijisunStr;
-        model1.flower = suijifStr;
-        model1.praise = suijipStr;
-        [_dataArr addObject:model1];
-    }
-
+    //加载数据
+    [self loadData];
 }
+
+-(void)ldView
+{
+
+   
+}
+
+-(void)loadData
+{
+    [SVProgressHUD showWithStatus:@"加载数据中" maskType:SVProgressHUDMaskTypeBlack];
+    
+    NSDictionary *params = @{@"date":@"2014-06-02 00:00:00",@"username":[LoginUser sharedLoginUser].userName};
+    
+    [HttpTool getWithPath:@"honor" params:params success:^(id JSON) {
+        if ([JSON[@"code"] intValue] ==0) {
+            NSArray *arr = JSON[@"data"];
+            for (int i = 0; i<arr.count; i++) {
+                ZJHonorModel *model1  = [[ZJHonorModel alloc] init];
+                
+                 [model1 setKeyValues:arr[i]];
+                
+                [_dataArr addObject:model1];
+            }
+           
+            //加载界面
+             [self.view addSubview:_tableView];
+            [SVProgressHUD showSuccessWithStatus:@"请求成功" duration:1];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
+        }
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"网络连接错误" duration:1];
+    }];
+}
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

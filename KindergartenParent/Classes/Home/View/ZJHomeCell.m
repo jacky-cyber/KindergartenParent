@@ -59,7 +59,7 @@
     _statuView = [[UIView alloc] init];
     _statuView.layer.cornerRadius = 5;
     _statuView.layer.masksToBounds = YES;
-    [self.contentView addSubview:_statuView];
+    //[self.contentView addSubview:_statuView];
 }
 - (void)settingSubviewFrame
 {

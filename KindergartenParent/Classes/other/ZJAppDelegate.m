@@ -36,7 +36,7 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    if (![LoginUser sharedLoginUser].isLogin) {
+    if ([LoginUser sharedLoginUser].isLogin) {
         self.window.rootViewController = _menuController;
     }else{
         BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:[[ZJLoginViewController alloc] init]];
