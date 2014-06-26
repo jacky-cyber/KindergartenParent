@@ -10,6 +10,7 @@
 #import "ZJFuYaoDanCell.h"
 #import "ZJFuyaodanDetailViewController.h"
 #import "ZJADDViewController.h"
+#import "ZJFuYaoDanModel.h"
 @interface ZJFuyaodanViewController ()
 {
     UITableView *_tableView;
@@ -19,14 +20,7 @@
 
 @implementation ZJFuyaodanViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad
 {
@@ -58,14 +52,45 @@
     [self.view addSubview:_tableView];
     
     
+    //加载数据
+    [self initData];
     
 }
+
+-(void)initData{
+    
+    
+    [SVProgressHUD showWithStatus:@"正在加载服药单" maskType:SVProgressHUDMaskTypeBlack];
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"page":@"1"};
+    [HttpTool getWithPath:@"fylist" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0) {
+            for (NSDictionary *dict in JSON[@"data"]) {
+                //将数据模型化
+                ZJFuYaoDanModel *model = [[ZJFuYaoDanModel alloc] init];
+                [model setKeyValues:dict];
+                [_dataArr addObject:model];
+            }
+            //重新刷新tableview
+            [_tableView reloadData];
+            
+            [SVProgressHUD dismiss];
+        
+            
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+
 
 #pragma mark----- UITableView
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return _dataArr.count;
-    return 10;
+    return _dataArr.count;
+    //return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -82,8 +107,9 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     //cell 数据Model 补充
+    cell.fydmodel = _dataArr[indexPath.row];
     /*
-     
+    
      
      
      */
@@ -93,18 +119,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //根据具体情况修改
-    
-    ZJFuyaodanDetailViewController *detailVC = [[ZJFuyaodanDetailViewController alloc]init];
 
-    [self.navigationController pushViewController:detailVC animated:YES];
+    [self pushController:[ZJFuyaodanDetailViewController class] withInfo:_dataArr[indexPath.row] withTitle:@"服药单详情"];
     
 }
 
 -(void)addFuyaodan
 {
     NSLog(@"添加服药单");
-    ZJADDViewController *add = [[ZJADDViewController alloc]init];
-    [self.navigationController pushViewController:add animated:YES];
+    
+    [self pushController:[ZJADDViewController class] withInfo:nil];
+    
 }
 - (void)didReceiveMemoryWarning
 {

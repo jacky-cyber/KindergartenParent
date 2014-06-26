@@ -7,6 +7,17 @@
 //
 
 #import "ZJFuYaoDanCell.h"
+#import "ZJFuYaoDanModel.h"
+
+@interface ZJFuYaoDanCell(){
+    UILabel *_timeLabel;//时间标签
+    UIImageView *_mornImg;//
+    UIImageView *_noonImg;//中午
+    UIImageView *_eveImg;//晚上
+    
+}
+
+@end
 
 @implementation ZJFuYaoDanCell
 
@@ -46,6 +57,7 @@
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 80, 25)];
     timeLabel.text = @"2014-06-21";
     timeLabel.font = kFont13;
+    _timeLabel = timeLabel;
     [self.contentView addSubview:timeLabel];
     
    
@@ -68,19 +80,60 @@
     UIImageView *imageV1 = [[UIImageView alloc]initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
     imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
     [self.contentView addSubview:imageV1];
+    _mornImg = imageV1;
     //中
     UIImageView *imageV2 = [[UIImageView alloc]initWithFrame:CGRectMake(120+1*60, 10, 25, 25)];
     imageV2.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:1]]];
     [self.contentView addSubview:imageV2];
+    _noonImg = imageV2;
     //晚
     UIImageView *imageV3 = [[UIImageView alloc]initWithFrame:CGRectMake(120+2*60, 10, 25, 25)];
     imageV3.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:2]]];
     [self.contentView addSubview:imageV3];
+    _eveImg = imageV3;
     
     
     
     
 }
+
+
+-(void)setFydmodel:(ZJFuYaoDanModel *)fydmodel
+{
+    
+    
+    
+    _fydmodel = fydmodel;
+    
+    //设置时间
+    _timeLabel.text = [_fydmodel.time substringToIndex:10];
+    
+    if ([self isRang:@"早"]) {
+        _mornImg.alpha = 0;
+    }
+    
+    if ([self isRang:@"中"]) {
+        _noonImg.alpha = 0;
+    }
+    
+    if ([self isRang:@"晚"]) {
+        _eveImg.alpha = 0;
+    }
+    
+}
+#pragma mark 看是否包含
+-(BOOL)isRang:(NSString*)str
+{
+    BOOL flag = false;
+    //
+    NSRange rang = [_fydmodel.fuyaotime rangeOfString:str];//判断字符串是否包含
+    if (rang.length == 0)//不包含
+    {
+        flag = true;
+    }
+    return flag;
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

@@ -78,8 +78,8 @@
     
     
     //发布人
-    NSString *uname = [NSString stringWithFormat:@"<a href='www.baidu.com'>%@</a> 的家长",_cmmodel.cmnickname];
-    _unameLabel.text = uname;
+    //NSString *uname = [NSString stringWithFormat:@"<a href='www.baidu.com'>%@</a> 的家长",_cmmodel.cmnickname];
+    _unameLabel.text = _cmmodel.cmnickname;
     _unameLabel.linkAttributes = @{@"color":@"#78a40e"};
     //发布时间
     TimeFormatTools *timef = [[TimeFormatTools alloc] init];
@@ -99,6 +99,14 @@
     CGRect bgF = _bgView.frame;
     bgF.size.height = YH(_contentLabel)+10;
     _bgView.frame = bgF;
+    
+    //判断是否最后一段，不加分割线
+    if (_isLast == false) {
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(kMargin, H(_bgView), 280, 0.5)];
+        [_bgView addSubview:lineView];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    
     
 }
 

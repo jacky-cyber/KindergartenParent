@@ -9,7 +9,7 @@
 #import "ZJCommentListViewController.h"
 #import "ZJCommentCell.h"
 #import "ZJCommentModel.h"
-@interface ZJCommentListViewController ()
+@interface ZJCommentListViewController ()<UITextFieldDelegate>
 {
     NSMutableArray *_dataArr;
 }
@@ -30,38 +30,51 @@
     if (ISIOS7) {
         height -=20;
     }
-    _dataArr = [NSMutableArray array];
     
-    [self addData];
-    
+    //[self addData];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 1. 利用通知中心监听键盘的变化（打开、关闭、中英文切换）
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-}
-#pragma mark 添加数据
--(void)addData{
     
+    //初始化数组
+    _dataArr = [NSMutableArray array];
+
+    //加载数据
+    [self initData];
     
-    for (int i = 0; i<10; i++) {
-        ZJCommentModel *model = [[ZJCommentModel alloc] init];
-        model.cmtime = @"2014-06-18 12:12:12";
-        model.content = @"你是一个美丽的小女孩儿，哈哈哈你是一个美丽的小女孩儿，哈哈哈你是一个美丽的小女孩儿，哈哈哈";
-        model.cmnickname = @"张三";
-        model.cmuimgurl = @"http://static.oschina.net/uploads/user/98/196012_100.jpg?t=1378866193000";
-        [_dataArr addObject:model];
-        
-        ZJCommentModel *model1 = [[ZJCommentModel alloc] init];
-        model1.cmtime = @"2014-05-18 12:12:12";
-        model1.content = @"你是一个美丽的小女孩儿，哈哈哈你是一个美丽的小女孩儿，哈哈哈";
-        model1.cmnickname = @"李四";
-        model1.cmuimgurl = @"http://static.oschina.net/uploads/user/98/196012_100.jpg?t=1378866193000";
-        [_dataArr addObject:model1];
-        
-    }
     
     
 }
+
+
+-(void)initData
+{
+    NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@"1"};
+    
+    [HttpTool getWithPath:@"commentlist" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+ 
+        if ([JSON[@"code"] intValue] == 0) {
+
+            for (NSDictionary *dict in JSON[@"data"]) {
+                ZJCommentModel *model = [[ZJCommentModel alloc] init];
+                [model setKeyValues:dict];
+                [_dataArr addObject:model];
+                
+            }
+            [self.tableView reloadData];
+            //model setKeyValues:JSON
+            
+            
+        }
+    } failure:^(NSError *error) {
+         MyLog(@"%@",error.debugDescription);
+    }];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -89,11 +102,17 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     ZJCommentModel *model = _dataArr[indexPath.row];
+    
+    //判断是否最后一个，让后去掉分割线
+    if ([model isEqual:_dataArr.lastObject]) {
+        cell.isLast = true;
+    }
+    
     cell.tag = indexPath.row;
     [cell setCmmodel:model];
     
     // Configure the cell...
-    //如果是第一行，调整bgVie的高度
+    //如果是第一行，调整bgVie的高度顶部的高度是20
     if (indexPath.row == 0) {
         CGRect bgF = cell.bgView.frame;
         bgF.origin.y = 20;
@@ -153,8 +172,44 @@
         //[self scrollToTableBottom];
     }];
 }
-
+#pragma mark -评论
 - (IBAction)sendCommentAction:(id)sender {
+    
+    [_commentTextField resignFirstResponder];
+    
+    NSString *commentStr = _commentTextField.text.trimString;
+    if (commentStr.isEmptyString) {
+        [SVProgressHUD showErrorWithStatus:@"评论类容不能为空" duration:1.0];
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:@"正在评论" maskType:SVProgressHUDMaskTypeBlack];
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"pwallid":self.userInfo,
+                             @"content":commentStr};
+    [HttpTool getWithPath:@"comment" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"评论成功" duration:1];
+            
+            //先删除数据
+            [_dataArr removeAllObjects];
+            //重新加载数据
+            [self initData];
+            
+            //将文本内容清空
+            _commentTextField.text = @"";
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self sendCommentAction:nil];
+    return YES;
 }
 
 /*

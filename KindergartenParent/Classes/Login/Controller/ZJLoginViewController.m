@@ -86,6 +86,11 @@
             [LoginUser sharedLoginUser].classes = user.classes;
             [LoginUser sharedLoginUser].profilImg = user.profileimg;
             [LoginUser sharedLoginUser].nickname = user.nickname;
+            [LoginUser sharedLoginUser].name = user.name;
+            [LoginUser sharedLoginUser].parentname = user.parentname;
+            [LoginUser sharedLoginUser].tel = user.tel;
+            
+            MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
             self.view.window.rootViewController = menuController;

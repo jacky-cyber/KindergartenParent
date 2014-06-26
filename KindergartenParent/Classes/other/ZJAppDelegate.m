@@ -24,7 +24,7 @@
    
     ZJRightSideDrawerViewController * rightSideDrawerViewController = [[ZJRightSideDrawerViewController alloc] init];
     
-    ZJPhotWallViewController * centerViewController  = [[ZJPhotWallViewController alloc] init];
+    ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
     
     BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];
 

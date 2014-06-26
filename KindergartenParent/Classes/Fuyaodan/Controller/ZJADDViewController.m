@@ -26,6 +26,11 @@
     BOOL zhong;
     BOOL wan;
     
+    NSString *_fuyaoTime;//服药时间
+    NSString *_remark;//注意事项
+    NSString *_jiliang;//剂量
+    NSString *_yaowuname;//药物名称
+    
 }
 @end
 
@@ -50,19 +55,19 @@
     zhong = NO;
     wan = NO;
     
+    MyLog(@"%@",[LoginUser sharedLoginUser].description);
+    
     //修改数据
-    NSString *stuName = @"学生姓名：小果果";
-    NSString *className = @"所在班级：海盗班";
-    NSString *parName = @"家长姓名：果断断";
-    NSString *teleCall = @"联系方式：121212121212";
+    NSString *stuName =[NSString stringWithFormat:@"学生姓名：%@",[LoginUser sharedLoginUser].name];
+    NSString *className = [NSString stringWithFormat:@"所在班级：%@",[LoginUser sharedLoginUser].classes];
+    NSString *parName = [NSString stringWithFormat:@"家长姓名：%@",[LoginUser sharedLoginUser].parentname];
+    NSString *teleCall = [NSString stringWithFormat:@"联系方式：%@",[LoginUser sharedLoginUser].tel];
     NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,className,parName,teleCall, nil];
     
-    
-    NSString *timeLabelText = @"2014-06-14";
-    NSString *YaoNameLabelText = @"药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵";
-    NSString *YaoNumLabelText = @"服用剂量: 九胃泰药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花葵花葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵";
-    NSString *YaoTimeLabelText = @"服药时间: 早，中，晚";
-    NSString *YaoCareLabelText = @"注意事项: 九胃泰葵花葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵";
+    NSString *YaoNameLabelText = @"药物名称: 请填写药物名称";
+    NSString *YaoNumLabelText = @"服用剂量: 请填写服用剂量";
+    NSString *YaoTimeLabelText = @"服药时间: 请选择服药时间";
+    NSString *YaoCareLabelText = @"注意事项: 请填写注意事项";
     
     
     //发送
@@ -97,7 +102,7 @@
     
     _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 20, 100, 40)];
     _timeLabel.font = kFont13;
-    _timeLabel.text = timeLabelText;
+    _timeLabel.text = [[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10];
     [self.view addSubview:_timeLabel];
     
     //学生信息
@@ -263,7 +268,7 @@
         [UIView commitAnimations];
         _label.hidden = NO;
         _titleName.text = @"药物名称";
-        _contentView.text = @"填写药物名称，多个用逗号隔开";
+        _contentView.text = _yaowuname?_yaowuname:@"填写药物名称，多个用逗号隔开";
         k =0;
         
     }
@@ -275,7 +280,7 @@
         [UIView commitAnimations];
         _label.hidden = NO;
         _titleName.text = @"服用剂量";
-        _contentView.text = @"填写各个药物的服用剂量，多个用逗号隔开";
+        _contentView.text = _jiliang?_jiliang:@"填写各个药物的服用剂量，多个用逗号隔开";
         k = 1;
     }
     else if (btn.tag == 2)
@@ -299,7 +304,7 @@
         [UIView commitAnimations];
         _label.hidden = NO;
         _titleName.text = @"注意事项";
-        _contentView.text = @"请在此处填写注意事项";
+        _contentView.text = _remark?_remark:@"请在此处填写注意事项";
         k = 3;
     }
 }
@@ -366,10 +371,13 @@
     if (k == 0)
     {
         _YaoNameLabel.text = [NSString stringWithFormat:@"药物名称：%@",_contentView.text];
+        _yaowuname = _contentView.text.trimString;
     }
     else if(k == 1)
     {
         _YaoNumLabel.text = [NSString stringWithFormat:@"服用剂量：%@",_contentView.text];
+        _jiliang = _contentView.text.trimString;
+
     }
     else if(k == 2)
     {
@@ -402,11 +410,16 @@
         }
         
         _YaoTimeLabel.text = [NSString stringWithFormat:@"服药时间：%@ %@ %@",szao,szhong,swan];
+        
+        //药物名称
+        _fuyaoTime =  [NSString stringWithFormat:@"%@%@%@",szao,szhong,swan];
+
     }
     
     else if(k == 3)
     {
         _YaoCareLabel.text = [NSString stringWithFormat:@"注意事项：%@",_contentView.text];
+        _remark = _contentView.text.trimString;
     }
     [self btnBack];
 }
@@ -414,15 +427,64 @@
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    _contentView.text = @"";
-    
-    
-    return YES;
-    
+   
+    if ([_contentView.text isEqualToString:@"请在此处填写注意事项"] ||
+        [_contentView.text isEqualToString:@"填写各个药物的服用剂量，多个用逗号隔开"] ||
+        [_contentView.text isEqualToString:@"填写药物名称，多个用逗号隔开"]) {
+         _contentView.text = @"";
+    }
+      return YES;
 }
 #pragma mark-----发送数据
 -(void)sendinfo
 {
+    
+    MyLog(@"%@-%@---%@-----%@",_yaowuname,_jiliang,_fuyaoTime,_remark);
+    
+    NSString *msg = nil;
+    if (_yaowuname.isEmptyString || _yaowuname==nil) {
+        msg = @"药物名称不能为空";
+        [SVProgressHUD showErrorWithStatus:msg duration:1];
+        return;
+    }
+    if (_jiliang.isEmptyString || _jiliang==nil) {
+        msg = @"药物剂量不能为空";
+        [SVProgressHUD showErrorWithStatus:msg duration:1];
+        return;
+    }
+    if (_fuyaoTime.isEmptyString || _fuyaoTime==nil) {
+        msg = @"服药时间不能为空";
+        [SVProgressHUD showErrorWithStatus:msg duration:1];
+        return;
+    }
+    if (_remark.isEmptyString || _remark==nil) {
+        msg = @"注意事项不能为空";
+        [SVProgressHUD showErrorWithStatus:msg duration:1];
+        return;
+    }
+   
+    
+    //发送数据
+    [SVProgressHUD showWithStatus:@"正在添加服药单" maskType:SVProgressHUDMaskTypeBlack];
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"yaowuname":_yaowuname,
+                             @"jiliang":_jiliang,
+                             @"fuyaotime":_fuyaoTime,
+                             @"remark":_remark};
+    [HttpTool getWithPath:@"addfuyao" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0) {
+            
+            [SVProgressHUD dismiss];
+            [self popController:@"ZJFuyaodanViewController" withSel:@selector(initData) withObj:nil];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
     NSLog(@"发送信息");
     
 }

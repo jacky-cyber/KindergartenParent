@@ -7,7 +7,7 @@
 //
 
 #import "ZJFuyaodanDetailViewController.h"
-
+#import "ZJFuYaoDanModel.h"
 @interface ZJFuyaodanDetailViewController ()
 {
     UIScrollView *_scrollView;
@@ -15,6 +15,8 @@
     UILabel *_YaoNum;
     UILabel *_YaoTime;
     UILabel *_YaoCare;
+    
+    ZJFuYaoDanModel *_model;
 }
 @end
 
@@ -39,20 +41,24 @@
     if (ISIOS7) {
         height -=20;
     }
+    // 初始化数据
+    _model = self.userInfo;
+    
     //学生信息
     
-    NSString *stuName = @"学生姓名：小果果";
-    NSString *className = @"所在班级：海盗班";
-    NSString *parName = @"家长姓名：果断断";
-    NSString *teleCall = @"联系方式：121212121212";
+    NSString *stuName = [NSString stringWithFormat:@"学生姓名：%@",_model.uname];
+    NSString *className = [NSString stringWithFormat:@"所在班级：%@",_model.uclasses];
+    NSString *parName = [NSString stringWithFormat:@"家长姓名：%@",_model.uparentname];
+    NSString *teleCall = [NSString stringWithFormat:@"联系方式：%@",_model.utel];
+    
     NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,className,parName,teleCall, nil];
     
     
     //药物数据 string
-    NSString *YaoWuName = @"九胃泰葵药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花药物名称: 九胃泰葵花葵花花葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵花";
-    NSString *YaoWuNum = @"葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃泰葵花胃康灵，小儿感冒灵，九九胃";
-    NSString *YaoTime = @"早，中，晚";
-    NSString *YaoCare = @"生态制剂（整肠生、金双歧、妈咪爱、培菲康等）与抗生素合用时，注意应间隔两小时服用，避免药效丧失。";
+    NSString *YaoWuName = _model.yaowuname;
+    NSString *YaoTime = _model.fuyaotime;
+    NSString *YaoCare = _model.remark;
+
     
     
     //导航
@@ -77,7 +83,7 @@
     
     //左边时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 3, 80, 25)];
-    timeLabel.text = @"2014-06-21";
+    timeLabel.text = [_model.time substringToIndex:10];
     timeLabel.font = kFont13;
     [label1 addSubview:timeLabel];
     
@@ -85,15 +91,26 @@
     //早
     UIImageView *imageV1 = [[UIImageView alloc]initWithFrame:CGRectMake(120+0*60,5, 20, 20)];
     
+    if ([self isRang:@"早"]) {
+        imageV1.alpha = 0;
+    }
+    
     imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
     [label1 addSubview:imageV1];
     //中
     UIImageView *imageV2 = [[UIImageView alloc]initWithFrame:CGRectMake(120+1*60, 5, 20, 20)];
+    if ([self isRang:@"中"]) {
+        imageV2.alpha = 0;
+    }
     
     imageV2.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:1]]];
     [label1 addSubview:imageV2];
     //晚
     UIImageView *imageV3 = [[UIImageView alloc]initWithFrame:CGRectMake(120+2*60,5, 20, 20)];
+    if ([self isRang:@"晚"]) {
+        imageV3.alpha = 0;
+    }
+
     if (ISIOS7)
     {
         imageV1.frame = CGRectMake(120+0*60,5, 25, 25);
@@ -158,11 +175,11 @@
     [_scrollView addSubview:_YaoName];
     
     //服用剂量
-    UIImageView *huixian1 = [[UIImageView alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+175, 260, 1)];
+    UIImageView *huixian1 = [[UIImageView alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+176, 260, 1)];
     huixian1.image = [UIImage imageNamed:@"huitiao_10"];
     [_scrollView addSubview:huixian1];
     
-    UILabel *YaoNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+175, 60, 40)];
+    UILabel *YaoNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+177, 60, 40)];
     YaoNumLabel.text = @"服用剂量:";
     YaoNumLabel.font = kFont13;
     YaoNumLabel.backgroundColor = [UIColor clearColor];
@@ -170,16 +187,16 @@
     
     _YaoNum = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     [_YaoNum setNumberOfLines:0];
-    _YaoNum.text = YaoWuNum;
+    _YaoNum.text = _model.jiliang;
     _YaoNum.font = kFont13;
     _YaoNum.backgroundColor = [UIColor clearColor];
-    CGSize lablesize2 = [YaoWuNum sizeWithFont:font constrainedToSize:size];
-    [_YaoNum setFrame:CGRectMake(100, _YaoName.frame.size.height+185, lablesize2.width, lablesize2.height)];
+    CGSize lablesize2 = [_model.jiliang sizeWithFont:font constrainedToSize:size];
+    [_YaoNum setFrame:CGRectMake(100, _YaoName.frame.size.height+187, lablesize2.width, lablesize2.height)];
     [_scrollView addSubview:_YaoNum];
     
     //服药时间
     
-    UIImageView *huixian2 = [[UIImageView alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+_YaoNum.frame.size.height+188, 260, 1)];
+    UIImageView *huixian2 = [[UIImageView alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+_YaoNum.frame.size.height+189, 260, 1)];
     huixian2.image = [UIImage imageNamed:@"huitiao_10"];
     [_scrollView addSubview:huixian2];
     
@@ -195,11 +212,11 @@
     _YaoTime.backgroundColor = [UIColor clearColor];
     [_scrollView addSubview:_YaoTime];
     //注意事项
-    UIImageView *huixian3 = [[UIImageView alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+185, 260, 1)];
+    UIImageView *huixian3 = [[UIImageView alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+180, 260, 1)];
     huixian3.image = [UIImage imageNamed:@"huitiao_10"];
     [_scrollView addSubview:huixian3];
     
-    UILabel *YaoCareLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+185, 60, 40)];
+    UILabel *YaoCareLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+182, 60, 40)];
     YaoCareLabel.text = @"注意事项:";
     YaoCareLabel.font = kFont13;
     YaoCareLabel.backgroundColor = [UIColor clearColor];
@@ -218,20 +235,20 @@
     imageViewU.image = [UIImage imageNamed:@"tiao_03"];
     [_scrollView addSubview:imageViewU];
     
-    UIImageView *imageViewD = [[UIImageView alloc]initWithFrame:CGRectMake(20,  _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+195, 280, 1)];
+    UIImageView *imageViewD = [[UIImageView alloc]initWithFrame:CGRectMake(20,  _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+200, 280, 1)];
     imageViewD.image = [UIImage imageNamed:@"tiao_03"];
     [_scrollView addSubview:imageViewD];
     
-    UIImageView *imageViewL = [[UIImageView alloc]initWithFrame:CGRectMake(20, 19, 1, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+175)];
+    UIImageView *imageViewL = [[UIImageView alloc]initWithFrame:CGRectMake(20, 19, 1, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+181)];
     imageViewL.image = [UIImage imageNamed:@"tiao_03"];
     [_scrollView addSubview:imageViewL];
     
-    UIImageView *imageViewR = [[UIImageView alloc]initWithFrame:CGRectMake(300, 19, 1, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+175)];
+    UIImageView *imageViewR = [[UIImageView alloc]initWithFrame:CGRectMake(300, 19, 1, _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+181)];
     imageViewR.image = [UIImage imageNamed:@"tiao_03"];
     [_scrollView addSubview:imageViewR];
     
     CGFloat H = _YaoName.frame.size.height+_YaoNum.frame.size.height+_YaoTime.frame.size.height+_YaoCare.frame.size.height+175 +19;
-    if (H < 460)
+    if (H < 300)
     {
         _scrollView.scrollEnabled = NO;
     }
@@ -242,6 +259,20 @@
     }
     
 }
+
+#pragma mark 看是否包含
+-(BOOL)isRang:(NSString*)str
+{
+    BOOL flag = false;
+    //
+    NSRange rang = [_model.fuyaotime rangeOfString:str];//判断字符串是否包含
+    if (rang.length == 0)//不包含
+    {
+        flag = true;
+    }
+    return flag;
+}
+
 #pragma mark-----发送数据
 -(void)sendinfoAgain
 {

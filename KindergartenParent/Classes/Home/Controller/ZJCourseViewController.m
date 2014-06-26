@@ -35,6 +35,12 @@
     _tableView.dataSource = self;
     //_tableView.sectionHeaderHeight = 30;
     _tableView.sectionFooterHeight = 0;
+    
+    //设置背景，ios6里面不然就很乱
+    UIView *backView = [[UIView alloc] init];
+    backView.backgroundColor = [UIColor whiteColor];
+    [_tableView setBackgroundView:backView];
+    
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.rowHeight = [ZJCookBookTableViewCell cellHeight];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -93,7 +99,10 @@
 //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
 //    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    //设置背景，ios6里面不然就很乱
+    UIView *backView = [[UIView alloc] init];
+    [cell setBackgroundView:backView];
+
     
     ZJCourseModel *cModel = _dataArr[indexPath.row];
     //时间段

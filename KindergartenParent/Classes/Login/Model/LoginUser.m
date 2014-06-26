@@ -16,7 +16,9 @@
 #define kNickName @"nickName"
 #define kClasses @"classes"
 #define kProfileImg @"profileImg"
-
+#define kParentName @"parentName"
+#define kTel @"tel"
+#define kName @"name"
 @implementation LoginUser
 single_implementation(LoginUser)
 
@@ -51,6 +53,15 @@ single_implementation(LoginUser)
 {
     return [self loadStringFromDefaultsWithKey:kProfileImg];
 }
+-(NSString *)parentname{
+    return [self loadStringFromDefaultsWithKey:kParentName];
+}
+-(NSString *)tel{
+    return [self loadStringFromDefaultsWithKey:kTel];
+}
+-(NSString *)name{
+    return [self loadStringFromDefaultsWithKey:kName];
+}
 
 -(void)setUserName:(NSString *)userName
 {
@@ -76,7 +87,18 @@ single_implementation(LoginUser)
 {
     [profilImg saveToNSDefaultsWithKey:kProfileImg];
 }
-
+-(void)setTel:(NSString *)tel
+{
+    [tel saveToNSDefaultsWithKey:kTel];
+}
+-(void)setParentname:(NSString *)parentname
+{
+    [parentname saveToNSDefaultsWithKey:kParentName];
+}
+-(void)setName:(NSString *)name
+{
+    [name saveToNSDefaultsWithKey:kName];
+}
 -(BOOL)isLogin
 {
     BOOL flag = YES;
@@ -94,6 +116,10 @@ single_implementation(LoginUser)
 {
     self.userName = userName;
     self.password = pwd;
+}
+
+-(NSString *)description{
+    return [NSString stringWithFormat:@"用户姓名:%@,名称:%@,班级:%@,电话：%@，家长姓名：%@",self.userId,self.name,self.classes,self.tel,self.parentname];
 }
 
 -(void)loginout

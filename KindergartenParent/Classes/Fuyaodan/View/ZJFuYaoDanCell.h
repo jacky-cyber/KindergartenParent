@@ -10,6 +10,6 @@
 
 @class ZJFuYaoDanModel;
 @interface ZJFuYaoDanCell : UITableViewCell
-@property (nonatomic,strong) ZJFuYaoDanModel *model;
+@property (nonatomic,strong) ZJFuYaoDanModel *fydmodel;
 
 @end

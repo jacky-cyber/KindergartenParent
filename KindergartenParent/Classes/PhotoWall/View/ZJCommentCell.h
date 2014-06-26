@@ -13,6 +13,7 @@
 
 @property(nonatomic,strong) ZJCommentModel *cmmodel;
 @property(nonatomic,strong) UIView *bgView;
+@property(nonatomic,assign) BOOL isLast;//判断是否是最后一行，就不要最底部那个分割线
 +(NSString*)ID;
 
 -(CGFloat)cellH;

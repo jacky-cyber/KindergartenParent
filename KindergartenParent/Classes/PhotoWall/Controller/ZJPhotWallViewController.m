@@ -42,7 +42,26 @@
     self.navigationController.navigationItem.rightBarButtonItem = nil;
     
     
+    //加载数据
+    [self initData];
 }
+
+-(void)initData{
+    
+//    classesid	int	班级id
+//    catid	分类	分类id
+//    username	String	看自己
+//    page	int	页数
+    
+    NSDictionary *params = @{@"classesid":@"LS13436871757",@"catid":@"1",@"page":@"1"};
+    
+    [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+    } failure:^(NSError *error) {
+        MyLog(@"%@",error.debugDescription);
+    }];
+}
+
 
 #define kMargin 10
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -129,7 +148,7 @@
 }
 
 -(void)commentAction{
-    [self pushController:[ZJCommentListViewController class] withInfo:nil withTitle:@"评论"];
+    [self pushController:[ZJCommentListViewController class] withInfo:@"1" withTitle:@"评论"];
 }
 
 -(void)praiseAction
