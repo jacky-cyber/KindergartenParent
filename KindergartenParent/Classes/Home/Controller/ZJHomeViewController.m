@@ -96,7 +96,7 @@
     
     
     
-    for (int i = 1; i<12; i++) {
+    for (int i = 1; i<=12; i++) {
         ZJHomeModel *model1 = [[ZJHomeModel alloc] init];
         model1.nid = @"110";
         model1.type = [NSString stringWithFormat:@"%d",i];
@@ -271,7 +271,7 @@
     }else if ([model.type isEqualToString:@"3"]) {
         [self pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:@"本周食谱"];
     }else if ([model.type isEqualToString:@"11"]) {
-        [self pushController:[ZJSignInViewController class] withInfo:nil withTitle:@"详情"];
+        [self pushController:[ZJSignInViewController class] withInfo:nil withTitle:@"未到原因"];
     }else if([model.type isEqualToString:@"12"]){
        [self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"月评"];
     }else if([model.type isEqualToString:@"6"]){

@@ -9,6 +9,9 @@
 #import "ZJMonthCommentViewController.h"
 
 @interface ZJMonthCommentViewController ()<UITextViewDelegate>
+{
+    NSMutableArray *_starArr;//存放星星数目
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextView *commentTextView;
 @property (weak, nonatomic) IBOutlet UITextView *expectTextView;
@@ -23,8 +26,55 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _scrollView.contentSize = CGSizeMake(320, 480);
+    
+    //存放星星
+    _starArr = [NSMutableArray array];
+    for (int i =1; i<=3; i++) {
+        [_starArr addObject:@(i)];
+    }
 }
-- (IBAction)starAction:(id)sender {
+
+- (IBAction)starAction:(UIButton*)sender {
+    
+    UIImage *garyImg = [UIImage imageNamed:@"star"];
+    UIImage *hImg = [UIImage imageNamed:@"star_h"];
+    
+    NSLog(@"%d",sender.tag);
+    
+    
+    //是否包含星星
+    if (![_starArr containsObject:@(sender.tag)]) {
+        for (int i = 1 ; i <=5; i++) {
+            if (sender.tag >=i && ![_starArr containsObject:@(i)]) {
+                [_starArr addObject:@(i)];
+            }
+        }
+        
+    }else{
+        for (int i = 1 ; i <=5; i++) {
+            if (sender.tag <i) {
+                [_starArr removeObject:@(i)];
+            }
+        }
+    }
+    
+    
+    //UIButton *btn = (UIButton*)[self.scrollView viewWithTag:5];
+    
+    for (int i = 1; i<=5; i++) {
+        UIButton *btn = (UIButton*)[self.scrollView viewWithTag:i];
+        if ([_starArr containsObject:@(i)]) {
+             [btn setImage:hImg forState:UIControlStateNormal];
+        }else{
+             [btn setImage:garyImg forState:UIControlStateNormal];
+        }
+       
+       
+    }
+    
+    MyLog(@"%@",_starArr);
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,6 +110,37 @@
 }
 
 - (IBAction)sendAction:(id)sender {
+    NSString *commentStr = _commentTextView.text.trimString;
+    if (commentStr.isEmptyString || [commentStr isEqualToString:@"对教师的评语"]) {
+        [SVProgressHUD showErrorWithStatus:@"请填写对教师的评语" duration:1.0];
+        return;
+    }
+    
+    NSString *expectStr = _expectTextView.text.trimString;
+    if (expectStr.isEmptyString || [expectStr isEqualToString:@"对教师的期望"]) {
+        [SVProgressHUD showErrorWithStatus:@"请填写对教师的期望" duration:1.0];
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:@"正在评论" maskType:SVProgressHUDMaskTypeBlack];
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"comment":commentStr,
+                             @"expect":expectStr,
+                             @"teacherid":[LoginUser sharedLoginUser].teacherid,
+                             @"starnum":@(_starArr.count)};
+    [HttpTool getWithPath:@"addappraise" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"评论成功" duration:1];
+            
+                 }
+    } failure:^(NSError *error) {
+        
+    }];
+
+    
+    
 }
 - (IBAction)noSendAction:(id)sender {
 }

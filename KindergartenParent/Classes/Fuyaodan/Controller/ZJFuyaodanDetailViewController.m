@@ -8,7 +8,7 @@
 
 #import "ZJFuyaodanDetailViewController.h"
 #import "ZJFuYaoDanModel.h"
-@interface ZJFuyaodanDetailViewController ()
+@interface ZJFuyaodanDetailViewController ()<UIAlertViewDelegate>
 {
     UIScrollView *_scrollView;
     UILabel *_YaoName;
@@ -67,11 +67,15 @@
     btnR.frame = CGRectMake(0, 4, 80, 25);
     [btnR addTarget:self action:@selector(sendinfoAgain) forControlEvents:UIControlEventTouchUpInside];
     
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
     [btnR setTitle:@"再加一天" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
     UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
     self.navigationItem.rightBarButtonItem = ItemR;
     
-    //服药单详情
+    //服药单详情33,182,126
     
     _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     _scrollView.showsVerticalScrollIndicator = NO;
@@ -276,9 +280,48 @@
 #pragma mark-----发送数据
 -(void)sendinfoAgain
 {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确定再添加一天" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    [alert show];
+    return;
+    
     NSLog(@"发送信息");
     
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    MyLog(@"%d",buttonIndex);
+    if (buttonIndex == 1) {
+        NSString *yaoname = _YaoName.text;//名称
+        NSString *jiliang = _YaoNum.text.trimString;//剂量
+        NSString *time    = _YaoTime.text.trimString;//服药时间
+        NSString *remark  = _YaoCare.text.trimString;//注意事项
+        
+        
+        //发送数据
+        [SVProgressHUD showWithStatus:@"正在添加服药单" maskType:SVProgressHUDMaskTypeBlack];
+        NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                                 @"yaowuname":yaoname,
+                                 @"jiliang":jiliang,
+                                 @"fuyaotime":time,
+                                 @"remark":remark};
+        [HttpTool getWithPath:@"addfuyao" params:params success:^(id JSON) {
+            MyLog(@"%@",JSON);
+            if ([JSON[@"code"] intValue] == 0) {
+                [SVProgressHUD dismiss];
+                [self popController:@"ZJFuyaodanViewController" withSel:@selector(initData:) withObj:@(true)];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

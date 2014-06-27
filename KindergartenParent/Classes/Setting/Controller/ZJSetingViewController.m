@@ -72,8 +72,11 @@
     cell.titleLb.text = _dataArr[indexPath.row];
   
     if (indexPath.row ==0) {
-        cell.notifiStatus.alpha = 1;
-        [cell.notifiStatus addTarget:self action:@selector(upStatusAction:) forControlEvents:UIControlEventValueChanged];
+        UISwitch *swh = [[UISwitch alloc] init];
+        swh.frame = CGRectMake(W(cell.bgView)-W(swh)-10, 10, 50, H(cell.bgView));
+        [swh setOn:YES];
+        [cell.bgView addSubview:swh];
+        [swh addTarget:self action:@selector(upStatusAction:) forControlEvents:UIControlEventValueChanged];
     }else if (indexPath.row == 3){
         cell.versionLabel.alpha = 1;
     }

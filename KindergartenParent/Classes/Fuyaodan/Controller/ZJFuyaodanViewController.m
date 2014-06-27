@@ -53,11 +53,11 @@
     
     
     //加载数据
-    [self initData];
+    [self initData:false];
     
 }
 
--(void)initData{
+-(void)initData:(BOOL)flag{
     
     
     [SVProgressHUD showWithStatus:@"正在加载服药单" maskType:SVProgressHUDMaskTypeBlack];
@@ -66,18 +66,24 @@
     [HttpTool getWithPath:@"fylist" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
+            
+            //这是添加服药单返回来的时候,先删除所有的
+            if (flag) {
+                [_dataArr removeAllObjects];
+            }
+            
             for (NSDictionary *dict in JSON[@"data"]) {
                 //将数据模型化
                 ZJFuYaoDanModel *model = [[ZJFuYaoDanModel alloc] init];
                 [model setKeyValues:dict];
+                
+               
                 [_dataArr addObject:model];
             }
             //重新刷新tableview
             [_tableView reloadData];
             
-            [SVProgressHUD dismiss];
-        
-            
+            [SVProgressHUD dismiss];        
         }
     } failure:^(NSError *error) {
         

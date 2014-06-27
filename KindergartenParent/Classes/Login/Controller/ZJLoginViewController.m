@@ -89,6 +89,8 @@
             [LoginUser sharedLoginUser].name = user.name;
             [LoginUser sharedLoginUser].parentname = user.parentname;
             [LoginUser sharedLoginUser].tel = user.tel;
+            [LoginUser sharedLoginUser].teacherid = user.teacherid;
+            [LoginUser sharedLoginUser].kindergarten = user.kindergarten;
             
             MyLog(@"%@",[LoginUser sharedLoginUser].description);
             

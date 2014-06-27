@@ -25,4 +25,5 @@
 @property(nonatomic,copy) NSString *eat;
 @property(nonatomic,copy) NSString *drink;
 @property(nonatomic,copy) NSString *userid;
+@property(nonatomic,copy) NSString *createtime;
 @end

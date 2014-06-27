@@ -30,7 +30,11 @@
     
     
     // Do any additional setup after loading the view from its nib.
-    UIImage *bgImage = [UIImage imageNamed:@"aboutme"];
+    
+    UIImage *bgImage = [UIImage imageNamed:@"about_me"];
+    if (iPhone5) {
+        bgImage = [UIImage imageNamed:@"aboutme"];
+    }
     self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
 
 }

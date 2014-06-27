@@ -36,6 +36,6 @@
 #define kScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreenWidth [[UIScreen mainScreen] bounds].size.width
 
-#define kBaseUrl @"http://192.168.1.99:8888/"
+#define kBaseUrl @"http://182.18.23.244:8080/"
 
 

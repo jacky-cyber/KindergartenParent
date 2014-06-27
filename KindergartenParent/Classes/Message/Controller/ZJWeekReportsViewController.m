@@ -51,6 +51,23 @@
     imageView.image = [UIImage imageNamed:@"weekReport_bg"];
     [_scrollView addSubview:imageView];
     
+    //添加标题
+    
+    NSString *titleStr = [NSString stringWithFormat:@"%@周报",[LoginUser sharedLoginUser].kindergarten];
+    
+    //UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, W(imageView), H(imageView)/2)];
+    UILabel *titleLabel = [ZJUIMethods creatLabel:titleStr frame:CGRectMake(0, 0, W(imageView), H(imageView)/2) font:nil textColor:[UIColor whiteColor]];
+    titleLabel.text = [NSString stringWithFormat:@"%@周报",[LoginUser sharedLoginUser].kindergarten];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    [imageView addSubview:titleLabel];
+    
+    //添加标题
+     UILabel *timeLabel = [ZJUIMethods creatLabel:_model.createtime frame:CGRectMake(0,H(imageView)/2, W(imageView), H(imageView)/2) font:nil textColor:[UIColor whiteColor]];
+    timeLabel.backgroundColor = [UIColor clearColor];
+    timeLabel.textAlignment = NSTextAlignmentCenter;
+    [imageView addSubview:timeLabel];
+
     
     ZJWeekReportView *jiankan = [[ZJWeekReportView alloc] init];
     jiankan.frame = CGRectMake(20, 110, 280, 50);

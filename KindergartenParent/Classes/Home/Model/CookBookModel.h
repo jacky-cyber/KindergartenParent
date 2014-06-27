@@ -10,4 +10,8 @@
 
 @interface CookBookModel : NSObject
 
+@property(copy,nonatomic) NSString *breakfast;
+@property(copy,nonatomic) NSString *lunch;
+@property(copy,nonatomic) NSString *supper;
+@property(copy,nonatomic) NSString *jiacan;
 @end

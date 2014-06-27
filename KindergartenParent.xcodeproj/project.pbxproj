@@ -179,6 +179,7 @@
 		4B24808919590DC900C520A9 /* zhong1_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FEA19590DC900C520A9 /* zhong1_09@2x.png */; };
 		4B24808A19590DC900C520A9 /* zhong_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FEB19590DC900C520A9 /* zhong_09@2x.png */; };
 		4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B24808D1959796100C520A9 /* ZJHomeModel.m */; };
+		4B4115DC195D05840048446C /* readme in Resources */ = {isa = PBXBuildFile; fileRef = 4B4115DB195D05840048446C /* readme */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -472,6 +473,7 @@
 		4B247FEB19590DC900C520A9 /* zhong_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhong_09@2x.png"; sourceTree = "<group>"; };
 		4B24808C1959796100C520A9 /* ZJHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeModel.h; sourceTree = "<group>"; };
 		4B24808D1959796100C520A9 /* ZJHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeModel.m; sourceTree = "<group>"; };
+		4B4115DB195D05840048446C /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -535,6 +537,7 @@
 				4B247FB219590DC900C520A9 /* Images.xcassets */,
 				4B247FB319590DC900C520A9 /* Resouce */,
 				4B247E8919590D9200C520A9 /* Supporting Files */,
+				4B4115DB195D05840048446C /* readme */,
 			);
 			path = KindergartenParent;
 			sourceTree = "<group>";
@@ -1339,6 +1342,7 @@
 				4B24806B19590DC900C520A9 /* fasong_03.png in Resources */,
 				4B24806619590DC900C520A9 /* touxiang@2x.png in Resources */,
 				4B24806219590DC900C520A9 /* jiazhangming@2x.png in Resources */,
+				4B4115DC195D05840048446C /* readme in Resources */,
 				4B24807819590DC900C520A9 /* img05@2x.png in Resources */,
 				4B247FF519590DC900C520A9 /* ZJEditPwdViewController.xib in Resources */,
 				4B24805C19590DC900C520A9 /* beijing@2x.png in Resources */,

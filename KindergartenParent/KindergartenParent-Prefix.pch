@@ -25,6 +25,7 @@
 #import "ZJUserInfoModel.h"
 #import "ZJUIMethods.h"
 #import "RTLabel.h"
+#import "UIImage+ZJ.h"
 #endif
 
 #import <SystemConfiguration/SystemConfiguration.h>

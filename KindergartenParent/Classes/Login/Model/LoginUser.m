@@ -19,6 +19,8 @@
 #define kParentName @"parentName"
 #define kTel @"tel"
 #define kName @"name"
+#define kTeacherId @"teacherid"
+#define kKindergarten @"kindergarten"
 @implementation LoginUser
 single_implementation(LoginUser)
 
@@ -62,7 +64,12 @@ single_implementation(LoginUser)
 -(NSString *)name{
     return [self loadStringFromDefaultsWithKey:kName];
 }
-
+-(NSString *)teacherid{
+    return [self loadStringFromDefaultsWithKey:kTeacherId];
+}
+-(NSString *)kindergarten{
+    return  [self loadStringFromDefaultsWithKey:kKindergarten];
+}
 -(void)setUserName:(NSString *)userName
 {
     [userName saveToNSDefaultsWithKey:kUserName];
@@ -99,6 +106,14 @@ single_implementation(LoginUser)
 {
     [name saveToNSDefaultsWithKey:kName];
 }
+-(void)setTeacherid:(NSString *)teacherid
+{
+    [teacherid saveToNSDefaultsWithKey:kTeacherId];
+}
+-(void)setKindergarten:(NSString *)kindergarten
+{
+    [kindergarten saveToNSDefaultsWithKey:kKindergarten];
+}
 -(BOOL)isLogin
 {
     BOOL flag = YES;
@@ -119,7 +134,7 @@ single_implementation(LoginUser)
 }
 
 -(NSString *)description{
-    return [NSString stringWithFormat:@"用户姓名:%@,名称:%@,班级:%@,电话：%@，家长姓名：%@",self.userId,self.name,self.classes,self.tel,self.parentname];
+    return [NSString stringWithFormat:@"用户姓名:%@,名称:%@,班级:%@,电话：%@，家长姓名：%@,幼儿园%@",self.userId,self.name,self.classes,self.tel,self.parentname,self.kindergarten];
 }
 
 -(void)loginout
