@@ -50,11 +50,13 @@
 }
 -(void)ladData
 {
-//    [HttpTool getWithPath:@"recipe" params:@{@"id":@1} success:^(id JSON) {
-//        MyLog(@"%@",JSON);
-//    } failure:^(NSError *error) {
-//        MyLog(@"%@",error.localizedDescription);
-//    }];
+    
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName};
+    [HttpTool getWithPath:@"course" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+    } failure:^(NSError *error) {
+        MyLog(@"%@",error.localizedDescription);
+    }];
     _dataArr = [NSMutableArray array];
     for (int i = 0; i<7; i++) {
         ZJCourseModel *cModel = [[ZJCourseModel alloc] init];

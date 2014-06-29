@@ -309,6 +309,7 @@
         [HttpTool getWithPath:@"addfuyao" params:params success:^(id JSON) {
             MyLog(@"%@",JSON);
             if ([JSON[@"code"] intValue] == 0) {
+                
                 [SVProgressHUD dismiss];
                 [self popController:@"ZJFuyaodanViewController" withSel:@selector(initData:) withObj:@(true)];
                 

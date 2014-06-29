@@ -98,9 +98,9 @@
     
     for (int i = 1; i<=12; i++) {
         ZJHomeModel *model1 = [[ZJHomeModel alloc] init];
-        model1.nid = @"110";
+        model1.nid = @"1";
         model1.type = [NSString stringWithFormat:@"%d",i];
-        model1.content = @"系统消息";
+        model1.content = @"这是消息内容";
         model1.createtime = @"2014-06-01 18:18:00";
         model1.createuid = @"123";
         [_oneDayData addObject:model1];
@@ -229,14 +229,64 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    
+    
     ZJHomeModel *model  = _oneDayData[indexPath.row];
+    //    通知类型
+    //    1	系统消息
+    //    2	幼儿园通知
+    //    3	本周食谱
+    //    4	每日一报
+    //    5	每周一报
+    //    6	医务室通知
+    //    7	荣誉榜
+    //    8	老师通知
+    //    9	生日提醒
+    //    10	活动通知
+    //    11	签到/签退
+    //    12	月评
+    
+    NSString *title = nil;
+    
+    if([model.type isEqualToString:@"1"]){
+        title = @"系统消息";
+    }else if([model.type isEqualToString:@"2"]){
+        title = @"幼儿园通知";
+    }else if([model.type isEqualToString:@"3"]){
+        title = @"本周食谱";
+    }else if([model.type isEqualToString:@"4"]){
+        title = @"每日一报";
+    }else if ([model.type isEqualToString:@"5"]) {
+        title = @"每周一报";
+    }else if([model.type isEqualToString:@"6"]){
+        title = @"医务室通知";
+    }else if([model.type isEqualToString:@"7"]){
+        title = @"荣誉榜";
+    }else if([model.type isEqualToString:@"8"]){
+        title = @"老师通知";
+    }else if([model.type isEqualToString:@"9"]){
+        title = @"生日提醒";
+    }else if([model.type isEqualToString:@"10"]){
+        title = @"活动信息";
+    }else if ([model.type isEqualToString:@"11"]) {
+        title = @"签到，签退";
+    }else if([model.type isEqualToString:@"12"]){
+        title = @"老师月评";
+    }
+    
+    
     
     NSString *typeImageName = [NSString stringWithFormat:@"type_%@",model.type];
     
     cell.typeImg.image = [UIImage imageNamed:typeImageName];
-    cell.titleLb.text = model.content;
-    cell.timeLb.text = @"一天前";
-    cell.contentLb.text = @"您好，你的孩子已经服药了，早上没有忘记吃药，请您放心，吃药了，吃了";
+    cell.titleLb.text = title;
+    
+    //格式化时间
+    TimeFormatTools *timetools  = [[TimeFormatTools alloc] init];
+    NSString *timeStr = [timetools timeToNow:model.createtime];
+    
+    cell.timeLb.text = timeStr;
+    cell.contentLb.text = model.content;
     return cell;
 }
 
@@ -267,25 +317,25 @@
 //    11	签到/签退
 //    12	月评
     if ([model.type isEqualToString:@"5"]) {
-        [self pushController:[ZJWeekReportsViewController class] withInfo:nil withTitle:@"每周一报"];
+        [self pushController:[ZJWeekReportsViewController class] withInfo:model.nid withTitle:@"每周一报"];
     }else if ([model.type isEqualToString:@"3"]) {
-        [self pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:@"本周食谱"];
+        [self pushController:[ZJCookBooksViewController class] withInfo:model.nid withTitle:@"本周食谱"];
     }else if ([model.type isEqualToString:@"11"]) {
-        [self pushController:[ZJSignInViewController class] withInfo:nil withTitle:@"未到原因"];
+        [self pushController:[ZJSignInViewController class] withInfo:model.nid withTitle:@"未到原因"];
     }else if([model.type isEqualToString:@"12"]){
-       [self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"月评"];
+       [self pushController:[ZJMonthCommentViewController class] withInfo:model withTitle:@"月评"];
     }else if([model.type isEqualToString:@"6"]){
-        [self pushController:[ZJDrugStatusController class] withInfo:nil withTitle:@"服药通知"];
+        [self pushController:[ZJDrugStatusController class] withInfo:model withTitle:@"服药通知"];
     }else if([model.type isEqualToString:@"4"]){
-        [self pushController:[ZJDayReportViewController class] withInfo:nil withTitle:@"每日一报"];
+        [self pushController:[ZJDayReportViewController class] withInfo:model.nid withTitle:@"每日一报"];
     }else if([model.type isEqualToString:@"7"]){
-        [self pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
+        [self pushController:[ZJHonorViewController class] withInfo:model.nid withTitle:@"荣誉榜"];
     }else if([model.type isEqualToString:@"1"]){
-        [self pushController:[ZJSystemMsgViewController class] withInfo:nil withTitle:@"系统通知"];
+        [self pushController:[ZJSystemMsgViewController class] withInfo:model withTitle:@"系统通知"];
     }else if([model.type isEqualToString:@"10"]){
-        [self pushController:[ZJActivityViewController class] withInfo:nil withTitle:@"通知详情"];
+        [self pushController:[ZJActivityViewController class] withInfo:model withTitle:@"通知详情"];
     }else if([model.type isEqualToString:@"2"]){
-        [self pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"通知详情"];
+        [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"通知详情"];
     }
 
 }

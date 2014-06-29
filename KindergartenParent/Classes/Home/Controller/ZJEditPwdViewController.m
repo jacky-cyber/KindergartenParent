@@ -26,7 +26,7 @@
     //导航
     
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnR.frame = CGRectMake(0, 4, 80, 25);
+    btnR.frame = CGRectMake(0, 4, 50, 25);
     [btnR addTarget:self action:@selector(sendAction) forControlEvents:UIControlEventTouchUpInside];
     
     [btnR setImage:[UIImage imageNamed:@"editpwd_save"] forState:UIControlStateNormal];
@@ -92,7 +92,7 @@
             [SVProgressHUD showErrorWithStatus:@"密码修改错误，请检查您旧密码是否真确" duration:1];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error.description);
+      //  NSLog(@"%@",error.description);
     }];
 }
 

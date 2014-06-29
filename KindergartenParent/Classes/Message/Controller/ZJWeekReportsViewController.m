@@ -200,13 +200,13 @@
     //    @property(nonatomic,strong) NSString *jiayuangongyu;
     //    @property(nonatomic,strong) NSString *userid;
     [SVProgressHUD showWithStatus:@"加载数据中" maskType:SVProgressHUDMaskTypeBlack];
-    [HttpTool getWithPath:@"weekreport" params:@{@"id":@"1"} success:^(id JSON) {
+    [HttpTool getWithPath:@"weekreport" params:@{@"id":self.userInfo} success:^(id JSON) {
         ///NSLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] ==0) {
             [_model setKeyValues:JSON[@"data"]];
             //加载界面
             [self ldView];
-            [SVProgressHUD showSuccessWithStatus:@"请求成功" duration:1];
+            kPdismiss;
         }else{
             [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
         }

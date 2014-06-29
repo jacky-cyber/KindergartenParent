@@ -23,6 +23,9 @@
 // 内容标题
 @property (strong, nonatomic) NSString *contentTitle;
 // 内容标签
-@property (weak, nonatomic) NSString *contentLable;
+@property (copy, nonatomic) NSString *contentLable;
+
+//修改的参数
+@property(copy,nonatomic) NSString *param;
 
 @end

@@ -74,7 +74,7 @@
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
             [_userModel setKeyValues:JSON[@"data"]];
-            [SVProgressHUD showSuccessWithStatus:@"加载成功" duration:1];
+            kPdismiss;
             [self addSubViews];
         }
     } failure:^(NSError *error) {
@@ -236,6 +236,24 @@
         controller.contentTitle = sender.titleLabel.text;
         // 2. 传递内容标签
        controller.contentLable = _titleArr[sender.tag-1];
+        
+        //通过点击的tag值确定要修改的参数
+        
+//         _titleArr = @[@"昵       称",@"学生姓名",@"家长姓名",@"联系电话",@"家庭住址",@"过  敏  史",@"备注信息",@"修改密码"];
+        NSString *param = nil;
+        
+        if (sender.tag == 1) {
+            param = @"nickname";
+        }else if(sender.tag  == 5){
+            param = @"address";
+        }else if(sender.tag  == 6){
+            param = @"guominshi";
+        }else if(sender.tag  == 7){
+            param = @"remark";
+        }
+        controller.param = param;
+        
+        
         // 3. 设置代理
         controller.delegate = self;
         [self.navigationController pushViewController:controller animated:YES];

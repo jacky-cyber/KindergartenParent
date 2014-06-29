@@ -154,6 +154,16 @@
 -(void)praiseAction
 {
     
+    NSDictionary *params = @{@"pwallid":@"1",
+                             @"userName":[LoginUser sharedLoginUser].userName,
+                             @"content":@""
+                             };
+    
+    [HttpTool getWithPath:@"praise" params:params success:^(id JSON) {
+        NSLog(@"%@",JSON);
+    } failure:^(NSError *error) {
+        
+    }];
 
 }
 -(void)cateAction
@@ -255,7 +265,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 204;
+    return 150;
 }
 
 @end

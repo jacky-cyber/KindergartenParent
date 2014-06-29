@@ -478,10 +478,10 @@
             [SVProgressHUD dismiss];
             [self popController:@"ZJFuyaodanViewController" withSel:@selector(initData:) withObj:@(true)];
             
-            [self.navigationController popViewControllerAnimated:YES];
+            //[self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
-        
+        kPdismiss;
     }];
     
     

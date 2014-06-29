@@ -7,7 +7,7 @@
 //
 
 #import "ZJDrugStatusController.h"
-
+#import "ZJHomeModel.h"
 @interface ZJDrugStatusController ()
 @property (weak, nonatomic) IBOutlet UILabel *detialLabel;
 @property (weak, nonatomic) IBOutlet UILabel *publishTimeLabel;
@@ -21,13 +21,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    ZJHomeModel *model = self.userInfo;
+    
     TimeFormatTools *timeTool = [[TimeFormatTools alloc] init];
-    _publishTimeLabel.text = [timeTool timeToNow:@"2014-06-13 13:23:00"];
+    _publishTimeLabel.text = [timeTool timeToNow:model.createtime];
     
     
     UILabel *label = [[UILabel alloc] init];
     label.numberOfLines = 0;
-    NSString *drugStr = @"您的孩子已经服药了，哈哈，请放心吧，真的，放心吧，我是不会骗你的，骗你也是可能的";
+    NSString *drugStr = model.content;
 
     CGFloat height = [drugStr getHeightByWidth:280 font:kFont(14)];
     label.font = kFont(14);

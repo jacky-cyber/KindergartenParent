@@ -34,9 +34,31 @@
     self.navigationItem.rightBarButtonItem = ItemR;
     
 }
+#pragma  makr 提交未到原因
 -(void)sendAction
 {
     NSString *causeStr = self.causeTextView.text.trimString;
+    [_causeTextView resignFirstResponder];
+    
+   
+    kPBlack(@"正在提交未到原因");
+    NSDictionary *params = @{@"content":causeStr,
+                             @"username":[LoginUser sharedLoginUser].userName,
+                             @"notifid":self.userInfo};
+    
+    [HttpTool getWithPath:@"reply" params:params success:^(id JSON) {
+        if ([JSON[@"code"] intValue] == 0) {
+            kPS(@"未到原因提交成功", 1);
+            
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            kPE(@"系统异常", 1)
+        }
+    } failure:^(NSError *error) {
+      //  NSLog(@"%@",error.description);
+    }];
+
     
     MyLog(@"%@",causeStr);
 }

@@ -12,6 +12,7 @@
 {
     UITextField *_textField;
     UITextView  *_textView;
+    
 }
 @end
 
@@ -28,7 +29,7 @@
     
     //导航按钮
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnR.frame = CGRectMake(0, 4, 80, 25);
+    btnR.frame = CGRectMake(0, 4, 50, 25);
     [btnR addTarget:self action:@selector(updateAction) forControlEvents:UIControlEventTouchUpInside];
     
     [btnR setImage:[UIImage imageNamed:@"editpwd_save"] forState:UIControlStateNormal];
@@ -73,6 +74,27 @@
     //[_delegate editUserInfoViewControllerDidFinished];
     //相应代理
     [self.delegate performSelector:@selector(editUserInfoViewControllerDidFinished:withLabel:) withObject:contentStr withObject:_contentLable];
+    
+    
+    
+    [SVProgressHUD showWithStatus:@"数据加载" maskType:SVProgressHUDMaskTypeBlack];
+    
+    NSDictionary *params = @{@"role":@"0",
+                             _param:contentStr,
+                             @"username":[LoginUser sharedLoginUser].userName};
+    
+    [HttpTool getWithPath:@"updateuserinfo" params:params success:^(id JSON) {
+        if ([JSON[@"code"] intValue] == 0) {
+            [SVProgressHUD showSuccessWithStatus:@"密码修改成功" duration:0.5];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"密码修改错误，请检查您旧密码是否真确" duration:1];
+        }
+    } failure:^(NSError *error) {
+       // NSLog(@"%@",error.description);
+    }];
+
+    
     
     [self.navigationController popViewControllerAnimated:YES];
 

@@ -46,17 +46,17 @@
 -(void)loadData
 {
     [SVProgressHUD showWithStatus:@"加载数据中" maskType:SVProgressHUDMaskTypeBlack];
-    [HttpTool getWithPath:@"todayreport" params:@{@"id":@"1"} success:^(id JSON) {
+    [HttpTool getWithPath:@"todayreport" params:@{@"id":self.userInfo} success:^(id JSON) {
         ///NSLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] ==0) {
             _dataDict = JSON[@"data"];
             [self.view addSubview:_tableView];
-            [SVProgressHUD showSuccessWithStatus:@"请求成功" duration:1];
+            kPdismiss;
         }else{
            [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
         }
     } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"网络连接错误" duration:1];
+        
     }];
 }
 

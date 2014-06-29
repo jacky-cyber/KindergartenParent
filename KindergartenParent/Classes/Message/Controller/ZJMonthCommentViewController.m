@@ -33,7 +33,7 @@
         [_starArr addObject:@(i)];
     }
 }
-
+#pragma mark 计算月评的星星数目
 - (IBAction)starAction:(UIButton*)sender {
     
     UIImage *garyImg = [UIImage imageNamed:@"star"];
@@ -72,7 +72,7 @@
        
     }
     
-    MyLog(@"%@",_starArr);
+   // MyLog(@"%@",_starArr);
     
     
 }
@@ -136,7 +136,7 @@
             
                  }
     } failure:^(NSError *error) {
-        
+        kPE(@"月评失败", 1);
     }];
 
     

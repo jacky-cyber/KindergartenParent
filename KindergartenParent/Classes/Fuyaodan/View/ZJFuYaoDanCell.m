@@ -107,29 +107,33 @@
     
     //设置时间
     _timeLabel.text = [_fydmodel.time substringToIndex:10];
-    
-    if ([self isRang:@"早"]) {
+      if (![self isRang:@"早" withModel:fydmodel]) {
         _mornImg.alpha = 0;
+    }else{
+        _mornImg.alpha = 1;
     }
     
-    if ([self isRang:@"中"]) {
+    if (![self isRang:@"中" withModel:fydmodel]) {
         _noonImg.alpha = 0;
+    }else{
+        _noonImg.alpha = 1;
     }
     
-    if ([self isRang:@"晚"]) {
+    if (![self isRang:@"晚" withModel:fydmodel]) {
         _eveImg.alpha = 0;
+    }else{
+        _eveImg.alpha = 1;
     }
-    
 }
 #pragma mark 看是否包含
--(BOOL)isRang:(NSString*)str
+-(BOOL)isRang:(NSString*)str withModel:(ZJFuYaoDanModel*)model
 {
-    BOOL flag = false;
+    BOOL flag = true;
     //
-    NSRange rang = [_fydmodel.fuyaotime rangeOfString:str];//判断字符串是否包含
+    NSRange rang = [model.fuyaotime rangeOfString:str];//判断字符串是否包含
     if (rang.length == 0)//不包含
     {
-        flag = true;
+        flag = false;
     }
     return flag;
 }

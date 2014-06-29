@@ -63,7 +63,7 @@
            
             //加载界面
              [self.view addSubview:_tableView];
-            [SVProgressHUD showSuccessWithStatus:@"请求成功" duration:1];
+            kPdismiss;
         }else{
             [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
         }

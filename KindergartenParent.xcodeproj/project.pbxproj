@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		4B0B6E50195A92FC0053BC9E /* ZJActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */; };
 		4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */; };
+		4B1B4303195FD71900EDAE1E /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42F7195FD71900EDAE1E /* MJPhoto.m */; };
+		4B1B4304195FD71900EDAE1E /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B1B42F8195FD71900EDAE1E /* MJPhotoBrowser.bundle */; };
+		4B1B4305195FD71900EDAE1E /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42FA195FD71900EDAE1E /* MJPhotoBrowser.m */; };
+		4B1B4306195FD71900EDAE1E /* MJPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42FC195FD71900EDAE1E /* MJPhotoLoadingView.m */; };
+		4B1B4307195FD71900EDAE1E /* MJPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42FE195FD71900EDAE1E /* MJPhotoProgressView.m */; };
+		4B1B4308195FD71900EDAE1E /* MJPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B4300195FD71900EDAE1E /* MJPhotoToolbar.m */; };
+		4B1B4309195FD71900EDAE1E /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B4302195FD71900EDAE1E /* MJPhotoView.m */; };
+		4B1B430C195FD78A00EDAE1E /* UIImageView+MJWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B430B195FD78A00EDAE1E /* UIImageView+MJWebCache.m */; };
+		4B1B430F195FD7AD00EDAE1E /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B430E195FD7AD00EDAE1E /* SDWebImageManager+MJ.m */; };
+		4B1B4316195FD7E600EDAE1E /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B4312195FD7E600EDAE1E /* MBProgressHUD+Add.m */; };
+		4B1B4317195FD7E600EDAE1E /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B1B4313195FD7E600EDAE1E /* MBProgressHUD.bundle */; };
+		4B1B4318195FD7E600EDAE1E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B4315195FD7E600EDAE1E /* MBProgressHUD.m */; };
 		4B247E8319590D9200C520A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B247E8219590D9200C520A9 /* Foundation.framework */; };
 		4B247E8519590D9200C520A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B247E8419590D9200C520A9 /* CoreGraphics.framework */; };
 		4B247E8719590D9200C520A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B247E8619590D9200C520A9 /* UIKit.framework */; };
@@ -196,6 +208,28 @@
 		4B0B6E4D195A92FC0053BC9E /* ZJActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJActivityViewController.h; sourceTree = "<group>"; };
 		4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJActivityViewController.m; sourceTree = "<group>"; };
 		4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJActivityViewController.xib; sourceTree = "<group>"; };
+		4B1B42F6195FD71900EDAE1E /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
+		4B1B42F7195FD71900EDAE1E /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
+		4B1B42F8195FD71900EDAE1E /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
+		4B1B42F9195FD71900EDAE1E /* MJPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoBrowser.h; sourceTree = "<group>"; };
+		4B1B42FA195FD71900EDAE1E /* MJPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoBrowser.m; sourceTree = "<group>"; };
+		4B1B42FB195FD71900EDAE1E /* MJPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoLoadingView.h; sourceTree = "<group>"; };
+		4B1B42FC195FD71900EDAE1E /* MJPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoLoadingView.m; sourceTree = "<group>"; };
+		4B1B42FD195FD71900EDAE1E /* MJPhotoProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoProgressView.h; sourceTree = "<group>"; };
+		4B1B42FE195FD71900EDAE1E /* MJPhotoProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoProgressView.m; sourceTree = "<group>"; };
+		4B1B42FF195FD71900EDAE1E /* MJPhotoToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoToolbar.h; sourceTree = "<group>"; };
+		4B1B4300195FD71900EDAE1E /* MJPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoToolbar.m; sourceTree = "<group>"; };
+		4B1B4301195FD71900EDAE1E /* MJPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhotoView.h; sourceTree = "<group>"; };
+		4B1B4302195FD71900EDAE1E /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhotoView.m; sourceTree = "<group>"; };
+		4B1B430A195FD78A00EDAE1E /* UIImageView+MJWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MJWebCache.h"; sourceTree = "<group>"; };
+		4B1B430B195FD78A00EDAE1E /* UIImageView+MJWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MJWebCache.m"; sourceTree = "<group>"; };
+		4B1B430D195FD7AD00EDAE1E /* SDWebImageManager+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDWebImageManager+MJ.h"; sourceTree = "<group>"; };
+		4B1B430E195FD7AD00EDAE1E /* SDWebImageManager+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+MJ.m"; sourceTree = "<group>"; };
+		4B1B4311195FD7E600EDAE1E /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
+		4B1B4312195FD7E600EDAE1E /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
+		4B1B4313195FD7E600EDAE1E /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		4B1B4314195FD7E600EDAE1E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		4B1B4315195FD7E600EDAE1E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4B247E7F19590D9200C520A9 /* KindergartenParent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KindergartenParent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B247E8219590D9200C520A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4B247E8419590D9200C520A9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -500,6 +534,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B1B42F5195FD71900EDAE1E /* MJPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				4B1B42F6195FD71900EDAE1E /* MJPhoto.h */,
+				4B1B42F7195FD71900EDAE1E /* MJPhoto.m */,
+				4B1B42F8195FD71900EDAE1E /* MJPhotoBrowser.bundle */,
+				4B1B42F9195FD71900EDAE1E /* MJPhotoBrowser.h */,
+				4B1B42FA195FD71900EDAE1E /* MJPhotoBrowser.m */,
+				4B1B42FB195FD71900EDAE1E /* MJPhotoLoadingView.h */,
+				4B1B42FC195FD71900EDAE1E /* MJPhotoLoadingView.m */,
+				4B1B42FD195FD71900EDAE1E /* MJPhotoProgressView.h */,
+				4B1B42FE195FD71900EDAE1E /* MJPhotoProgressView.m */,
+				4B1B42FF195FD71900EDAE1E /* MJPhotoToolbar.h */,
+				4B1B4300195FD71900EDAE1E /* MJPhotoToolbar.m */,
+				4B1B4301195FD71900EDAE1E /* MJPhotoView.h */,
+				4B1B4302195FD71900EDAE1E /* MJPhotoView.m */,
+			);
+			path = MJPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		4B1B4310195FD7E600EDAE1E /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				4B1B4311195FD7E600EDAE1E /* MBProgressHUD+Add.h */,
+				4B1B4312195FD7E600EDAE1E /* MBProgressHUD+Add.m */,
+				4B1B4313195FD7E600EDAE1E /* MBProgressHUD.bundle */,
+				4B1B4314195FD7E600EDAE1E /* MBProgressHUD.h */,
+				4B1B4315195FD7E600EDAE1E /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		4B247E7619590D9200C520A9 = {
 			isa = PBXGroup;
 			children = (
@@ -844,6 +910,8 @@
 		4B247F2719590DC900C520A9 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				4B1B4310195FD7E600EDAE1E /* MBProgressHUD */,
+				4B1B42F5195FD71900EDAE1E /* MJPhotoBrowser */,
 				4B247F2819590DC900C520A9 /* AFNetworking */,
 				4B247F3C19590DC900C520A9 /* DDMenuController */,
 				4B247F3F19590DC900C520A9 /* IQKeyBoardManager */,
@@ -973,6 +1041,8 @@
 				4B247F7B19590DC900C520A9 /* SDWebImageDownloaderOperation.m */,
 				4B247F7C19590DC900C520A9 /* SDWebImageManager.h */,
 				4B247F7D19590DC900C520A9 /* SDWebImageManager.m */,
+				4B1B430D195FD7AD00EDAE1E /* SDWebImageManager+MJ.h */,
+				4B1B430E195FD7AD00EDAE1E /* SDWebImageManager+MJ.m */,
 				4B247F7E19590DC900C520A9 /* SDWebImageOperation.h */,
 				4B247F7F19590DC900C520A9 /* SDWebImagePrefetcher.h */,
 				4B247F8019590DC900C520A9 /* SDWebImagePrefetcher.m */,
@@ -982,6 +1052,8 @@
 				4B247F8419590DC900C520A9 /* UIImage+GIF.m */,
 				4B247F8519590DC900C520A9 /* UIImage+MultiFormat.h */,
 				4B247F8619590DC900C520A9 /* UIImage+MultiFormat.m */,
+				4B1B430A195FD78A00EDAE1E /* UIImageView+MJWebCache.h */,
+				4B1B430B195FD78A00EDAE1E /* UIImageView+MJWebCache.m */,
 				4B247F8719590DC900C520A9 /* UIImage+WebP.h */,
 				4B247F8819590DC900C520A9 /* UIImage+WebP.m */,
 				4B247F8919590DC900C520A9 /* UIImageView+WebCache.h */,
@@ -1306,6 +1378,7 @@
 				4B24800C19590DC900C520A9 /* ZJDrugStatusController.xib in Resources */,
 				4B24802819590DC900C520A9 /* IQKeyboardManager.bundle in Resources */,
 				4B247FF819590DC900C520A9 /* ZJHomeDetialViewController.xib in Resources */,
+				4B1B4304195FD71900EDAE1E /* MJPhotoBrowser.bundle in Resources */,
 				4B24805A19590DC900C520A9 /* beijing02@2x.png in Resources */,
 				4B24808219590DC900C520A9 /* jian_14@2x.png in Resources */,
 				4B24806919590DC900C520A9 /* bj_27N@2x.png in Resources */,
@@ -1328,6 +1401,7 @@
 				4B24806319590DC900C520A9 /* menu@2x.png in Resources */,
 				4B24807D19590DC900C520A9 /* bj_27@2x.png in Resources */,
 				4B24807919590DC900C520A9 /* img06@2x.png in Resources */,
+				4B1B4317195FD7E600EDAE1E /* MBProgressHUD.bundle in Resources */,
 				4B247FFD19590DC900C520A9 /* ZJUserInfoViewController.xib in Resources */,
 				4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */,
 				4B24807B19590DC900C520A9 /* nav_menu_icon@2x.png in Resources */,
@@ -1398,6 +1472,7 @@
 				4B24802619590DC900C520A9 /* UIImageView+AFNetworking.m in Sources */,
 				4B24805519590DC900C520A9 /* ZJSetingViewController.m in Sources */,
 				4B24803619590DC900C520A9 /* MJType.m in Sources */,
+				4B1B4309195FD71900EDAE1E /* MJPhotoView.m in Sources */,
 				4B24802719590DC900C520A9 /* DDMenuController.m in Sources */,
 				4B24804E19590DC900C520A9 /* ZJUIMethods.m in Sources */,
 				4B24804B19590DC900C520A9 /* SVProgressHUD.m in Sources */,
@@ -1418,6 +1493,7 @@
 				4B24800319590DC900C520A9 /* ZJHomeCell.m in Sources */,
 				4B24803519590DC900C520A9 /* MJMethod.m in Sources */,
 				4B24803719590DC900C520A9 /* MJTypeEncoding.m in Sources */,
+				4B1B430F195FD7AD00EDAE1E /* SDWebImageManager+MJ.m in Sources */,
 				4B24804519590DC900C520A9 /* UIButton+WebCache.m in Sources */,
 				4B24804419590DC900C520A9 /* SDWebImagePrefetcher.m in Sources */,
 				4B24801F19590DC900C520A9 /* AFHTTPRequestOperation.m in Sources */,
@@ -1426,6 +1502,7 @@
 				4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */,
 				4B247FF119590DC900C520A9 /* ZJCookBooksViewController.m in Sources */,
 				4B24805619590DC900C520A9 /* ZJSetingCell.m in Sources */,
+				4B1B4305195FD71900EDAE1E /* MJPhotoBrowser.m in Sources */,
 				4B247E8F19590D9200C520A9 /* main.m in Sources */,
 				4B247FFA19590DC900C520A9 /* ZJSignInViewController.m in Sources */,
 				4B24802119590DC900C520A9 /* AFJSONRequestOperation.m in Sources */,
@@ -1433,6 +1510,8 @@
 				4B24802E19590DC900C520A9 /* NSArray+Sort.m in Sources */,
 				4B24800519590DC900C520A9 /* ZJLoginViewController.m in Sources */,
 				4B24801219590DC900C520A9 /* ZJWeekReportsViewController.m in Sources */,
+				4B1B4303195FD71900EDAE1E /* MJPhoto.m in Sources */,
+				4B1B4308195FD71900EDAE1E /* MJPhotoToolbar.m in Sources */,
 				4B24800119590DC900C520A9 /* ZJCookBookTableViewCell.m in Sources */,
 				4B24803219590DC900C520A9 /* MJArgument.m in Sources */,
 				4B24801C19590DC900C520A9 /* UIImage+ZJ.m in Sources */,
@@ -1443,6 +1522,7 @@
 				4B24804119590DC900C520A9 /* SDWebImageDownloader.m in Sources */,
 				4B24802919590DC900C520A9 /* IQKeyboardManager.m in Sources */,
 				4B24804819590DC900C520A9 /* UIImage+WebP.m in Sources */,
+				4B1B4306195FD71900EDAE1E /* MJPhotoLoadingView.m in Sources */,
 				4B24800719590DC900C520A9 /* LoginUser.m in Sources */,
 				4B24800D19590DC900C520A9 /* ZJHonorViewController.m in Sources */,
 				4B24805219590DC900C520A9 /* ZJPhotWallViewController.m in Sources */,
@@ -1450,6 +1530,7 @@
 				4B247FED19590DC900C520A9 /* ZJFuyaodanDetailViewController.m in Sources */,
 				4B247FEF19590DC900C520A9 /* ZJFuYaoDanModel.m in Sources */,
 				4B24801019590DC900C520A9 /* ZJSystemMsgViewController.m in Sources */,
+				4B1B430C195FD78A00EDAE1E /* UIImageView+MJWebCache.m in Sources */,
 				4B24802F19590DC900C520A9 /* UIView+Hierarchy.m in Sources */,
 				4B24805819590DC900C520A9 /* ZJVideoViewController.m in Sources */,
 				4B24803119590DC900C520A9 /* UIWindow+Hierarchy.m in Sources */,
@@ -1457,6 +1538,7 @@
 				4B24800919590DC900C520A9 /* ZJRightSideDrawerViewController.m in Sources */,
 				4B24801819590DC900C520A9 /* ZJWeekReportView.m in Sources */,
 				4B24802019590DC900C520A9 /* AFImageRequestOperation.m in Sources */,
+				4B1B4307195FD71900EDAE1E /* MJPhotoProgressView.m in Sources */,
 				4B24803819590DC900C520A9 /* NSObject+MJCoding.m in Sources */,
 				4B24803F19590DC900C520A9 /* SDWebImageCompat.m in Sources */,
 				4B24804F19590DC900C520A9 /* ZJAppDelegate.m in Sources */,
@@ -1467,8 +1549,10 @@
 				4B24802D19590DC900C520A9 /* IQToolbar.m in Sources */,
 				4B247FEE19590DC900C520A9 /* ZJFuyaodanViewController.m in Sources */,
 				4B24803D19590DC900C520A9 /* NSData+GIF.m in Sources */,
+				4B1B4316195FD7E600EDAE1E /* MBProgressHUD+Add.m in Sources */,
 				4B247FF219590DC900C520A9 /* ZJCourseViewController.m in Sources */,
 				4B24803019590DC900C520A9 /* UIView+IQKeyboardToolbar.m in Sources */,
+				4B1B4318195FD7E600EDAE1E /* MBProgressHUD.m in Sources */,
 				4B24800819590DC900C520A9 /* ZJLeftSideDrawerViewController.m in Sources */,
 				4B24800419590DC900C520A9 /* ZJUserInfoCell.m in Sources */,
 			);
@@ -1587,6 +1671,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KindergartenParent/KindergartenParent-Prefix.pch";
 				INFOPLIST_FILE = "KindergartenParent/KindergartenParent-Info.plist";
@@ -1601,6 +1686,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KindergartenParent/KindergartenParent-Prefix.pch";
 				INFOPLIST_FILE = "KindergartenParent/KindergartenParent-Info.plist";

@@ -46,9 +46,9 @@
     [self.contentView addSubview:_titleLb];
     //2.创建时间
     _timeLb = [[UILabel alloc] init];
-    _timeLb.font = kFont(13);
+    _timeLb.font = kFont(11);
     _timeLb.textAlignment = NSTextAlignmentRight;
-   // _timeLb.backgroundColor = [UIColor colorWithRed:0.400 green:1.000 blue:0.800 alpha:1.000];
+    //_timeLb.backgroundColor = [UIColor colorWithRed:0.400 green:1.000 blue:0.800 alpha:1.000];
     [self.contentView addSubview:_timeLb];
     //3.内容
     _contentLb = [[UILabel alloc] init];
@@ -67,7 +67,7 @@
 
     _titleLb.frame = CGRectMake(XW(_typeImg)+10, 10, 150, kLableH);
     
-    _timeLb.frame = CGRectMake(200, 10, 100, kLableH);
+    _timeLb.frame = CGRectMake(190, 10, 110, kLableH);
     
 
     _contentLb.frame = CGRectMake(X(_titleLb), YH(_titleLb), 230, kLableH);

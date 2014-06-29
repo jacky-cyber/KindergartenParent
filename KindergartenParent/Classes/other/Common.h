@@ -31,7 +31,13 @@
 
 #define kNavH 44
 
+#define kPBlack(obj)  [SVProgressHUD showWithStatus:obj maskType:SVProgressHUDMaskTypeBlack];
 
+#define kPS(obj,time) [SVProgressHUD showSuccessWithStatus:obj duration:time?time:0.5];
+
+#define kPE(obj,time) [SVProgressHUD showErrorWithStatus:obj duration:time?time:0.5];
+
+#define kPdismiss [SVProgressHUD dismiss];
 
 #define kScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreenWidth [[UIScreen mainScreen] bounds].size.width

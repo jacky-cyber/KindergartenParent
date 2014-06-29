@@ -39,7 +39,7 @@
     }
     failure : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         if (failure == nil) return;
-        [SVProgressHUD showErrorWithStatus:@"网络请求错误" duration:1];
+        //[SVProgressHUD showErrorWithStatus:@"网络请求错误" duration:1];
 //#warning 错误信息
         failure(error);
     }];

@@ -9,6 +9,9 @@
 #import "ZJCookBooksViewController.h"
 #import "ZJCookBookTableViewCell.h"
 #import "CookBookModel.h"
+#import "UIImageView+MJWebCache.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 @interface ZJCookBooksViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
@@ -56,12 +59,11 @@
     //初始化数组
     _dataArr = [NSMutableArray array];
     
-    [HttpTool getWithPath:@"recipe" params:@{@"id":@1} success:^(id JSON) {
+    [HttpTool getWithPath:@"recipe" params:@{@"id":self.userInfo} success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
             NSArray *data = JSON[@"data"][@"everyday"];
             for (NSDictionary *dict in data) {
-                
-                NSLog(@"%d-----",dict.count);
+        
                  CookBookModel *model = [CookBookModel objectWithKeyValues:dict];
                 [model setKeyValues:dict];
                 [_dataArr addObject:model];
@@ -74,9 +76,11 @@
                 UIButton *btnR = [UIButton buttonWithType:UIButtonTypeSystem];
                 btnR.frame = CGRectMake(0, 2, 50, 25);
                 [btnR setBackgroundImage:[UIImage imageNamed:@"nav_rightbackbround_image"] forState:UIControlStateNormal];
+                [btnR addTarget:self action:@selector(imagesAction:) forControlEvents:UIControlEventTouchUpInside];
                 [btnR setTitle:@"图片" forState:UIControlStateNormal];
                 [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
                 UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+                ItemR.tag = 10;
                 self.navigationItem.rightBarButtonItem = ItemR;
                 
             }
@@ -91,25 +95,32 @@
         MyLog(@"%@",error.localizedDescription);
     }];
 }
+#pragma mark 跳转到图片页面
+-(void)imagesAction:(UIButton *)sender{
+ 
+        int count = _images.count;
+        // 1.封装图片数据
+        NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+        for (int i = 0; i<count; i++) {
+            // 替换为中等尺寸图片
+            NSString *url = [_images[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+            MJPhoto *photo = [[MJPhoto alloc] init];
+            photo.url = [NSURL URLWithString:url]; // 图片路径
+           // photo.srcImageView = self.view.subviews[i]; // 来源于哪个UIImageView
+            [photos addObject:photo];
+        }
+        
+        // 2.显示相册
+        MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+        browser.currentPhotoIndex = sender.tag; // 弹出相册时显示的第一张图片是？
+        browser.photos = photos; // 设置所有的图片
+        [browser show];
+    
+    
+    //[self pushController:[ZJCookBookImagesViewController class] withInfo:_images withTitle:@"食谱配置"];
+    
+}
 
-//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return _dataArr.count;
-//
-//}
-
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-//    UIView *bgView = [[UIView alloc] init];
-//    bgView.backgroundColor = [UIColor whiteColor];
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, 280, 30)];
-//    NSString *imageName = [NSString stringWithFormat:@"zhou%d",section+1];
-//    imageView.image = [UIImage imageNamed:imageName];
-//    [bgView addSubview:imageView];
-//    return bgView;
-//}
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    return 30;
-//}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     

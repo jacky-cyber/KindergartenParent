@@ -64,7 +64,7 @@
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"page":@"1"};
     [HttpTool getWithPath:@"fylist" params:params success:^(id JSON) {
-        MyLog(@"%@",JSON);
+        //MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
             
             //这是添加服药单返回来的时候,先删除所有的
