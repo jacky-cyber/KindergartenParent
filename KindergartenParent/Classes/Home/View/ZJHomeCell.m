@@ -48,11 +48,13 @@
     _timeLb = [[UILabel alloc] init];
     _timeLb.font = kFont(11);
     _timeLb.textAlignment = NSTextAlignmentRight;
+    _timeLb.textColor = [UIColor colorWithWhite:0.737 alpha:1.000];
     //_timeLb.backgroundColor = [UIColor colorWithRed:0.400 green:1.000 blue:0.800 alpha:1.000];
     [self.contentView addSubview:_timeLb];
     //3.内容
     _contentLb = [[UILabel alloc] init];
     _contentLb.font = kFont(13);
+    _contentLb.textColor = [UIColor colorWithWhite:0.478 alpha:1.000];
     [self.contentView addSubview:_contentLb];
 
     //4.是否阅读
@@ -76,7 +78,7 @@
     _statuView.backgroundColor = [UIColor redColor];
    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(X(_titleLb), YH(_contentLb), W(_contentLb), 0.5)];
-    lineView.backgroundColor = [UIColor lightGrayColor];
+    lineView.backgroundColor = [UIColor colorWithWhite:0.957 alpha:1.000];
     [self.contentView addSubview:lineView];
 }
 

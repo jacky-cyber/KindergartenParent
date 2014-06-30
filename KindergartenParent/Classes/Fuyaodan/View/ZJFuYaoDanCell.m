@@ -108,19 +108,19 @@
     //设置时间
     _timeLabel.text = [_fydmodel.time substringToIndex:10];
       if (![self isRang:@"早" withModel:fydmodel]) {
-        _mornImg.alpha = 0;
+        _mornImg.alpha = 0.2;
     }else{
         _mornImg.alpha = 1;
     }
     
     if (![self isRang:@"中" withModel:fydmodel]) {
-        _noonImg.alpha = 0;
+        _noonImg.alpha = 0.2;
     }else{
         _noonImg.alpha = 1;
     }
     
     if (![self isRang:@"晚" withModel:fydmodel]) {
-        _eveImg.alpha = 0;
+        _eveImg.alpha = 0.2;
     }else{
         _eveImg.alpha = 1;
     }

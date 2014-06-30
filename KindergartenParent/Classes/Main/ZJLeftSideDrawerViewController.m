@@ -111,16 +111,17 @@
         
        
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(XW(imageView), 10, 100,30 )];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(XW(imageView)+5, 10, 100,30 )];
         label.textColor = [UIColor whiteColor];
+        label.font = kFont(18);
         label.text = _dataArr[indexPath.row];
         label.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:label];
         
         
         UIView *fengeline = [[UIView alloc] initWithFrame:CGRectMake(X(label), YH(label)+10, 120, 0.5)];
-        fengeline.backgroundColor = [UIColor whiteColor];
-        [cell.contentView addSubview:fengeline];
+        fengeline.backgroundColor = [UIColor colorWithRed:0.420 green:0.580 blue:0.733 alpha:1.000];
+        //[cell.contentView addSubview:fengeline];
     }
     
     //cell.textLabel.text = _dataArr[indexPath.row];

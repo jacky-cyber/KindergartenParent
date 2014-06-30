@@ -42,6 +42,23 @@
     self.navigationController.navigationItem.rightBarButtonItem = nil;
     
     
+    
+    //看自己
+    
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 4, 65, 25);
+    [btnR addTarget:self action:@selector(initData) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    [btnR setTitle:@"看自己" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
+
+    
+    
     //加载数据
     [self initData];
 }
@@ -72,7 +89,7 @@
     //父视图
     UIView *superView = [[UIView alloc] init];
     superView.frame = CGRectMake(kMargin, 20, 300,210);
-    superView.layer.borderColor = [UIColor colorWithRed:0.471 green:0.643 blue:0.055 alpha:1.000].CGColor;
+    superView.layer.borderColor = [UIColor colorWithRed:0.820 green:0.867 blue:0.773 alpha:1.000].CGColor;
     superView.layer.borderWidth = 1;
     [view addSubview:superView];
     //标题
@@ -101,6 +118,7 @@
     //时间
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(XW(timeImg)+5, 0, 80, 16)];
     timeLabel.text = @"2014-05-15";
+    timeLabel.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
     timeLabel.font = kFont(12);
     [toolView addSubview:timeLabel];
     
@@ -110,6 +128,7 @@
     
     //赞
     UILabel *praiseLable = [ZJUIMethods creatLabel:@"1234" frame:CGRectMake(XW(praiseBtn)+5, 0, 30, 16) font:kFont(12) textColor:nil];
+    praiseLable.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
     //praiseLable.backgroundColor = [UIColor redColor];
     [toolView addSubview:praiseLable];
     
@@ -120,6 +139,7 @@
     
     //赞
     UILabel *commentLb = [ZJUIMethods creatLabel:@"1234" frame:CGRectMake(XW(commentBtn)+5, 0, 30, 16) font:kFont(12) textColor:nil];
+    commentLb.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
     //commentLb.backgroundColor = [UIColor redColor];
     [toolView addSubview:commentLb];
     
@@ -172,7 +192,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 250;
+    return 245;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -204,14 +224,15 @@
     if (ISIOS7) {
         
     }
-    UIView *view = [ZJUIMethods creatView:CGRectMake(kMargin, 0, 300, 100) bgColor:[UIColor colorWithWhite:0.969 alpha:1.000]];
+    UIView *view = [ZJUIMethods creatView:CGRectMake(kMargin, 10, 300, 100) bgColor:[UIColor colorWithWhite:0.969 alpha:1.000]];
     [cell addSubview:view];
     CGRect viewFrame = view.frame;
     
-    NSString *name = @"<a href='a'>果果果果</a> 的家长:<font color='gray'>的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长</font>";
+    NSString *name = @"<a href='a' size>果果果果</a>:<font color='gray'>的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长的家长</font>";
     
     RTLabel *coment = [[RTLabel alloc] initWithFrame:CGRectMake(10, 10, 280, 21)];
     coment.text = name;
+    coment.font = kFont(13);
     [view addSubview:coment];
     //coment.backgroundColor = [UIColor colorWithRed:0.758 green:0.967 blue:1.000 alpha:1.000];
     coment.linkAttributes = @{@"color":@"#78a40e"};
@@ -228,14 +249,15 @@
     
     //添加分割线
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(X(coment), YH(coment)+5, 280, 1)];
-    line.backgroundColor = [UIColor grayColor];
+    line.backgroundColor = [UIColor colorWithWhite:0.941 alpha:1.000];
     [view addSubview:line];
     
     
-    NSString *name1 = @"<a href='a'>果果果果</a> 的家长:<font color='gray'>的家长的家长的家长长的家长的家长的家长的家长</font>";
+    NSString *name1 = @"<a href='a'>果果果果</a> <font color='gray'>的家长的家长的家长长的家长的家长的家长的家长</font>";
     MyLog(@"----%@----%f",NSStringFromCGRect(coment.frame),YH(coment));
     RTLabel *coment1 = [[RTLabel alloc] initWithFrame:CGRectMake(10, YH(line)+5, 280, 21)];
     coment1.text = name1;
+    coment1.font = kFont(13);
     [view addSubview:coment1];
     //coment1.backgroundColor = [UIColor colorWithRed:0.522 green:1.000 blue:0.531 alpha:1.000];
     coment1.linkAttributes = @{@"color":@"#78a40e"};
@@ -246,6 +268,12 @@
     //重新设置view frame
     viewFrame.size.height = YH(coment1)+10;
     view.frame = viewFrame;
+    
+    
+    if (indexPath.row <2) {
+//        UIView *bottomLine = [ZJUIMethods creatView:CGRectMake(X(view), YH(view)+3, W(view), 1) bgColor:[UIColor colorWithRed:0.965 green:0.000 blue:0.965 alpha:1.000]];
+       // [cell addSubview:bottomLine];
+    }
     
     
     return cell;
@@ -265,7 +293,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 150;
+    return 105;
 }
 
 @end

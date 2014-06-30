@@ -101,7 +101,7 @@
         model1.nid = @"1";
         model1.type = [NSString stringWithFormat:@"%d",i];
         model1.content = @"这是消息内容";
-        model1.createtime = @"2014-06-01 18:18:00";
+        model1.createtime = @"2014-06-29 18:18:00";
         model1.createuid = @"123";
         [_oneDayData addObject:model1];
 
@@ -136,25 +136,31 @@
     //设置家长名字
     //NSString *nickname = [LoginUser sharedLoginUser].nickname;
     UILabel *parentName = [[UILabel alloc] init];
-    parentName.frame = CGRectMake(XW(prifileImg),H(headView)*0.8-25,100,25);
-    parentName.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.200];
+    parentName.frame = CGRectMake(XW(prifileImg),H(headView)*0.8-25,180,25);
+    parentName.backgroundColor =  [UIColor colorWithWhite:0.000 alpha:0.200];
+    parentName.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
+    parentName.layer.cornerRadius = 5;
+    parentName.layer.masksToBounds = YES;
     
+    NSString *str  = [NSString stringWithFormat:@"%@    %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
     
     
     parentName.font = kFont(16);
-    parentName.text = [LoginUser sharedLoginUser].nickname;
+    parentName.text = str;
     [headView addSubview:parentName];
     //设置学生班级
     //NSString *classes = [LoginUser sharedLoginUser].nickname;
     UILabel *userNameLabel = [[UILabel alloc] init];
     userNameLabel.frame = CGRectMake(XW(parentName),Y(parentName),50,H(parentName));
-    
-    userNameLabel.text =  [LoginUser sharedLoginUser].classes;;
+    userNameLabel.layer.cornerRadius = 5;
+    userNameLabel.layer.masksToBounds = YES;
+    userNameLabel.text =  [LoginUser sharedLoginUser].classes;
     userNameLabel.font = kFont(13);
+     userNameLabel.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
     userNameLabel.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.200];
-    [headView addSubview:userNameLabel];
+   // [headView addSubview:userNameLabel];
     //荣誉榜
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(270,H(headView)*0.8-22, 16, 22)];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(290,H(headView)*0.8-22, 16, 22)];
     [btn setImage:[UIImage imageNamed:@"honor"] forState:UIControlStateNormal];
     // btn.backgroundColor = [UIColor colorWithRed:0.400 green:1.000 blue:1.000 alpha:1.000];
     [btn addTarget:self action:@selector(honorAction) forControlEvents:UIControlEventTouchUpInside];
