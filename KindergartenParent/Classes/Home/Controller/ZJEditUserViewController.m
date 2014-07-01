@@ -77,7 +77,7 @@
     
     
     
-    [SVProgressHUD showWithStatus:@"数据加载" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"修改用户信息" maskType:SVProgressHUDMaskTypeBlack];
     
     NSDictionary *params = @{@"role":@"0",
                              _param:contentStr,
@@ -88,9 +88,11 @@
             [SVProgressHUD showSuccessWithStatus:@"密码修改成功" duration:0.5];
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            [SVProgressHUD showErrorWithStatus:@"密码修改错误，请检查您旧密码是否真确" duration:1];
+            
+            kPE(@"系统异常", 1);
         }
     } failure:^(NSError *error) {
+         kPdismiss;
        // NSLog(@"%@",error.description);
     }];
 

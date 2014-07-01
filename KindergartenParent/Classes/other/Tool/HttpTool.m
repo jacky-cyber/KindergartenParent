@@ -23,11 +23,11 @@
     if (params) {
         [allParams setDictionary:params];
     }
-    MyLog(@"%@",allParams);
+   // MyLog(@"%@",allParams);
     NSMutableURLRequest *request = [client requestWithMethod:method path:urlString parameters:allParams];
     
     
-    MyLog(@"%@",request);
+    MyLog(@"Request: %@ --- params : %@",request.URL,allParams);
     //设置超时
     [request setTimeoutInterval:10];
     // 2.创建AFJSONRequestOperation对象
@@ -35,7 +35,7 @@
     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         if (success == nil) return;
         success(JSON);
-        MyLog(@"%@",JSON);
+        //MyLog(@"%@",JSON);
     }
     failure : ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         if (failure == nil) return;

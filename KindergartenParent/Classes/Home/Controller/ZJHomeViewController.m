@@ -31,7 +31,9 @@
     ZJUserInfoModel *_uinfo;
     UIView *headView;//
     
+    NSMutableArray *_allDays;//按天分组
     NSMutableArray *_oneDayData;//一天的数据
+    
 }
 @end
 
@@ -46,7 +48,7 @@
     
     CGFloat height = H(self.view)-kNavH;
     if (ISIOS7) {
-        height -=20;
+        //height -=20;
     }
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,height) style:UITableViewStyleGrouped];
 
@@ -81,6 +83,12 @@
     //load加载用户信息
     //[self loadUserInfo];
     
+    //初始化分组数组
+    _allDays = [NSMutableArray array];
+    
+    //初始化每天的数据
+    _oneDayData = [NSMutableArray array];
+    
     //加载通知信息
     [self loadNotifi];
     
@@ -103,7 +111,7 @@
         model1.content = @"这是消息内容";
         model1.createtime = @"2014-06-29 18:18:00";
         model1.createuid = @"123";
-        [_oneDayData addObject:model1];
+        //[_oneDayData addObject:model1];
 
     }
     
@@ -167,17 +175,7 @@
     [headView addSubview:btn];
 
 }
--(void)loadUserInfo{
-    [HttpTool getWithPath:@"getuserinfo" params:@{@"username":[LoginUser sharedLoginUser].userName} success:^(id JSON) {
-        //MyLog(@"%@",JSON);
-        _uinfo = [[ZJUserInfoModel alloc] init];
-        [_uinfo setKeyValues:JSON[@"data"]];
-        NSLog(@"%@",_uinfo.name);
-        
-    } failure:^(NSError *error) {
-        
-    }];
-}
+
 #pragma mark 获取通知信息
 -(void)loadNotifi
 {
@@ -185,7 +183,26 @@
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,@"page":@"1"};
     
     [HttpTool getWithPath:@"getnotifi" params:params success:^(id JSON) {
-        NSLog(@"%@",JSON);
+        //NSLog(@"%@",JSON[@"data"]);
+        
+        //第一层循环所有的天数
+        for (NSDictionary *dict in JSON[@"data"]) {
+            NSMutableArray*oneDayDaya = [NSMutableArray array];
+            //循环每天的数据
+            for (NSDictionary *dayDatas in dict[@"list"]) {
+               // NSLog(@"%@",dayDatas);
+                ZJHomeModel *model = [[ZJHomeModel alloc] init];
+                [model setKeyValues:dayDatas];
+                [model setNid:dayDatas[@"id"]];
+                [oneDayDaya addObject:model];
+            }
+            
+            [_allDays addObject:oneDayDaya];
+           
+        }
+        
+         MyLog(@"----------------%d",_allDays.count);
+        [_tableView reloadData];
     } failure:^(NSError *error) {
         NSLog(@"%@",error.localizedDescription);
     }];
@@ -218,11 +235,15 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _oneDayData.count;
+    NSArray *oneDatData = _allDays[section];
+    MyLog(@"-----------%@------%d",oneDatData,oneDatData.count);
+    
+    return oneDatData.count;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+     MyLog(@"---------_allDays------%d",_allDays.count);
+    return _allDays.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -237,7 +258,7 @@
     
     
     
-    ZJHomeModel *model  = _oneDayData[indexPath.row];
+    ZJHomeModel *model  = _allDays[indexPath.section][indexPath.row];
     //    通知类型
     //    1	系统消息
     //    2	幼儿园通知
@@ -254,29 +275,29 @@
     
     NSString *title = nil;
     
-    if([model.type isEqualToString:@"1"]){
+    if([model.type isEqual:@1]){
         title = @"系统消息";
-    }else if([model.type isEqualToString:@"2"]){
+    }else if([model.type isEqual:@2]){
         title = @"幼儿园通知";
-    }else if([model.type isEqualToString:@"3"]){
+    }else if([model.type isEqual:@3]){
         title = @"本周食谱";
-    }else if([model.type isEqualToString:@"4"]){
+    }else if([model.type isEqual:@4]){
         title = @"每日一报";
-    }else if ([model.type isEqualToString:@"5"]) {
+    }else if ([model.type isEqual:@5]) {
         title = @"每周一报";
-    }else if([model.type isEqualToString:@"6"]){
+    }else if([model.type isEqual:@6]){
         title = @"医务室通知";
-    }else if([model.type isEqualToString:@"7"]){
+    }else if([model.type isEqual:@7]){
         title = @"荣誉榜";
-    }else if([model.type isEqualToString:@"8"]){
+    }else if([model.type isEqual:@8]){
         title = @"老师通知";
-    }else if([model.type isEqualToString:@"9"]){
+    }else if([model.type isEqual:@9]){
         title = @"生日提醒";
-    }else if([model.type isEqualToString:@"10"]){
+    }else if([model.type isEqual:@10]){
         title = @"活动信息";
-    }else if ([model.type isEqualToString:@"11"]) {
+    }else if ([model.type isEqual:@11]) {
         title = @"签到，签退";
-    }else if([model.type isEqualToString:@"12"]){
+    }else if([model.type isEqual:@12]){
         title = @"老师月评";
     }
     
@@ -306,7 +327,7 @@
 {
     //[self.navigationController pushViewController:[[ZJHomeDetialViewController alloc] init] animated:YES];
     
-    ZJHomeModel *model  = _oneDayData[indexPath.row];
+    ZJHomeModel *model  = _allDays[indexPath.section][indexPath.row];
     
     
 //    通知类型
@@ -322,25 +343,25 @@
 //    10	活动通知
 //    11	签到/签退
 //    12	月评
-    if ([model.type isEqualToString:@"5"]) {
+    if ([model.type isEqual:@5]) {
         [self pushController:[ZJWeekReportsViewController class] withInfo:model.nid withTitle:@"每周一报"];
-    }else if ([model.type isEqualToString:@"3"]) {
+    }else if ([model.type isEqual:@3]) {
         [self pushController:[ZJCookBooksViewController class] withInfo:model.nid withTitle:@"本周食谱"];
-    }else if ([model.type isEqualToString:@"11"]) {
+    }else if ([model.type isEqual:@11]) {
         [self pushController:[ZJSignInViewController class] withInfo:model.nid withTitle:@"未到原因"];
-    }else if([model.type isEqualToString:@"12"]){
+    }else if([model.type isEqual:@12]){
        [self pushController:[ZJMonthCommentViewController class] withInfo:model withTitle:@"月评"];
-    }else if([model.type isEqualToString:@"6"]){
+    }else if([model.type isEqual:@6]){
         [self pushController:[ZJDrugStatusController class] withInfo:model withTitle:@"服药通知"];
-    }else if([model.type isEqualToString:@"4"]){
+    }else if([model.type isEqual:@4]){
         [self pushController:[ZJDayReportViewController class] withInfo:model.nid withTitle:@"每日一报"];
-    }else if([model.type isEqualToString:@"7"]){
+    }else if([model.type isEqual:@7]){
         [self pushController:[ZJHonorViewController class] withInfo:model.nid withTitle:@"荣誉榜"];
-    }else if([model.type isEqualToString:@"1"]){
+    }else if([model.type isEqual:@1]){
         [self pushController:[ZJSystemMsgViewController class] withInfo:model withTitle:@"系统通知"];
-    }else if([model.type isEqualToString:@"10"]){
+    }else if([model.type isEqual:@10]){
         [self pushController:[ZJActivityViewController class] withInfo:model withTitle:@"通知详情"];
-    }else if([model.type isEqualToString:@"2"]){
+    }else if([model.type isEqual:@2]){
         [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"通知详情"];
     }
 
@@ -369,7 +390,7 @@
    
     if (buttonIndex == 0) {
          NSString *deviceModel=[UIDevice currentDevice].model;
-        if ([deviceModel isEqualToString:@"iPhone Simulator"]) {
+        if ([deviceModel isEqual:@"iPhone Simulator"]) {
             [SVProgressHUD showErrorWithStatus:@"模拟器不支持拍照" duration:2];
             return;
         }
