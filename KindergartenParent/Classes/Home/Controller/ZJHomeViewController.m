@@ -79,9 +79,7 @@
     backImageView.frame = CGRectMake(0, 0, 320, H(headView)*0.8);
     [headView addSubview:backImageView];
     
-   
-    //load加载用户信息
-    //[self loadUserInfo];
+
     
     //初始化分组数组
     _allDays = [NSMutableArray array];
@@ -94,29 +92,64 @@
     
     [self loadHeadView];
     
-    //加载数据
-    //[self loadData];
+    // 集成刷新控件
+    [self setupRefresh];
+    
 }
 
--(void)loadData
+
+
+#pragma mark 开始进入刷新状态
+static int page = 2;
+- (void)footerRereshing
 {
-    _oneDayData = [NSMutableArray arrayWithCapacity:12];
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,@"page":@(page)};
     
-    
-    
-    for (int i = 1; i<=12; i++) {
-        ZJHomeModel *model1 = [[ZJHomeModel alloc] init];
-        model1.nid = @"1";
-        model1.type = [NSString stringWithFormat:@"%d",i];
-        model1.content = @"这是消息内容";
-        model1.createtime = @"2014-06-29 18:18:00";
-        model1.createuid = @"123";
-        //[_oneDayData addObject:model1];
+    [HttpTool getWithPath:@"getnotifi" params:params success:^(id JSON) {
+        //NSLog(@"%@",JSON[@"data"]);
+        
+        //第一层循环所有的天数
+        for (NSDictionary *dict in JSON[@"data"]) {
+            NSMutableArray*oneDayDaya = [NSMutableArray array];
+            //循环每天的数据
+            for (NSDictionary *dayDatas in dict[@"list"]) {
+                // NSLog(@"%@",dayDatas);
+                ZJHomeModel *model = [[ZJHomeModel alloc] init];
+                [model setKeyValues:dayDatas];
+                [model setNid:dayDatas[@"id"]];
+                [oneDayDaya addObject:model];
+            }
+            
+            [_allDays addObject:oneDayDaya];
+            
+        }
 
-    }
+        //加载成功
+        page ++;
+        [_tableView reloadData];
+        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+        [_tableView footerEndRefreshing];
+
+    } failure:^(NSError *error) {
+        [_tableView footerEndRefreshing];
+        NSLog(@"%@",error.localizedDescription);
+    }];
     
 }
 
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
+{
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_tableView addHeaderWithTarget:self action:@selector(loadNotifi)];
+//#warning 自动刷新(一进入程序就下拉刷新)
+    //[self.tableView headerBeginRefreshing];
+    
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
 
 
 -(void)loadHeadView
@@ -185,6 +218,8 @@
     [HttpTool getWithPath:@"getnotifi" params:params success:^(id JSON) {
         //NSLog(@"%@",JSON[@"data"]);
         
+        //删除所有的数据先
+        [_allDays removeAllObjects];
         //第一层循环所有的天数
         for (NSDictionary *dict in JSON[@"data"]) {
             NSMutableArray*oneDayDaya = [NSMutableArray array];
@@ -203,6 +238,8 @@
         
          MyLog(@"----------------%d",_allDays.count);
         [_tableView reloadData];
+        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+        [_tableView headerEndRefreshing];
     } failure:^(NSError *error) {
         NSLog(@"%@",error.localizedDescription);
     }];
