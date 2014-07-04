@@ -38,7 +38,7 @@
     
     CGFloat height = H(self.view)-kNavH;
     if (ISIOS7) {
-        //height -=20;
+        height -=20;
     }
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, W(self.view),height) style:UITableViewStylePlain];
@@ -99,20 +99,26 @@
 -(void)imagesAction:(UIButton *)sender{
  
         int count = _images.count;
+    
+    if (!count) {
+        kPE(@"本周食谱没有图片", 1);
+    }
+    
+    
         // 1.封装图片数据
         NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
         for (int i = 0; i<count; i++) {
             // 替换为中等尺寸图片
-            NSString *url = [_images[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+            
             MJPhoto *photo = [[MJPhoto alloc] init];
-            photo.url = [NSURL URLWithString:url]; // 图片路径
+            photo.url = [NSURL URLWithString:_images[i]]; // 图片路径
            // photo.srcImageView = self.view.subviews[i]; // 来源于哪个UIImageView
             [photos addObject:photo];
         }
         
         // 2.显示相册
         MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-        browser.currentPhotoIndex = sender.tag; // 弹出相册时显示的第一张图片是？
+        //browser.currentPhotoIndex = sender.tag; // 弹出相册时显示的第一张图片是？
         browser.photos = photos; // 设置所有的图片
         [browser show];
     

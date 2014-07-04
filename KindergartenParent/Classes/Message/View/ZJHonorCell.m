@@ -75,9 +75,9 @@
         if (i <_model.flower.intValue) {
             imgName = [NSString stringWithFormat:@"guli"];
         }else if (i < _model.flower.intValue + _model.sun.intValue && i >= _model.flower.intValue) {
-            imgName = [NSString stringWithFormat:@"praise"];
-        }else if (i >=_model.flower.intValue + _model.sun.intValue ) {
             imgName = [NSString stringWithFormat:@"jiayou"];
+        }else if (i >=_model.flower.intValue + _model.sun.intValue ) {
+            imgName = [NSString stringWithFormat:@"praise"];
         }
 
         // i这个位置对应的列数

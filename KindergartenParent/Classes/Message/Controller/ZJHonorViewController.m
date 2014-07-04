@@ -46,9 +46,11 @@
 
 -(void)loadData
 {
-    [SVProgressHUD showWithStatus:@"加载数据中" maskType:SVProgressHUDMaskTypeBlack];
     
-    NSDictionary *params = @{@"date":@"2014-06-02 00:00:00",@"username":[LoginUser sharedLoginUser].userName};
+    NSString *timeStr = [TimeFormatTools timeFormatToNow:@"yyyy-MM-dd"];
+
+    kPBlack(@"数据加载中");
+    NSDictionary *params = @{@"date":timeStr,@"username":[LoginUser sharedLoginUser].userName};
     
     [HttpTool getWithPath:@"honor" params:params success:^(id JSON) {
         if ([JSON[@"code"] intValue] ==0) {
@@ -111,7 +113,7 @@
     if (sum%4 !=0) {
         colNum +=1;
     }
-    NSLog(@"%@---%@----%@",model.flower,model.sun,model.praise);
+    //NSLog(@"%@---%@----%@",model.flower,model.sun,model.praise);
     
     height = 42 * colNum +10;
     

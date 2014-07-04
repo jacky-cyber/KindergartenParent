@@ -95,7 +95,7 @@
     [self loadHeadView];
     
     //加载数据
-    [self loadData];
+    //[self loadData];
 }
 
 -(void)loadData
@@ -236,13 +236,13 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray *oneDatData = _allDays[section];
-    MyLog(@"-----------%@------%d",oneDatData,oneDatData.count);
+    //MyLog(@"-----------%@------%d",oneDatData,oneDatData.count);
     
     return oneDatData.count;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-     MyLog(@"---------_allDays------%d",_allDays.count);
+     //MyLog(@"---------_allDays------%d",_allDays.count);
     return _allDays.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

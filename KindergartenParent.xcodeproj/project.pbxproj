@@ -191,6 +191,8 @@
 		4B24808919590DC900C520A9 /* zhong1_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FEA19590DC900C520A9 /* zhong1_09@2x.png */; };
 		4B24808A19590DC900C520A9 /* zhong_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FEB19590DC900C520A9 /* zhong_09@2x.png */; };
 		4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B24808D1959796100C520A9 /* ZJHomeModel.m */; };
+		4B2C156F1963A6C300BB2335 /* timeline_image_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */; };
+		4B2C15701963A6C300BB2335 /* timeline_image_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */; };
 		4B4115DC195D05840048446C /* readme in Resources */ = {isa = PBXBuildFile; fileRef = 4B4115DB195D05840048446C /* readme */; };
 		4BFFDCF01962831100439190 /* ZJPotoWallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */; };
 /* End PBXBuildFile section */
@@ -508,6 +510,8 @@
 		4B247FEB19590DC900C520A9 /* zhong_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhong_09@2x.png"; sourceTree = "<group>"; };
 		4B24808C1959796100C520A9 /* ZJHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeModel.h; sourceTree = "<group>"; };
 		4B24808D1959796100C520A9 /* ZJHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeModel.m; sourceTree = "<group>"; };
+		4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_image_loading.png; sourceTree = "<group>"; };
+		4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeline_image_loading@2x.png"; sourceTree = "<group>"; };
 		4B4115DB195D05840048446C /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		4BFFDCEE1962831100439190 /* ZJPotoWallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPotoWallModel.h; sourceTree = "<group>"; };
 		4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPotoWallModel.m; sourceTree = "<group>"; };
@@ -1187,6 +1191,8 @@
 		4B247FB419590DC900C520A9 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */,
+				4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */,
 				4B247FB519590DC900C520A9 /* backgroundImg */,
 				4B247FB819590DC900C520A9 /* HomeImg */,
 				4B247FC519590DC900C520A9 /* images */,
@@ -1367,6 +1373,7 @@
 			files = (
 				4B24807019590DC900C520A9 /* wan_07@2x.png in Resources */,
 				4B24805B19590DC900C520A9 /* beijing2@2x.png in Resources */,
+				4B2C15701963A6C300BB2335 /* timeline_image_loading@2x.png in Resources */,
 				4B24807419590DC900C520A9 /* img01@2x.png in Resources */,
 				4B24805119590DC900C520A9 /* ZJCommentListViewController.xib in Resources */,
 				4B24805919590DC900C520A9 /* Images.xcassets in Resources */,
@@ -1422,6 +1429,7 @@
 				4B24806619590DC900C520A9 /* touxiang@2x.png in Resources */,
 				4B24806219590DC900C520A9 /* jiazhangming@2x.png in Resources */,
 				4B4115DC195D05840048446C /* readme in Resources */,
+				4B2C156F1963A6C300BB2335 /* timeline_image_loading.png in Resources */,
 				4B24807819590DC900C520A9 /* img05@2x.png in Resources */,
 				4B247FF519590DC900C520A9 /* ZJEditPwdViewController.xib in Resources */,
 				4B24805C19590DC900C520A9 /* beijing@2x.png in Resources */,
@@ -1683,6 +1691,7 @@
 				INFOPLIST_FILE = "KindergartenParent/KindergartenParent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1698,6 +1707,7 @@
 				INFOPLIST_FILE = "KindergartenParent/KindergartenParent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -29,7 +29,7 @@
 #endif
     // 1.取出设置主题的对象
     UINavigationBar *navBar = [UINavigationBar appearance];
-    UIBarButtonItem *barItem = [UIBarButtonItem appearance];
+   // UIBarButtonItem *barItem = [UIBarButtonItem appearance];
     
     
     

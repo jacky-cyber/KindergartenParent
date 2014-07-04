@@ -365,9 +365,10 @@
 	//CTFrameRef 
 	frame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0, 0), path, NULL);
 	
-	CFRange range;
+	//CFRange range;
 	CGSize constraint = CGSizeMake(self.frame.size.width, 1000000);
-	self._optimumSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, [self._plainText length]), nil, constraint, &range);
+    self._optimumSize = [self._plainText sizeWithFont:kFont(13) constrainedToSize:constraint];
+//	self._optimumSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, [self._plainText length]), nil, constraint, &range);
 	
 	
 	if (currentSelectedButtonComponentIndex==-1)

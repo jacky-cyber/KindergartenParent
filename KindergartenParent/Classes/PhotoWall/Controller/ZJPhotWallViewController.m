@@ -139,11 +139,12 @@
             _images = model.images;
 
         //}
-        
+        UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading.png"];
+
         //取出图片的张数
         int count = model.images.count;
         
-        for (int i = 0 ; i<model.images.count; i++) {
+        for (int i = 0 ; i<count; i++) {
             
             CGFloat width = 280;
             CGFloat margin = 0;
@@ -154,19 +155,17 @@
             }
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMargin+margin, 0, width, 150)];
-            NSString *string = model.images[i];
-            NSURL *url = [NSURL URLWithString:string];
-            
-            [imageView setImageWithURL:url placeholderImage:nil];
-            
-            if (count==1) {
+            [imageBgView addSubview:imageView];
+
+            [imageView setImageURLStr:model.images[i] placeholder:placeholder];
+            //if (count==1) {
                 imageView.contentMode = UIViewContentModeScaleAspectFill ;
                 imageView.clipsToBounds = YES;
-            }
+            //}
              imageView.tag = i;
             imageView.userInteractionEnabled = YES;
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
-            [imageBgView addSubview:imageView];
+           
             if (i == 1) {
                 break;
             }
@@ -174,21 +173,11 @@
         
     }
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMargin, kMargin+YH(title), 280, 150)];
-//    imageView.contentMode = UIViewContentModeScaleAspectFill;
-//    imageView.clipsToBounds = YES;
-//    // 超出边界的减掉
-////    child.clipsToBounds = YES;
-////    child.contentMode = UIViewContentModeScaleAspectFill;
-//    NSString *string = @"http://img.icoin.cn/_files/201405/13/fd25c3295ddc4873a81567e1120fb91b.jpg";
-//    NSURL *url = [NSURL URLWithString:string];
-//    
-//    [imageView setImageWithURL:url placeholderImage:nil];
-//   // [superView addSubview:imageView];
+
     
     //工具条view
     UIView *toolView = [[UIView alloc] init];
-    toolView.frame = CGRectMake(kMargin,  kMargin+YH(imageView), 280, 16);
+    toolView.frame = CGRectMake(kMargin,  kMargin+YH(imageBgView), 280, 16);
     toolView.backgroundColor = [UIColor whiteColor];
     [superView addSubview:toolView];
     
@@ -262,11 +251,15 @@
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
     for (int i = 0; i<count; i++) {
         // 替换为中等尺寸图片
-        NSString *url = [model.images[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+        //NSString *url = [model.images[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
         MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString:url]; // 图片路径
+        photo.url = [NSURL URLWithString:model.images[i]]; // 图片路径
         UIView *imageBgView  = [self.view viewWithTag:tag];
-        photo.srcImageView = imageBgView.subviews[i]; // 来源于哪个UIImageView
+        //只放两张图片，所以i<2
+        if (i<2) {
+             photo.srcImageView = imageBgView.subviews[i]; // 来源于哪个UIImageView
+        }
+       
         [photos addObject:photo];
     }
     
@@ -302,7 +295,11 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 285;
+    CGFloat h = 285;
+    if (section >0) {
+        h = 275;
+    }
+    return h;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -337,17 +334,17 @@
         
     }
     //cell.backgroundColor = [UIColor brownColor];
-    UIView *view = [ZJUIMethods creatView:CGRectMake(kMargin, 5, 300, 100) bgColor:[UIColor colorWithWhite:0.969 alpha:1.000]];
+    UIView *view = [ZJUIMethods creatView:CGRectMake(kMargin, 0, 300, 100) bgColor:[UIColor colorWithWhite:0.969 alpha:1.000]];
     [cell addSubview:view];
     CGRect viewFrame = view.frame;
     
     //防止重复 删除姿势图
     NSArray *subViews = view.subviews;
-    for (UIView *view in subViews) {
-        [view removeFromSuperview];
+    for (UIView *subView in subViews) {
+        [subView removeFromSuperview];
     }
     
-    CGFloat height = 10;
+    CGFloat height = 0;
     for (int i = 0; i < model.comment.count; i ++) {
         NSDictionary *commDict = model.comment[i];
         
@@ -355,17 +352,21 @@
        // MyLog(@"%@",commStr);
         
         RTLabel *coment = [[RTLabel alloc] initWithFrame:CGRectMake(10, height, 280, 21)];
+        [view addSubview:coment];
         coment.text = commStr;
         coment.font = kFont(13);
-        [view addSubview:coment];
-        //coment.backgroundColor = [UIColor colorWithRed:0.758 green:0.967 blue:1.000 alpha:1.000];
         coment.linkAttributes = @{@"color":@"#78a40e"};
-        CGSize optimumSize = [coment optimumSize];
         //重新计算label 的高度
-        CGRect frame = [coment frame];
-        frame.size.height = (int)optimumSize.height+5;
+        CGRect frame = coment.frame;
+        NSString *str = [NSString stringWithFormat:@"%@%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
+        
+        
+        //CGSize optimumSize = coment.optimumSize;
+        //重新计算label 的高度
+        frame.size.height = [self getRTLabelH:str];
+    
         height += frame.size.height+5;
-        MyLog(@"height = %f----h:%f",height,frame.size.height+5);
+        //MyLog(@" = %f -%f",[self getRTLabelH:str],optimumSize.height);
         [coment setFrame:frame];
         //添加分割线
         if (i<model.comment.count -1) {
@@ -373,24 +374,13 @@
             line.backgroundColor = [UIColor colorWithWhite:0.941 alpha:1.000];
             [view addSubview:line];
         }
-        
-        
-       
+ 
         //重新设置view frame
-        viewFrame.size.height = YH(coment)+10;
+        viewFrame.size.height = YH(coment);
         view.frame = viewFrame;
 
         
     }
-
-
-    
-    if (indexPath.row <2) {
-//        UIView *bottomLine = [ZJUIMethods creatView:CGRectMake(X(view), YH(view)+3, W(view), 1) bgColor:[UIColor colorWithRed:0.965 green:0.000 blue:0.965 alpha:1.000]];
-       // [cell addSubview:bottomLine];
-    }
-    
-    
     return cell;
 }
 
@@ -411,24 +401,38 @@
     
      ZJPotoWallModel *model = _dataArr[indexPath.section];
     
-    CGFloat height = 30;
+    CGFloat height = 0;
     
     if (model.comment.count==0) {
         height = 0;
     }
     
     for (int i = 0; i < model.comment.count; i ++) {
+        height +=5;
         if (i>0) {
-            height +=10;
+           // height +=10;
         }
         NSDictionary *commDict = model.comment[i];
         
         NSString *commStr = [NSString stringWithFormat:@"%@%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
-        height += [commStr getHeightByWidth:280 font:kFont(13)];
+        height += [self getRTLabelH:commStr];
+         // MyLog(@"%f------%@",height,commStr);
     }
-    MyLog(@"%f------",height);
+    //MyLog(@"%f------",height);
     
     return height;
+}
+
+#pragma 返回每个rtlable的高度
+-(CGFloat)getRTLabelH:(NSString *)str
+{
+    CGFloat h = 0;
+    
+    h = [str getHeightByWidth:280 font:kFont(13)];
+    
+    return h;
+    
+    
 }
 
 @end

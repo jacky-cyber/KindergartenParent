@@ -11,5 +11,5 @@
 @interface TimeFormatTools : NSObject
 - (NSString*)timeToNow:(NSString*)theDate;
 + (NSString*)timeAfterNow:(NSString*)theDate;
-+(NSString *)timeFormat:(NSTimeInterval)timeInterval format:(NSString*)format;
++(NSString *)timeFormatToNow:(NSString*)format;
 @end
