@@ -130,9 +130,10 @@ static int page = 1;
         page ++;
         [_tableView reloadData];
     } failure:^(NSError *error) {
+        kPdismiss
         MyLog(@"%@",error.debugDescription);
     }];
-    kPdismiss
+    //kPdismiss
 }
 
 
