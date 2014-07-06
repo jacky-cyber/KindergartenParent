@@ -181,7 +181,8 @@
     //*******添加
     
     _imageBg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 0)];
-    _imageBg.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.5];;
+    //_imageBg.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.5];
+    _imageBg.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
     
     _imageBg.userInteractionEnabled = YES;
     [self.view addSubview:_imageBg];
@@ -259,14 +260,15 @@
 
 -(void)btnClick:(UIButton *)btn
 {
+    
+    [UIView animateWithDuration:0.5 animations:^{
+         _imageBg.frame = CGRectMake(0, 0, 320, H(self.view));
+         _label.hidden = NO;
+    }];
     if (btn.tag == 0)
     {
-        NSLog(@"添加药物名称");
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        _imageBg.frame = CGRectMake(0, 0, 320, 480);
-        [UIView commitAnimations];
-        _label.hidden = NO;
+
+       
         _titleName.text = @"药物名称";
         _contentView.text = _yaowuname?_yaowuname:@"填写药物名称，多个用逗号隔开";
         k =0;
@@ -274,22 +276,14 @@
     }
     else if (btn.tag == 1)
     {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        _imageBg.frame = CGRectMake(0, 0, 320, 480);
-        [UIView commitAnimations];
-        _label.hidden = NO;
+
         _titleName.text = @"服用剂量";
         _contentView.text = _jiliang?_jiliang:@"填写各个药物的服用剂量，多个用逗号隔开";
         k = 1;
     }
     else if (btn.tag == 2)
     {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        _imageBg.frame = CGRectMake(0, 0, 320, 480);
-        [UIView commitAnimations];
-        _label.hidden = NO;
+
         _bghongxian.hidden = YES;
         _threeBtnLabel.hidden = NO;
         _titleName.text = @"服药时间";
@@ -298,11 +292,6 @@
     }
     else if (btn.tag == 3)
     {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        _imageBg.frame = CGRectMake(0, 0, 320, 480);
-        [UIView commitAnimations];
-        _label.hidden = NO;
         _titleName.text = @"注意事项";
         _contentView.text = _remark?_remark:@"请在此处填写注意事项";
         k = 3;
@@ -355,14 +344,14 @@
 -(void)btnBack
 {
     
-    _label.hidden = YES;
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.5];
-    _label.hidden = YES;
-    _bghongxian.hidden = NO;
-    _threeBtnLabel.hidden = YES;
-    _imageBg.frame = CGRectMake(0, 0, 320, 0);
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _label.hidden = YES;
+        _label.hidden = YES;
+        _bghongxian.hidden = NO;
+        _threeBtnLabel.hidden = YES;
+        _imageBg.frame = CGRectMake(0, 0, 320, 0);
+    }];
     
 }
 -(void)btnadd
