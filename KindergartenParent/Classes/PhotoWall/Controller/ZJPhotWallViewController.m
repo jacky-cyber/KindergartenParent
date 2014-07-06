@@ -12,6 +12,7 @@
 #import "UIImageView+MJWebCache.h"
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
+static int page = 1;
 @interface ZJPhotWallViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
@@ -19,11 +20,32 @@
     
     NSArray *_images;//图片数组
 }
+
 @end
 
 @implementation ZJPhotWallViewController
 
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+   // page = 1;
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [super viewWillAppear:animated];
+    page = 1;
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,6 +61,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.sectionFooterHeight = 0;
+    [self.view addSubview:_tableView];
     //设置背景，ios6里面不然就很乱
     UIView *backView = [[UIView alloc] init];
     backView.backgroundColor = [UIColor whiteColor];
@@ -54,7 +77,7 @@
     
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
     btnR.frame = CGRectMake(0, 4, 65, 25);
-    [btnR addTarget:self action:@selector(initData) forControlEvents:UIControlEventTouchUpInside];
+    [btnR addTarget:self action:@selector(initData:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
     
@@ -69,21 +92,32 @@
     _dataArr = [NSMutableArray array];
     
     //加载数据
-    [self initData];
+    [self initData:nil];
 }
 
--(void)initData{
+-(void)initData:(UIButton*)btn{
+    
+
     
 //    classesid	int	班级id
 //    catid	分类	分类id
 //    username	String	看自己
 //    page	int	页数
     kPBlack(@"正在加载成长记录");
-    NSDictionary *params = @{@"classesid":@"1",@"catid":@"1",@"page":@"1"};
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        //@{@"classesid":@"1",@"page":@"1"}
+   
+    //如果有分类
+    if (btn) {
+        [params setValue:@(btn.tag) forKey:@"catid"];
+        //删除数据并且初始化page
+        [_dataArr removeAllObjects];
+        page = 1;
+    }
+    [params setObject:@"1" forKey:@"classesid"];
+    [params setObject:@(page) forKey:@"page"];
     
     [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
-       // MyLog(@"%@",JSON[@"data"]);
-        
         for (NSDictionary *dict in JSON[@"data"]) {
             ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
             [model setKeyValues:dict];
@@ -93,10 +127,12 @@
             //MyLog(@"%@",model.images);
         }
         kPdismiss;
-        [self.view addSubview:_tableView];
+        page ++;
+        [_tableView reloadData];
     } failure:^(NSError *error) {
         MyLog(@"%@",error.debugDescription);
     }];
+    kPdismiss
 }
 
 
@@ -219,7 +255,7 @@
     //按钮
     NSArray *cateArr = @[@"健康",@"语言",@"科学",@"艺术",@"社会"];
     for (int i = 0; i<5; i++) {
-        UIButton *button = [ZJUIMethods creatButton:cateArr[i] frame:CGRectMake(i*58, 0, 48, 20) delegate:self selector:@selector(cateAction) tag:i+1];
+        UIButton *button = [ZJUIMethods creatButton:cateArr[i] frame:CGRectMake(i*58, 0, 48, 20) delegate:self selector:@selector(initData:) tag:i+1];
         button.titleLabel.font = kFont(14);
         [button setBackgroundImage:[UIImage imageNamed:@"categor_bg"] forState:UIControlStateNormal];
         [cateView addSubview:button];
@@ -347,30 +383,36 @@
     CGFloat height = 0;
     for (int i = 0; i < model.comment.count; i ++) {
         NSDictionary *commDict = model.comment[i];
+  
+        NSString *cmStr = [NSString stringWithFormat:@"%@:%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
+        // 如果想要改变部份文本内容的风格，我们就需要用到NSAttributedString NSMutableAttributedString
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:cmStr];
         
-        NSString *commStr = [NSString stringWithFormat:@"<a href='a' >%@</a>:<font color='gray'>%@</font>",commDict[@"cmnickname"],commDict[@"cmcontent"]];
-       // MyLog(@"%@",commStr);
-        
-        RTLabel *coment = [[RTLabel alloc] initWithFrame:CGRectMake(10, height, 280, 21)];
+        int nickNameLengt = ((NSString*)commDict[@"cmnickname"]).length;
+        [attrString addAttribute:(NSString *)kCTForegroundColorAttributeName
+                            value:[UIColor redColor]
+                            range:NSMakeRange(0,nickNameLengt )];
+         [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.627 green:0.827 blue:0.149 alpha:1.000] range:NSMakeRange(0,nickNameLengt)];
+       
+        UILabel *coment = [ZJUIMethods creatLabel:nil frame:CGRectMake(10, height, 280, 16) font:kFont(13) textColor:nil];
+        coment.lineBreakMode = NSLineBreakByWordWrapping;
+        coment.backgroundColor = [UIColor clearColor];
+        [coment setAttributedText:attrString];
         [view addSubview:coment];
-        coment.text = commStr;
-        coment.font = kFont(13);
-        coment.linkAttributes = @{@"color":@"#78a40e"};
+
         //重新计算label 的高度
         CGRect frame = coment.frame;
-        NSString *str = [NSString stringWithFormat:@"%@%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
-        
-        
+    
         //CGSize optimumSize = coment.optimumSize;
         //重新计算label 的高度
-        frame.size.height = [self getRTLabelH:str];
+        frame.size.height = [self getRTLabelH:cmStr]+5;
     
-        height += frame.size.height+5;
-        //MyLog(@" = %f -%f",[self getRTLabelH:str],optimumSize.height);
+        height += frame.size.height+10;
+    
         [coment setFrame:frame];
         //添加分割线
         if (i<model.comment.count -1) {
-            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(X(coment), YH(coment), 280, 1)];
+            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(X(coment), YH(coment)+5, 280, 1)];
             line.backgroundColor = [UIColor colorWithWhite:0.941 alpha:1.000];
             [view addSubview:line];
         }
@@ -408,13 +450,13 @@
     }
     
     for (int i = 0; i < model.comment.count; i ++) {
-        height +=5;
+        height +=10;
         if (i>0) {
            // height +=10;
         }
         NSDictionary *commDict = model.comment[i];
         
-        NSString *commStr = [NSString stringWithFormat:@"%@%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
+        NSString *commStr = [NSString stringWithFormat:@"%@:%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
         height += [self getRTLabelH:commStr];
          // MyLog(@"%f------%@",height,commStr);
     }
@@ -429,7 +471,7 @@
     CGFloat h = 0;
     
     h = [str getHeightByWidth:280 font:kFont(13)];
-    
+     //MyLog(@"%@--%f",str,h);
     return h;
     
     

@@ -203,6 +203,7 @@
 		4B998A331966B62A00EAECC8 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2A1966B62A00EAECC8 /* UIScrollView+MJRefresh.m */; };
 		4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */; };
 		4BFFDCF01962831100439190 /* ZJPotoWallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */; };
+		7161507419692E5800F6FEB9 /* InsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7161507319692E5800F6FEB9 /* InsetsLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -539,6 +540,8 @@
 		4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		4BFFDCEE1962831100439190 /* ZJPotoWallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPotoWallModel.h; sourceTree = "<group>"; };
 		4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPotoWallModel.m; sourceTree = "<group>"; };
+		7161507219692E5800F6FEB9 /* InsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetsLabel.h; sourceTree = "<group>"; };
+		7161507319692E5800F6FEB9 /* InsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetsLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -792,6 +795,8 @@
 				4B247EEA19590DC900C520A9 /* ZJHomeCell.m */,
 				4B247EEB19590DC900C520A9 /* ZJUserInfoCell.h */,
 				4B247EEC19590DC900C520A9 /* ZJUserInfoCell.m */,
+				7161507219692E5800F6FEB9 /* InsetsLabel.h */,
+				7161507319692E5800F6FEB9 /* InsetsLabel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1571,6 +1576,7 @@
 				4B247FF119590DC900C520A9 /* ZJCookBooksViewController.m in Sources */,
 				4B24805619590DC900C520A9 /* ZJSetingCell.m in Sources */,
 				4B1B4305195FD71900EDAE1E /* MJPhotoBrowser.m in Sources */,
+				7161507419692E5800F6FEB9 /* InsetsLabel.m in Sources */,
 				4B247E8F19590D9200C520A9 /* main.m in Sources */,
 				4B247FFA19590DC900C520A9 /* ZJSignInViewController.m in Sources */,
 				4B24802119590DC900C520A9 /* AFJSONRequestOperation.m in Sources */,

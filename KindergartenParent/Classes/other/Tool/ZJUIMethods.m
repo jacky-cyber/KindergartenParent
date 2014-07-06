@@ -28,6 +28,7 @@
 +(UILabel *)creatLabel:(NSString *)name frame:(CGRect)frame font:(UIFont *)font textColor:(UIColor *)textColor{
     
     UILabel *label=[[UILabel alloc]initWithFrame:frame];
+    label.numberOfLines = 0;
     label.text=name;
     label.textColor=textColor;
     label.font=font;

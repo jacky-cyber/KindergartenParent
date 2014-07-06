@@ -9,6 +9,9 @@
 #import "ZJCommentListViewController.h"
 #import "ZJCommentCell.h"
 #import "ZJCommentModel.h"
+
+int page = 1;
+
 @interface ZJCommentListViewController ()<UITextFieldDelegate>
 {
     NSMutableArray *_dataArr;
@@ -20,6 +23,13 @@
 
 
 @implementation ZJCommentListViewController
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    page = 1;
+    
+}
 
 - (void)viewDidLoad
 {
@@ -42,22 +52,39 @@
     _dataArr = [NSMutableArray array];
 
     //加载数据
-    [self initData];
+    [self headerRereshing];
     
     
+    // 集成刷新控件
+    [self setupRefresh];
     
 }
 
-
--(void)initData
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
 {
-    NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@"1"};
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    //#warning 自动刷新(一进入程序就下拉刷新)
+    //[self.tableView headerBeginRefreshing];
+    
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [self.tableView  addFooterWithTarget:self action:@selector(footerRereshing)];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    page = 1;
+    NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@(page)};
     
     [HttpTool getWithPath:@"commentlist" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
- 
+        
         if ([JSON[@"code"] intValue] == 0) {
-
+            
             for (NSDictionary *dict in JSON[@"data"]) {
                 ZJCommentModel *model = [[ZJCommentModel alloc] init];
                 [model setKeyValues:dict];
@@ -68,13 +95,45 @@
             //model setKeyValues:JSON
             
             //滚动到顶部
-            [self scrollToTableBottom];
-   
+            if (page == 1) {
+                 [self scrollToTableBottom];
+            }
+           
+            page ++;
+            
         }
     } failure:^(NSError *error) {
-         MyLog(@"%@",error.debugDescription);
+        MyLog(@"%@",error.debugDescription);
     }];
+    [self.tableView headerEndRefreshing];
 }
+
+- (void)footerRereshing
+{
+    NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@(page)};
+    
+    [HttpTool getWithPath:@"commentlist" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        
+        if ([JSON[@"code"] intValue] == 0) {
+            
+            for (NSDictionary *dict in JSON[@"data"]) {
+                ZJCommentModel *model = [[ZJCommentModel alloc] init];
+                [model setKeyValues:dict];
+                [_dataArr addObject:model];
+                
+            }
+            [self.tableView reloadData];
+            page ++;
+    
+        }
+        
+    } failure:^(NSError *error) {
+        MyLog(@"%@",error.debugDescription);
+    }];
+    [self.tableView footerEndRefreshing];
+}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -198,7 +257,7 @@
             //先删除数据
             [_dataArr removeAllObjects];
             //重新加载数据
-            [self initData];
+            [self headerRereshing];
             
             //将文本内容清空
             _commentTextField.text = @"";

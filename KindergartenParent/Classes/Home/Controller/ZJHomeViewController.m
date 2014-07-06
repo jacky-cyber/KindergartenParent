@@ -21,6 +21,7 @@
 #import "ZJActivityViewController.h"
 #import "ZJSystemMsgViewController.h"
 #import "ZJHomeModel.h"
+#import "InsetsLabel.h"
 #define kFoodtH 0
 
 @interface ZJHomeViewController ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
@@ -154,11 +155,35 @@ static int page = 2;
 
 -(void)loadHeadView
 {
+        //设置家长名字
+  
+    InsetsLabel * parentName=[[InsetsLabel alloc] initWithFrame:CGRectMake(70,H(headView)*0.8-25,180,25)];
+    parentName.insets = UIEdgeInsetsMake(0, 10, 0, 0);
+
+    parentName.backgroundColor =  [UIColor colorWithWhite:0.000 alpha:0.200];
+    parentName.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
+    parentName.layer.cornerRadius = 5;
+    parentName.layer.masksToBounds = YES;
+    
+    NSString *str  = [NSString stringWithFormat:@"%@    %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
+    
+    //班级的长度
+    int classesLeng  = [LoginUser sharedLoginUser].classes.length;
+    
+    // 如果想要改变部份文本内容的风格，我们就需要用到NSAttributedString NSMutableAttributedString
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:str];
+    //设置属性
+    [attributeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0f] range:NSMakeRange(str.length-classesLeng, classesLeng)];
+    parentName.font = kFont(16);
+    [parentName setAttributedText:attributeString];
+    
+    //parentName.text = str;
+    [headView addSubview:parentName];
+    
     //设置头像
     UIImageView *prifileImg = [[UIImageView alloc] init];
     prifileImg.tag = 1;
     prifileImg.frame = CGRectMake(20, H(headView)*0.8-45, 60, 60);
-    
     //设置头像
     [prifileImg setImageWithURL:[NSURL URLWithString:[LoginUser sharedLoginUser].profilImg] placeholderImage:nil];
     prifileImg.layer.cornerRadius = 5;
@@ -168,45 +193,18 @@ static int page = 2;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self action:@selector(updateProfileAction)];
     [prifileImg addGestureRecognizer:tap];
-    
-//    [profileImgbtn setImage:[UIImage imageNamed:@"201277441619594489.jpg"] forState:UIControlStateNormal];
-//    [profileImgbtn addTarget:self action:@selector(updateProfileAction) forControlEvents:UIControlEventTouchUpInside];
-//    profileImgbtn.layer.cornerRadius = 10;
-//    profileImgbtn.layer.masksToBounds = YES;
     [headView addSubview:prifileImg];
-    //设置家长名字
-    //NSString *nickname = [LoginUser sharedLoginUser].nickname;
-    UILabel *parentName = [[UILabel alloc] init];
-    parentName.frame = CGRectMake(XW(prifileImg),H(headView)*0.8-25,180,25);
-    parentName.backgroundColor =  [UIColor colorWithWhite:0.000 alpha:0.200];
-    parentName.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
-    parentName.layer.cornerRadius = 5;
-    parentName.layer.masksToBounds = YES;
-    
-    NSString *str  = [NSString stringWithFormat:@"%@    %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
-    
-    
-    parentName.font = kFont(16);
-    parentName.text = str;
-    [headView addSubview:parentName];
-    //设置学生班级
-    //NSString *classes = [LoginUser sharedLoginUser].nickname;
-    UILabel *userNameLabel = [[UILabel alloc] init];
-    userNameLabel.frame = CGRectMake(XW(parentName),Y(parentName),50,H(parentName));
-    userNameLabel.layer.cornerRadius = 5;
-    userNameLabel.layer.masksToBounds = YES;
-    userNameLabel.text =  [LoginUser sharedLoginUser].classes;
-    userNameLabel.font = kFont(13);
-     userNameLabel.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
-    userNameLabel.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.200];
-   // [headView addSubview:userNameLabel];
+
+
     //荣誉榜
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(290,H(headView)*0.8-22, 16, 22)];
     [btn setImage:[UIImage imageNamed:@"honor"] forState:UIControlStateNormal];
     // btn.backgroundColor = [UIColor colorWithRed:0.400 green:1.000 blue:1.000 alpha:1.000];
     [btn addTarget:self action:@selector(honorAction) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:btn];
-
+    
+//    bringSubviewToFront
+    [self.view bringSubviewToFront:prifileImg];
 }
 
 #pragma mark 获取通知信息
