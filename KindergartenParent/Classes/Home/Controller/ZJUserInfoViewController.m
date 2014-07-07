@@ -72,7 +72,7 @@
     [SVProgressHUD showWithStatus:@"加载数据" maskType:SVProgressHUDMaskTypeBlack];
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName};
     [HttpTool getWithPath:@"getuserinfo" params:params success:^(id JSON) {
-        MyLog(@"%@",JSON);
+       // MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
             [_userModel setKeyValues:JSON[@"data"]];
             
@@ -359,7 +359,6 @@
 {
     //username=xuesheng&role=0&isParse=false&profileimg=123
     NSDictionary *params = @{@"role":@"0",
-                             @"isParse":@(false),
                             @"username":[LoginUser sharedLoginUser].userName,
                              @"profileimg":@123};
     

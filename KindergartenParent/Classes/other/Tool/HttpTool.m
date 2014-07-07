@@ -56,9 +56,9 @@
     // 所谓baseURL就是此后所有的请求都基于此地址
     NSURL *url = [NSURL URLWithString:kBaseUrl];
     AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:url];
-     NSString *urlString = [NSString stringWithFormat:@"kindergarten/service/app!%@.action?username=%@&role=0&isParse=false&profileimg=123",path,[LoginUser sharedLoginUser].userName];
+     NSString *urlString = [NSString stringWithFormat:@"kindergarten/service/app!%@.action?isParse=false",path];
     // 2. 根据httpClient生成post请求
-    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:urlString parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
         // 提示：UIImage不能为空
         NSData *data = UIImagePNGRepresentation(image);
@@ -111,7 +111,7 @@
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         MyLog(@"%@",responseObject);
 //          NSLog(@"成功呢！json ===%@",operation.responseString);
-//         NSLog(@"upload finish ---%@",[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]);
+         NSLog(@"upload finish ---%@",[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]);
         //NSLog(@"上传文件成功");
         success(operation);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
