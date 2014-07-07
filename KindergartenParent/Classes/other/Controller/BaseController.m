@@ -60,7 +60,7 @@
  */
 - (BaseController*)pushController:(Class)controller withInfo:(id)info withTitle:(NSString*)title withOther:(id)other withModel:(BOOL)isModel
 {
-    NSLog(@"Base UserInfo:%@-》%@",info,other);
+    NSLog(@"Base UserInfo:%@-》%@--->%@",info,other,controller);
     BaseController *base = [[controller alloc] init];
     if ([(NSObject*)base respondsToSelector:@selector(setUserInfo:)]) {
         base.userInfo = info;

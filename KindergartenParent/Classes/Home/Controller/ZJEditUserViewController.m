@@ -77,15 +77,15 @@
     
     
     
-    [SVProgressHUD showWithStatus:@"修改用户信息" maskType:SVProgressHUDMaskTypeBlack];
-    
+    //[SVProgressHUD showWithStatus:@"修改用户信息" maskType:SVProgressHUDMaskTypeBlack];
+    //kPBlack(@"正在修改用户信息");
     NSDictionary *params = @{@"role":@"0",
                              _param:contentStr,
                              @"username":[LoginUser sharedLoginUser].userName};
     
     [HttpTool getWithPath:@"updateuserinfo" params:params success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
-            [SVProgressHUD showSuccessWithStatus:@"密码修改成功" duration:0.5];
+            kPS(@"修改成功", 0);
             [self.navigationController popViewControllerAnimated:YES];
         }else{
             

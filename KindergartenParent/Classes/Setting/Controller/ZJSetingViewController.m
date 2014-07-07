@@ -14,6 +14,8 @@
 {
     NSArray *_dataArr;//数据源
     UITableView *_talbeView;
+    
+    BOOL isPush;//判断是否打开推送开关
 }
 @end
 
@@ -47,6 +49,10 @@
     
 //     [_talbeView registerNib:[UINib nibWithNibName:@"ZJSetingCell" bundle:nil] forCellReuseIdentifier:[ZJSetingCell ID]];
     
+    
+    //判断是否打开推送开关
+    [self pushmsgstatus];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,7 +80,7 @@
     if (indexPath.row ==0) {
         UISwitch *swh = [[UISwitch alloc] init];
         swh.frame = CGRectMake(W(cell.bgView)-W(swh)-10, 10, 50, H(cell.bgView));
-        [swh setOn:YES];
+        [swh setOn:isPush];
         [cell.bgView addSubview:swh];
         [swh addTarget:self action:@selector(upStatusAction:) forControlEvents:UIControlEventValueChanged];
     }else if (indexPath.row == 3){
@@ -92,13 +98,72 @@
     }
 }
 
+//判断是否推送状态
+-(void)pushmsgstatus{
+    
+    //182.18.23.244:8080/kindergarten/service/app!pushmsgstatus.action?username=xuesheng
+    [HttpTool getWithPath:@"pushmsgstatus" params:@{@"username":[LoginUser sharedLoginUser].userName} success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        
+//        code = 0;
+//        data =     {
+//            status = 2;
+//        };
+//        msg = success;
+        //1,开通，2关闭 默认关闭
+        if ([JSON[@"data"][@"status"] isEqual:@2]) {
+            isPush = NO;
+        }else{
+            isPush = YES;
+        }
+        [_talbeView reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+#pragma mark 修改
+
 -(void)upStatusAction:(UISwitch*)sw{
     BOOL isButtonOn = [sw isOn];
     if (isButtonOn) {
+        [self pushOnOff];
         MyLog(@"YES");
     }else {
         MyLog(@"NO");
+        [self pushOnOff];
     }
+}
+
+-(void)pushOnOff{
+    
+    //182.18.23.244:8080/kindergarten/service/app!openpushmsgstatus.action?username=xuesheng&notifistatus=1
+
+    //1打开
+    int  notifistatus = 2;
+     //消息推送状态 1 推送，2 不推送，
+    
+    //isPush == NO 就是推送关闭转状态，那个就打开
+    if (isPush == NO) {
+        //2.关闭
+        notifistatus = 1;
+    }
+    
+    [HttpTool getWithPath:@"openpushmsgstatus" params:@{@"username":[LoginUser sharedLoginUser].userName,@"notifistatus":@(notifistatus)} success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        
+        //消息推送状态 1 推送，2 不推送，默认推送
+        if ([JSON[@"code"] intValue] == 0) {
+            isPush = !isPush;
+            MyLog(@"success");
+        }else{
+            MyLog(@"failure");
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+
 }
 
 @end

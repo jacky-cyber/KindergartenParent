@@ -39,8 +39,25 @@
 @end
 
 @implementation ZJHomeViewController
-
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // page = 1;
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    page = 2;
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -346,6 +363,10 @@ static int page = 2;
     //格式化时间
     TimeFormatTools *timetools  = [[TimeFormatTools alloc] init];
     NSString *timeStr = [timetools timeToNow:model.createtime];
+    
+    if (timeStr.length >10) {
+        timeStr = [timeStr substringToIndex:10];
+    }
     
     cell.timeLb.text = timeStr;
     cell.contentLb.text = model.content;

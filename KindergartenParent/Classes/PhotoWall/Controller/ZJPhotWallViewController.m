@@ -42,7 +42,6 @@ static int page = 1;
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [super viewWillAppear:animated];
     page = 1;
 
 }
@@ -364,8 +363,6 @@ static int page = 1;
     
     ZJPotoWallModel *model = _dataArr[indexPath.section];
     //自定义View
-    
-    
    // NSLog(@"%@",NSStringFromCGRect(cell.frame));
     if (ISIOS7) {
         
@@ -408,7 +405,7 @@ static int page = 1;
         //重新计算label 的高度
         frame.size.height = [self getRTLabelH:cmStr]+5;
     
-        height += frame.size.height+10;
+        height += frame.size.height+5;
     
         [coment setFrame:frame];
         //添加分割线
@@ -458,7 +455,7 @@ static int page = 1;
         NSDictionary *commDict = model.comment[i];
         
         NSString *commStr = [NSString stringWithFormat:@"%@:%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
-        height += [self getRTLabelH:commStr];
+        height += [self getRTLabelH:commStr]>16?[self getRTLabelH:commStr]:16;
          // MyLog(@"%f------%@",height,commStr);
     }
     //MyLog(@"%f------",height);
@@ -472,7 +469,8 @@ static int page = 1;
     CGFloat h = 0;
     
     h = [str getHeightByWidth:280 font:kFont(13)];
-     //MyLog(@"%@--%f",str,h);
+    h = h>16?h:16;
+     MyLog(@"%@--%f",str,h);
     return h;
     
     

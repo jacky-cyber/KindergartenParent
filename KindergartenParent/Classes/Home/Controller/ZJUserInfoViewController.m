@@ -50,6 +50,7 @@
     
     //设置头像
     [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
+    self.prifileImg.tag = 100;
     self.prifileImg.layer.cornerRadius = 5;
     self.prifileImg.layer.masksToBounds = YES;
     self.prifileImg.userInteractionEnabled = YES;
@@ -74,6 +75,9 @@
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
             [_userModel setKeyValues:JSON[@"data"]];
+            
+            [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
+            [LoginUser sharedLoginUser].profilImg = _userModel.profileimg;
             kPdismiss;
             [self addSubViews];
         }
@@ -342,12 +346,32 @@
     //UIImage *img = [UIImage imageNamed:@"some.png"];
     //_imageData = UIImageJPEGRepresentation(image, 1.0);
     
-    UIButton *btn = (UIButton*)[self.view viewWithTag:1];
-    [btn setImage:image forState:UIControlStateNormal];
+    UIImageView *img = (UIImageView*)[self.view viewWithTag:100];
+    img.image = image;
+    
+    [self updateImage:image];
     
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+-(void)updateImage:(UIImage *)img
+{
+    //username=xuesheng&role=0&isParse=false&profileimg=123
+    NSDictionary *params = @{@"role":@"0",
+                             @"isParse":@(false),
+                            @"username":[LoginUser sharedLoginUser].userName,
+                             @"profileimg":@123};
+    
+    // profileimg
+    [HttpTool updateFileWithPath:@"updateuserinfo" params:params withImag:img success:^(id JSON) {
+        //重新加载数据
+        [self loadData];
+    } failure:^(NSError *error) {
+        
+    }];
+    
+  }
 
 - (void)didReceiveMemoryWarning
 {

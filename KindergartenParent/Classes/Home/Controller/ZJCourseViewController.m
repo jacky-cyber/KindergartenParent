@@ -46,6 +46,9 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
+    
+    //初始化数据
+    _dataArr = [NSMutableArray array];
     [self ladData];
 }
 -(void)ladData
@@ -53,26 +56,48 @@
     
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName};
     [HttpTool getWithPath:@"course" params:params success:^(id JSON) {
-        MyLog(@"%@",JSON);
+       // MyLog(@"%@",JSON);
+        NSDictionary *data = JSON[@"data"];
+        
+        
+        if (data[@"monday"]) {//周1
+            
+            [_dataArr addObject:data[@"monday"]];
+        }
+        if (data[@"tuesday"]) {//周2
+            [_dataArr addObject:data[@"tuesday"]];
+        }
+        if (data[@"thursday"]) {
+            [_dataArr addObject:data[@"thursday"]];
+        }
+        if (data[@"wednesday"]) {
+            [_dataArr addObject:data[@"wednesday"]];
+        }
+        if (data[@"friday"]) {
+            [_dataArr addObject:data[@"friday"]];
+        }
+        if (data[@"saturday"]) {
+            [_dataArr addObject:data[@"saturday"]];
+        }
+        if (data[@"sunday"]) {
+            [_dataArr addObject:data[@"sunday"]];
+        }
+        
+        [_tableView reloadData];
+        
+       // MyLog(@"%@",_dataArr);
+        
     } failure:^(NSError *error) {
         MyLog(@"%@",error.localizedDescription);
     }];
-    _dataArr = [NSMutableArray array];
-    for (int i = 0; i<7; i++) {
-        ZJCourseModel *cModel = [[ZJCourseModel alloc] init];
-        cModel.timestamp = @"11:00-12:00";
-        cModel.content = @"吃饭睡觉打豆豆";
-        [_dataArr addObject:cModel];
-        ZJCourseModel *cModel1 = [[ZJCourseModel alloc] init];
-        cModel1.timestamp = @"9:00-9:30";
-        cModel1.content = @"还不知道干点啥呢，哈哈哈";
-        
-        [_dataArr addObject:cModel1];
-    }
+   
+    
+    
+    
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 7;
+    return _dataArr.count;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -89,7 +114,12 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArr.count;
+    NSArray *daycourse = [NSArray array];
+    //MyLog(@"%d",((NSArray*)_dataArr[section]).count);
+    if (((NSArray*)_dataArr[section]).count>0) {
+        daycourse =  _dataArr[section];
+    }
+    return daycourse.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -106,7 +136,9 @@
     [cell setBackgroundView:backView];
 
     
-    ZJCourseModel *cModel = _dataArr[indexPath.row];
+    NSDictionary *dict = _dataArr[indexPath.section][indexPath.row];
+    ZJCourseModel *cModel = [[ZJCourseModel alloc] init];
+    [cModel setKeyValues:dict];
     //时间段
     
     UILabel *timeLabel = [ZJUIMethods creatLabel:cModel.timestamp frame:CGRectMake(20, 0, 80, 20) font:kFont(14) textColor:nil];
