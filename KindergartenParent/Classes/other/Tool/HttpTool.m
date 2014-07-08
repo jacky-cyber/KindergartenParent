@@ -61,8 +61,9 @@
     NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:urlString parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
         // 提示：UIImage不能为空
-        NSData *data = UIImagePNGRepresentation(image);
-        
+        //NSData *data = UIImagePNGRepresentation(image);
+        NSData *data = UIImageJPEGRepresentation(image , 0.75);
+       // MyLog(@"%@",data.bytes);
         /**
          参数说明：
          

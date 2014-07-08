@@ -289,6 +289,14 @@ int page = 1;
     return YES;
 }
 
+-(void)dealloc
+{
+   
+    [[NSNotificationCenter
+      defaultCenter] removeObserver:self name:@"keyboardChangeFrame"
+     
+     object:nil];
 
+}
 
 @end
