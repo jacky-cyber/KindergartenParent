@@ -13,7 +13,11 @@
 + (void)requestWithPath:(NSString *)path params:(NSDictionary *)params success:(HttpSuccessBlock)success failure:(HttpFailureBlock)failure method:(NSString *)method
 {
     
-     NSString *urlString = [NSString stringWithFormat:@"kindergarten/service/app!%@.action",path];
+    
+     NSMutableString *urlString = [NSMutableString stringWithFormat:@"kindergarten/service/app!%@.action",path];
+    if ([path isEqual:@"updateuserinfo"]) {
+        [urlString appendString:@"?isParse=false"];
+    }
     
     // 1.创建post请求
     AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:kBaseUrl]];
@@ -42,6 +46,7 @@
         //[SVProgressHUD showErrorWithStatus:@"网络请求错误" duration:1];
 //#warning 错误信息
         failure(error);
+        MyLog(@"%@",error.description);
     }];
     
     // 3.发送请求
@@ -86,8 +91,10 @@
         NSString *dateStr = [formatter stringFromDate:date];
         // 4) 使用系统时间生成一个文件名
         NSString *fileName = [NSString stringWithFormat:@"%@.png", dateStr];
-        
-        [formData appendPartWithFileData:data name:@"filename" fileName:fileName mimeType:@"image/png"];
+        if (image) {
+            [formData appendPartWithFileData:data name:@"filename" fileName:fileName mimeType:@"image/png"];
+
+        }
         
     }];
     
@@ -114,7 +121,7 @@
 //          NSLog(@"成功呢！json ===%@",operation.responseString);
          NSLog(@"upload finish ---%@",[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]);
         //NSLog(@"上传文件成功");
-        success(operation);
+        success(operation.responseString);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          failure(error);
        // NSLog(@"上传文件失败 %@", error);

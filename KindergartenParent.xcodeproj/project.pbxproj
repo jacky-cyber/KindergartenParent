@@ -1395,6 +1395,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = define;
 				TargetAttributes = {
+					4B247E7E19590D9200C520A9 = {
+						DevelopmentTeam = PU6M64Z267;
+					};
 					4B247E9F19590D9200C520A9 = {
 						TestTargetID = 4B247E7E19590D9200C520A9;
 					};

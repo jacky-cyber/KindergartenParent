@@ -83,22 +83,23 @@
                              _param:contentStr,
                              @"username":[LoginUser sharedLoginUser].userName};
     
-    [HttpTool getWithPath:@"updateuserinfo" params:params success:^(id JSON) {
-        if ([JSON[@"code"] intValue] == 0) {
+    [HttpTool updateFileWithPath:@"updateuserinfo" params:params withImag:nil success:^(id JSON) {
+        if ([JSON isEqualToString:@"{\"code\": 0, \"msg\":\"success\"}"]) {
             kPS(@"修改成功", 0);
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
             
-            kPE(@"系统异常", 1);
+            
+            
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
-         kPdismiss;
-       // NSLog(@"%@",error.description);
+         kPE(@"系统异常", 1);
     }];
-
     
+    //修改昵称
+    if ([_param isEqual:@"nickname"]) {
+        [LoginUser sharedLoginUser].nickname = contentStr;
+    }
     
-    [self.navigationController popViewControllerAnimated:YES];
 
 }
 

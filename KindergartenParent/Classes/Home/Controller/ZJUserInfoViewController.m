@@ -360,7 +360,7 @@
     //username=xuesheng&role=0&isParse=false&profileimg=123
     NSDictionary *params = @{@"role":@"0",
                             @"username":[LoginUser sharedLoginUser].userName,
-                             @"profileimg":@123};
+                            };
     
     // profileimg
     [HttpTool updateFileWithPath:@"updateuserinfo" params:params withImag:img success:^(id JSON) {
