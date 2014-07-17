@@ -51,7 +51,7 @@
         
     }else{
         _textField =[[UITextField alloc] initWithFrame:CGRectMake(20, 20, 280, 50)];
-        _textField.layer.borderColor = [UIColor grayColor].CGColor;
+        _textField.layer.borderColor = [UIColor colorWithRed:0.110 green:0.502 blue:0.275 alpha:1.000].CGColor;
         _textField.layer.borderWidth = 1;
         _textField.text = self.contentTitle;
         [self.view addSubview:_textField];

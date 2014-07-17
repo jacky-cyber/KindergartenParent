@@ -11,6 +11,7 @@
 @interface ZJUserInfoModel : NSObject
 single_interface(ZJUserInfoModel)
 @property(nonatomic,copy) NSString *address;
+@property(nonatomic,copy) NSString *classid;
 @property(nonatomic,copy) NSString *classes;
 @property(nonatomic,copy) NSString *guominshi;
 @property(nonatomic,copy) NSString *username;

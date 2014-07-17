@@ -178,31 +178,25 @@
         [parentView addSubview:titleLable];
         
         //按钮
-        UIButton *titleBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        titleBtn.tag = i+1;
-        titleBtn.titleLabel.font = kFont(14);
-        titleBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentRight;
-        titleBtn.backgroundColor = [UIColor clearColor];
-        titleBtn.titleLabel.numberOfLines = 0;
-        titleBtn.titleLabel.lineBreakMode =NSLineBreakByWordWrapping;
-        titleBtn.frame = CGRectMake(70, 10, 200, btnY);
-        [titleBtn setBackgroundImage:[UIImage imageNamed:@"wangjipwd"] forState:UIControlStateNormal];
-        [titleBtn setBackgroundImage:[UIImage imageNamed:@"wangjipwd"] forState:UIControlStateHighlighted];
-        [titleBtn setTitle:title forState:UIControlStateNormal];
+        
+        UILabel *titleLabel = [ZJUIMethods creatLabel:title frame:CGRectMake(70, 10, 200, btnY) font:kFont(14) textColor:[UIColor grayColor]];
+        titleLabel.numberOfLines = 0;
+        titleLabel.userInteractionEnabled = YES;
+        titleLabel.textAlignment = NSTextAlignmentRight;
+        titleLabel.tag = i+1;
+        
         if (i <1 || i >3 ) {
-            titleBtn.tintColor = [UIColor blackColor];
-            [titleBtn addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
-        }else{
-            titleBtn.enabled = NO;
-            titleBtn.tintColor = [UIColor grayColor];
+            titleLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:1.0];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editAction:)];
+            
+            [titleLabel addGestureRecognizer:tap];
             
         }
-        
         if (i==count) {
             //[titleBtn setBackgroundImage:[UIImage imageNamed:@"profile_detial"] forState:UIControlStateNormal];
             //titleBtn.frame = CGRectMake(240, 10, 25, 25);
         }
-         [parentView addSubview:titleBtn];
+         [parentView addSubview:titleLabel];
         
         
     
@@ -227,9 +221,9 @@
     
 }
 
--(void)editAction:(UIButton*)sender
+-(void)editAction:(UITapGestureRecognizer*)tap
 {
-    MyLog(@"%d",sender.tag);
+    UILabel *sender = (UILabel*)tap.view;
     if (sender.tag == 8) {
         [self pushController:[ZJEditPwdViewController class] withInfo:_userModel.username withTitle:@"修改密码"];
     }else{
@@ -237,7 +231,7 @@
         ZJEditUserViewController *controller = [[ZJEditUserViewController alloc] init];
 
         // 1. 设置标题
-        controller.contentTitle = sender.titleLabel.text;
+        controller.contentTitle = sender.text;
         // 2. 传递内容标签
        controller.contentLable = _titleArr[sender.tag-1];
         

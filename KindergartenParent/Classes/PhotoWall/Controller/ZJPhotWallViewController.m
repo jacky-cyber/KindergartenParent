@@ -75,9 +75,9 @@ static int page = 1;
     //看自己
     
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnR.frame = CGRectMake(0, 4, 65, 25);
+    btnR.frame = CGRectMake(0, 0, 65,30);
     [btnR addTarget:self action:@selector(initData:) forControlEvents:UIControlEventTouchUpInside];
-    
+    btnR.tag = 100;
     UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
     
     [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
@@ -98,30 +98,41 @@ static int page = 1;
     
 
     
-//    classesid	int	班级id
-//    catid	分类	分类id
-//    username	String	看自己
-//    page	int	页数
+
     kPBlack(@"正在加载成长记录");
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
         //@{@"classesid":@"1",@"page":@"1"}
    
     //如果有分类
-    if (btn) {
+    if (btn.tag != 100 && btn) {
         [params setValue:@(btn.tag) forKey:@"catid"];
         //删除数据并且初始化page
         [_dataArr removeAllObjects];
         page = 1;
     }
-    [params setObject:@"1" forKey:@"classesid"];
-    [params setObject:@(page) forKey:@"page"];
     
+    //看自己
+    if (btn.tag == 100) {
+        [_dataArr removeAllObjects];
+        page = 1;
+
+        [params setObject:[LoginUser sharedLoginUser].userName forKey:@"usernma"];
+    }
+    
+    //?classesid=1&cateid=1&username=xuesheng&usernma=xuesheng&page=1
+    
+    [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
+    [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
+    [params setObject:@(page) forKey:@"page"];
+    //[params setObject:@"1" forKey:@"cateid"];
     [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
+        NSLog(@"%@",JSON);
         for (NSDictionary *dict in JSON[@"data"]) {
             ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
             [model setKeyValues:dict];
             model.praisecount = [NSString stringWithFormat:@"%@",dict[@"praisecount"]];
             model.comcount = [NSString stringWithFormat:@"%@",dict[@"comcount"]];
+            model.ispraise = [NSString stringWithFormat:@"%@",dict[@"ispraise"]];
             [_dataArr addObject:model];
             //MyLog(@"%@",model.images);
         }
@@ -228,12 +239,24 @@ static int page = 1;
     timeLabel.font = kFont(12);
     [toolView addSubview:timeLabel];
     
-    UIButton *praiseBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(150, 0, 16, 16) delegate:self selector:@selector(praiseAction) tag:0];
-    [praiseBtn setImage:[UIImage imageNamed:@"p_parise"] forState:UIControlStateNormal];
+    
+    //设置赞按钮的背景图片
+    NSString *pariseS = nil;
+    
+    //MyLog(@"%@",model.ispraise);
+    if ([model.ispraise isEqualToString:@"0"]) {
+        pariseS = @"p_parise";
+    }else{
+         pariseS = @"p_parise_h";
+    }
+    
+    UIButton *praiseBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(150, 0, 16, 16) delegate:self selector:@selector(praiseAction:) tag:section];
+    [praiseBtn setImage:[UIImage imageNamed:pariseS] forState:UIControlStateNormal];
     [toolView addSubview:praiseBtn];
     
     //赞
     UILabel *praiseLable = [ZJUIMethods creatLabel:model.praisecount frame:CGRectMake(XW(praiseBtn)+5, 0, 30, 16) font:kFont(12) textColor:nil];
+    praiseLable.tag = 10+section;
     praiseLable.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
     //praiseLable.backgroundColor = [UIColor redColor];
     [toolView addSubview:praiseLable];
@@ -253,9 +276,39 @@ static int page = 1;
     UIView *cateView = [ZJUIMethods creatView:CGRectMake(kMargin, YH(toolView)+kMargin, 280, 20) bgColor:[UIColor whiteColor]];
     
     //按钮
-    NSArray *cateArr = @[@"健康",@"语言",@"科学",@"艺术",@"社会"];
-    for (int i = 0; i<5; i++) {
-        UIButton *button = [ZJUIMethods creatButton:cateArr[i] frame:CGRectMake(i*58, 0, 48, 20) delegate:self selector:@selector(initData:) tag:i+1];
+    //标签(1健康，2语言，3科学，4艺术,5社会)可多选，多选用逗号“，”隔开
+    //NSString *catS = [model.labels componentsSeparatedByString:@","];
+    
+    NSArray *cateArr = [model.labels componentsSeparatedByString:@","];
+    //MyLog(@"%@",cateArr);
+    for (int i = 0; i<cateArr.count; i++) {
+        NSString *title = nil;
+        int tag;
+        switch ([cateArr[i] intValue]) {
+            case 1:
+                tag = 1;
+                title = @"健康";
+                break;
+            case 2:
+                tag = 2;
+                title = @"语言";
+                break;
+            case 3:
+                tag = 3;
+                title = @"科学";
+                break;
+            case 4:
+                tag = 4;
+                title = @"艺术";
+                break;
+            case 5:
+                tag = 5;
+                title = @"社会";
+                break;
+            default:
+                break;
+        }
+        UIButton *button = [ZJUIMethods creatButton:title frame:CGRectMake(i*58, 0, 48, 20) delegate:self selector:@selector(initData:) tag:tag];
         button.titleLabel.font = kFont(14);
         [button setBackgroundImage:[UIImage imageNamed:@"categor_bg"] forState:UIControlStateNormal];
         [cateView addSubview:button];
@@ -310,16 +363,30 @@ static int page = 1;
     [self pushController:[ZJCommentListViewController class] withInfo:@(btn.tag) withTitle:@"评论"];
 }
 
--(void)praiseAction
+-(void)praiseAction:(UIButton*)sender
 {
     
-    NSDictionary *params = @{@"pwallid":@"1",
-                             @"userName":[LoginUser sharedLoginUser].userName,
-                             @"content":@""
+     ZJPotoWallModel *model = _dataArr[sender.tag];
+    NSString *type = nil;
+    if ([model.ispraise isEqualToString:@"0"]) {
+        type = @"0";
+        [sender setImage:[UIImage imageNamed:@"p_parise_h"] forState:UIControlStateNormal];
+    }else{
+        type = @"1";
+        [sender setImage:[UIImage imageNamed:@"p_parise"] forState:UIControlStateNormal];
+    }
+    
+    
+    NSDictionary *params = @{@"pwallid":model.id,
+                             @"username":[LoginUser sharedLoginUser].userName,
+                             @"type":type
                              };
     
     [HttpTool getWithPath:@"praise" params:params success:^(id JSON) {
-        NSLog(@"%@",JSON);
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue]==0) {
+            
+        }
     } failure:^(NSError *error) {
         
     }];
@@ -470,7 +537,7 @@ static int page = 1;
     
     h = [str getHeightByWidth:280 font:kFont(13)];
     h = h>16?h:16;
-     MyLog(@"%@--%f",str,h);
+    // MyLog(@"%@--%f",str,h);
     return h;
     
     

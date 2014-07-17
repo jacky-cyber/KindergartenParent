@@ -137,11 +137,9 @@
     
     ZJWeekReportView *biaoxian = [[ZJWeekReportView alloc] init];
     biaoxian.frame = CGRectMake(20, YH(chuqin)+kMarginH, 280, 50);
-    biaoxian.titleLabel.text = @"在园表演";
-    biaoxian.ftitleLabel.text = @"进餐:";
-    biaoxian.stitleLabel.text = @"饮水:";
-    biaoxian.fcontentLabel.text = _model.eat;
-    biaoxian.scontentLabel.text = _model.drink;
+    biaoxian.titleLabel.text = @"在园表现";
+    biaoxian.isOne = YES;
+    biaoxian.fcontentLabel.text = _model.biaoxian;
     [biaoxian setupFrame];
     [_scrollView addSubview:biaoxian];
     

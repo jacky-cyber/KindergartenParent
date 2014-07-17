@@ -17,4 +17,6 @@
 @property(nonatomic,copy) NSString *praisecount;
 @property(nonatomic,copy) NSString *title;
 @property(nonatomic,copy) NSString *videourl;
+@property(nonatomic,copy) NSString *labels;
+@property(nonatomic,copy) NSString *ispraise;
 @end
