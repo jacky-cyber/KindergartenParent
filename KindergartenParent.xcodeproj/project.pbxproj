@@ -194,6 +194,9 @@
 		4B2C156F1963A6C300BB2335 /* timeline_image_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */; };
 		4B2C15701963A6C300BB2335 /* timeline_image_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */; };
 		4B4115DC195D05840048446C /* readme in Resources */ = {isa = PBXBuildFile; fileRef = 4B4115DB195D05840048446C /* readme */; };
+		4B7FF1ED19790ED700779D9C /* ZJChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FF1EB19790ED700779D9C /* ZJChatViewController.m */; };
+		4B7FF1EE19790ED700779D9C /* ZJChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7FF1EC19790ED700779D9C /* ZJChatViewController.xib */; };
+		4B7FF1F11979195900779D9C /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FF1F01979195900779D9C /* ChatMessageCell.m */; };
 		4B998A2D1966B62A00EAECC8 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B998A1D1966B62A00EAECC8 /* MJRefresh.bundle */; };
 		4B998A2E1966B62A00EAECC8 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A201966B62A00EAECC8 /* MJRefreshBaseView.m */; };
 		4B998A2F1966B62A00EAECC8 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A221966B62A00EAECC8 /* MJRefreshConst.m */; };
@@ -522,6 +525,11 @@
 		4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_image_loading.png; sourceTree = "<group>"; };
 		4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeline_image_loading@2x.png"; sourceTree = "<group>"; };
 		4B4115DB195D05840048446C /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
+		4B7FF1EA19790ED700779D9C /* ZJChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJChatViewController.h; sourceTree = "<group>"; };
+		4B7FF1EB19790ED700779D9C /* ZJChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJChatViewController.m; sourceTree = "<group>"; };
+		4B7FF1EC19790ED700779D9C /* ZJChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJChatViewController.xib; sourceTree = "<group>"; };
+		4B7FF1EF1979195900779D9C /* ChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageCell.h; sourceTree = "<group>"; };
+		4B7FF1F01979195900779D9C /* ChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageCell.m; sourceTree = "<group>"; };
 		4B998A1D1966B62A00EAECC8 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		4B998A1E1966B62A00EAECC8 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		4B998A1F1966B62A00EAECC8 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -674,6 +682,7 @@
 		4B247EB719590DC900C520A9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4B7FF1E619790E0C00779D9C /* Chat */,
 				4B247EB819590DC900C520A9 /* Fuyaodan */,
 				4B247EC619590DC900C520A9 /* Home */,
 				4B247EED19590DC900C520A9 /* Login */,
@@ -1324,6 +1333,42 @@
 			path = "YiWuTongZhi-FuYaoDan";
 			sourceTree = "<group>";
 		};
+		4B7FF1E619790E0C00779D9C /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				4B7FF1E719790E0C00779D9C /* Controller */,
+				4B7FF1E819790E0C00779D9C /* Model */,
+				4B7FF1E919790E0C00779D9C /* View */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		4B7FF1E719790E0C00779D9C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4B7FF1EA19790ED700779D9C /* ZJChatViewController.h */,
+				4B7FF1EB19790ED700779D9C /* ZJChatViewController.m */,
+				4B7FF1EC19790ED700779D9C /* ZJChatViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4B7FF1E819790E0C00779D9C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4B7FF1E919790E0C00779D9C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4B7FF1EF1979195900779D9C /* ChatMessageCell.h */,
+				4B7FF1F01979195900779D9C /* ChatMessageCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4B998A1C1966B62A00EAECC8 /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -1470,6 +1515,7 @@
 				4B24807D19590DC900C520A9 /* bj_27@2x.png in Resources */,
 				4B24807919590DC900C520A9 /* img06@2x.png in Resources */,
 				4B1B4317195FD7E600EDAE1E /* MBProgressHUD.bundle in Resources */,
+				4B7FF1EE19790ED700779D9C /* ZJChatViewController.xib in Resources */,
 				4B247FFD19590DC900C520A9 /* ZJUserInfoViewController.xib in Resources */,
 				4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */,
 				4B24807B19590DC900C520A9 /* nav_menu_icon@2x.png in Resources */,
@@ -1555,6 +1601,7 @@
 				4B24804D19590DC900C520A9 /* TimeFormatTools.m in Sources */,
 				4B24801519590DC900C520A9 /* ZJHonorModel.m in Sources */,
 				4B24801B19590DC900C520A9 /* NSString+Helper.m in Sources */,
+				4B7FF1F11979195900779D9C /* ChatMessageCell.m in Sources */,
 				4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */,
 				4B24802C19590DC900C520A9 /* IQTitleBarButtonItem.m in Sources */,
 				4B24803919590DC900C520A9 /* NSObject+MJKeyValue.m in Sources */,
@@ -1569,6 +1616,7 @@
 				4B24803519590DC900C520A9 /* MJMethod.m in Sources */,
 				4B24803719590DC900C520A9 /* MJTypeEncoding.m in Sources */,
 				4B1B430F195FD7AD00EDAE1E /* SDWebImageManager+MJ.m in Sources */,
+				4B7FF1ED19790ED700779D9C /* ZJChatViewController.m in Sources */,
 				4B998A301966B62A00EAECC8 /* MJRefreshFooterView.m in Sources */,
 				4B24804519590DC900C520A9 /* UIButton+WebCache.m in Sources */,
 				4B24804419590DC900C520A9 /* SDWebImagePrefetcher.m in Sources */,

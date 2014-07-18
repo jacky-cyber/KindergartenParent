@@ -16,13 +16,13 @@
 #define kNickName @"nickName"
 #define kClasses @"classes"
 #define kClassid @"classid"
-
 #define kProfileImg @"profileImg"
 #define kParentName @"parentName"
 #define kTel @"tel"
 #define kName @"name"
 #define kTeacherId @"teacherid"
 #define kKindergarten @"kindergarten"
+#define kRole @"role"
 @implementation LoginUser
 single_implementation(LoginUser)
 
@@ -72,6 +72,9 @@ single_implementation(LoginUser)
 -(NSString *)kindergarten{
     return  [self loadStringFromDefaultsWithKey:kKindergarten];
 }
+-(NSString *)role{
+    return  [self loadStringFromDefaultsWithKey:kRole];
+}
 -(NSString *)classid{
     return [self loadStringFromDefaultsWithKey:kClassid];
 }
@@ -79,6 +82,12 @@ single_implementation(LoginUser)
 {
     [classid saveToNSDefaultsWithKey:kClassid];
 }
+
+-(void)setRole:(NSString *)role
+{
+    [role saveToNSDefaultsWithKey:kRole];
+}
+
 -(void)setUserName:(NSString *)userName
 {
     [userName saveToNSDefaultsWithKey:kUserName];

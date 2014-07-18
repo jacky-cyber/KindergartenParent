@@ -27,7 +27,7 @@ single_interface(ZJUserInfoModel)
 @property(nonatomic,copy) NSString *userid;
 @property(nonatomic,copy) NSString *teacherid;
 @property(nonatomic,copy) NSString *kindergarten;
-@property(nonatomic,copy) NSString *hzl;
+@property(nonatomic,copy) NSString *role;
 
 @end
 

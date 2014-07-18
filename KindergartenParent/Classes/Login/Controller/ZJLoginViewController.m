@@ -92,6 +92,7 @@
             [LoginUser sharedLoginUser].teacherid = user.teacherid;
             [LoginUser sharedLoginUser].kindergarten = user.kindergarten;
             [LoginUser sharedLoginUser].classid = user.classid;
+            [LoginUser sharedLoginUser].role = [NSString stringWithFormat:@"%@",user.role];
             MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;

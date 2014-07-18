@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 Define. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseController.h"
 
-@interface ZJRightSideDrawerViewController : UITableViewController
+@interface ZJRightSideDrawerViewController : BaseController
 
 @end

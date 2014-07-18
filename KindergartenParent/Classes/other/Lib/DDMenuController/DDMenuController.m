@@ -535,8 +535,8 @@
     [self.view insertSubview:view atIndex:0];
     
     frame = _root.view.frame;
-    frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
-    
+    //frame.origin.x = -(frame.size.width - kMenuOverlayWidth);
+    frame.origin.x = -80;
     BOOL _enabled = [UIView areAnimationsEnabled];
     if (!animated) {
         [UIView setAnimationsEnabled:NO];
@@ -613,7 +613,7 @@
         return;
     }
     
-    if (_menuFlags.showingLeftView) {
+    //if (_menuFlags.showingLeftView) {
         
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -637,13 +637,17 @@
             
         }];
         
-    } else {
-        
-        // just add the root and move to it if it's not center
-        [self setRootViewController:controller];
-        [self showRootController:animated];
-        
-    }
+//    } else {
+//        
+//        [UIView animateWithDuration:.1 animations:^{
+//        // just add the root and move to it if it's not center
+//       
+//        } completion:^(BOOL finished) {
+//            [self setRootViewController:controller];
+//            [self showRootController:animated];
+//        }];
+//        
+//    }
      
 }
 

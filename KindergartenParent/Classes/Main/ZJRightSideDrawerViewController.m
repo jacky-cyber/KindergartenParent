@@ -7,31 +7,96 @@
 //
 
 #import "ZJRightSideDrawerViewController.h"
+#import "UIImageView+MJWebCache.h"
+#import "ZJChatViewController.h"
+#import "DDMenuController.h"
+#import "ZJAppDelegate.h"
+@interface ZJRightSideDrawerViewController ()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView *_tableView;
 
-@interface ZJRightSideDrawerViewController ()
+    
+    NSMutableArray *_contactsArr;//通讯录数组
+}
 
 @end
 
 @implementation ZJRightSideDrawerViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
+    
+    _contactsArr = [NSMutableArray arrayWithCapacity:2];
+    
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    _tableView = [[UITableView alloc] init];
+    _tableView.frame = CGRectMake(240,0,self.view.frame.size.width,self.view.frame.size.height);
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    _tableView.bounces = NO;
+    _tableView.rowHeight = 60;
+ 
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _tableView.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
+    UIView *bgView = [[UIView alloc] init];
+    UIImageView *bgImag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beijing02"]];
+    [bgView addSubview:bgImag];
+    _tableView.backgroundView = bgView;
+    
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsMake(0, 50, 0, 0)];
+    }
+    
+//    UILabel *kindergarten = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight*0.9, 200, 21)];
+//    
+//    kindergarten.backgroundColor = [UIColor clearColor];
+//    kindergarten.textColor = [UIColor whiteColor];
+//    kindergarten.textAlignment = NSTextAlignmentCenter;
+//    kindergarten.text = @"美蒙国际双语幼儿园";
+//    [self.view addSubview:kindergarten];
+    
+    
+    //加载通讯录
+    [self initContacts];
+    
+}
+
+
+#pragma mark 初始化通讯录
+-(void)initContacts{
+    
+    //182.18.23.244:8080/kindergarten/service/app!addressbook.action?username=LS13436871757&role=1
+    
+    NSDictionary *d = [NSDictionary dictionary];
+    [_contactsArr addObject:d];
+    
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,@"role":[LoginUser sharedLoginUser].role};
+    
+    
+    [HttpTool getWithPath:@"addressbook" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if (JSON[@"data"]) {
+            for (NSDictionary *dict in JSON[@"data"][0][@"userList"]) {
+                [_contactsArr addObject:dict];
+            
+                
+            }
+            //[_contactsArr writeToFile:@"/Users/define/Desktop/a.plist" atomically:YES];
+            [_tableView reloadData];
+        }
+        MyLog(@"-------%@",_contactsArr);
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    //NSString *path  = [[NSBundle mainBundle] pathForResource:@"a" ofType:@"plist"];
+    //_contactsArr = [[NSMutableArray alloc] initWithContentsOfFile:path];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,30 +107,66 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
 
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
 
-    return 0;
+    return _contactsArr.count;
 }
 
-/*
+
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
- UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+     static NSString *ID = @"Cell";
+ UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+     if (!cell) {
+         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+     }
+     cell.backgroundColor = [UIColor clearColor];
+     if (indexPath.row > 0) {
+         NSDictionary *dict = _contactsArr[indexPath.row];
+         
+         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 5, 50, 50)];
+         [cell addSubview:imageView];
+         
+         [imageView setImageURLStr:dict[@"profileimngurl"] placeholder:[UIImage imageNamed:@"profile"]];
+         //cell.textLabel.text = @"xxxxx";
+     }
+    
+     
  
  // Configure the cell...
  
  return cell;
  }
- */
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ZJChatViewController *chat  = [[ZJChatViewController alloc] init];
+       BaseNavigationController *courseNav = [[BaseNavigationController alloc] initWithRootViewController:chat];
+    
+       // (DDMenuController*)((ZJAppDelegate*)[UIApplication sharedApplication].delegate).menuController;
+    
+    if (indexPath.row == 0) {
+        return;
+    }
+    
+    //[self.navigationController pushViewController:chat animated:YES];
+    
+    
+    DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    
+    [menuController setRootController:courseNav animated:YES];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+    
+}
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
