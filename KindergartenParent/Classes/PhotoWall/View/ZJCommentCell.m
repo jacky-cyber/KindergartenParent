@@ -15,7 +15,7 @@
 {
     //头像地址
     UIImageView *_imgView;
-    RTLabel *_unameLabel;//评论人
+    UILabel *_unameLabel;//评论人
     UILabel *_commTime;//评论时间
     UILabel *_contentLabel;//评论内容
    
@@ -45,7 +45,7 @@
     _imgView = [ZJUIMethods creatImageView:CGRectMake(kMargin, kMargin, 40, 40) imageName:@"201277441619594489.jpg"];
     [bgView addSubview:_imgView];
     //发布人
-    _unameLabel = [[RTLabel alloc] initWithFrame:CGRectMake( XW(_imgView)+kMargin, Y(_imgView),120,20)];
+    _unameLabel = [[UILabel alloc] initWithFrame:CGRectMake( XW(_imgView)+kMargin, Y(_imgView),120,20)];
     //_unameLabel.backgroundColor = [UIColor redColor];
     [bgView addSubview:_unameLabel];
     
@@ -80,7 +80,6 @@
     //发布人
     //NSString *uname = [NSString stringWithFormat:@"<a href='www.baidu.com'>%@</a> 的家长",_cmmodel.cmnickname];
     _unameLabel.text = _cmmodel.cmnickname;
-    _unameLabel.linkAttributes = @{@"color":@"#78a40e"};
     //发布时间
     TimeFormatTools *timef = [[TimeFormatTools alloc] init];
     NSString *timeStr = [timef timeToNow:_cmmodel.cmtime];

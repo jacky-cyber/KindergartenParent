@@ -1,5 +1,5 @@
 //
-//  ZJHomeViewController.h
+//  ZJNotificationListViewController.h
 //  KindergartenParent
 //
 //  Created by define on 14-7-25.
@@ -8,6 +8,6 @@
 
 #import "BaseController.h"
 
-@interface ZJHomeViewController : BaseController
+@interface ZJNotificationListViewController : BaseController
 
 @end

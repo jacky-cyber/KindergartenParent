@@ -71,7 +71,7 @@
    
     [SVProgressHUD showWithStatus:@"正在登录，请稍后" maskType:SVProgressHUDMaskTypeBlack];
     
-    [HttpTool getWithPath:@"login" params:@{@"username":username,@"pwd":pwd,@"role":@"0"} success:^(id JSON) {
+    [HttpTool getWithPath:@"login" params:@{@"username":username,@"pwd":pwd} success:^(id JSON) {
         if (JSON[@"data"]) {
             
             [SVProgressHUD showSuccessWithStatus:@"登录成功" duration:1];

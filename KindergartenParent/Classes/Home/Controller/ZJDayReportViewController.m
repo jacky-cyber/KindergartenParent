@@ -97,7 +97,7 @@
         textLabel.font = kFont(14);
         //设置显示
         
-        MyLog(@"%-----@",_dataDict);
+        //MyLog(@"%-----@",_dataDict);
         
         if (indexPath.row == 0) {
             textLabel.text = _dataDict[@"sleeptime"];

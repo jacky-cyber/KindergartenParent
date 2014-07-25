@@ -24,7 +24,6 @@
 #import "UIImageView+WebCache.h"
 #import "ZJUserInfoModel.h"
 #import "ZJUIMethods.h"
-#import "RTLabel.h"
 #import "UIImage+ZJ.h"
 #import "MJRefresh.h"
 #endif

@@ -81,7 +81,7 @@
     //182.18.23.244:8080/kindergarten/service/app!apply.action?username=xuesheng&id=1
     
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
-                             @"id":_model.nid};
+                             @"id":_model.id};
     [HttpTool getWithPath:@"applystatus" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
@@ -104,7 +104,7 @@
     182.18.23.244:8080/kindergarten/service/app!applystatus.action?username=xuesheng&id=1
      */
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
-                             @"id":_model.nid};
+                             @"id":_model.id};
     [HttpTool getWithPath:@"applystatus" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
         if ([JSON[@"data"][@"status"] isEqual:@2]) {

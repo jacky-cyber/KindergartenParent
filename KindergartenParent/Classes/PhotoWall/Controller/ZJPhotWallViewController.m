@@ -91,9 +91,24 @@ static int page = 1;
     _dataArr = [NSMutableArray array];
     
     //加载数据
-    [self initData:nil];
+    [self headerRefreshing];
+    
+    // 集成刷新控件
+    [self setupRefresh];
 }
-
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
+{
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_tableView addHeaderWithTarget:self action:@selector(headerRefreshing)];
+    //#warning 自动刷新(一进入程序就下拉刷新)
+    //[self.tableView headerBeginRefreshing];
+    
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
 -(void)initData:(UIButton*)btn{
     
 
@@ -145,7 +160,66 @@ static int page = 1;
     }];
     //kPdismiss
 }
+- (void)footerRereshing
+{
+    kPBlack(@"正在加载成长记录");
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
+    [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
+    [params setObject:@(page) forKey:@"page"];
+    [_dataArr removeAllObjects];
+    [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
+        for (NSDictionary *dict in JSON[@"data"]) {
+            ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
+            [model setKeyValues:dict];
+            model.praisecount = [NSString stringWithFormat:@"%@",dict[@"praisecount"]];
+            model.comcount = [NSString stringWithFormat:@"%@",dict[@"comcount"]];
+            model.ispraise = [NSString stringWithFormat:@"%@",dict[@"ispraise"]];
+            [_dataArr addObject:model];
+            //MyLog(@"%@",model.images);
+        }
+        kPdismiss;
+        page ++;
+        [_tableView reloadData];
+        [_tableView footerEndRefreshing];
+    } failure:^(NSError *error) {
+        [_tableView footerEndRefreshing];
+        kPdismiss
+        MyLog(@"%@",error.debugDescription);
+    }];
+    
+}
 
+-(void)headerRefreshing
+{
+    page = 1;
+    kPBlack(@"正在加载成长记录");
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
+    [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
+    [params setObject:@(page) forKey:@"page"];
+    [_dataArr removeAllObjects];
+    [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
+        for (NSDictionary *dict in JSON[@"data"]) {
+            ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
+            [model setKeyValues:dict];
+            model.praisecount = [NSString stringWithFormat:@"%@",dict[@"praisecount"]];
+            model.comcount = [NSString stringWithFormat:@"%@",dict[@"comcount"]];
+            model.ispraise = [NSString stringWithFormat:@"%@",dict[@"ispraise"]];
+            [_dataArr addObject:model];
+            //MyLog(@"%@",model.images);
+        }
+        kPdismiss;
+        
+        [_tableView reloadData];
+        [_tableView headerEndRefreshing];
+    } failure:^(NSError *error) {
+        [_tableView headerEndRefreshing];
+        kPdismiss
+        MyLog(@"%@",error.debugDescription);
+    }];
+    //kPdismiss
+}
 
 #define kMargin 10
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -186,7 +260,7 @@ static int page = 1;
             _images = model.images;
 
         //}
-        UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading.png"];
+        UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading"];
 
         //取出图片的张数
         int count = model.images.count;
@@ -453,10 +527,10 @@ static int page = 1;
         // 如果想要改变部份文本内容的风格，我们就需要用到NSAttributedString NSMutableAttributedString
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:cmStr];
         
-        int nickNameLengt = ((NSString*)commDict[@"cmnickname"]).length;
-        [attrString addAttribute:(NSString *)kCTForegroundColorAttributeName
-                            value:[UIColor redColor]
-                            range:NSMakeRange(0,nickNameLengt )];
+        int nickNameLengt = (int)((NSString*)commDict[@"cmnickname"]).length;
+//        [attrString addAttribute:(NSString *)kCTForegroundColorAttributeName
+//                            value:[UIColor redColor]
+//                            range:NSMakeRange(0,nickNameLengt )];
          [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.627 green:0.827 blue:0.149 alpha:1.000] range:NSMakeRange(0,nickNameLengt)];
        
         UILabel *coment = [ZJUIMethods creatLabel:nil frame:CGRectMake(10, height, 280, 16) font:kFont(13) textColor:nil];
