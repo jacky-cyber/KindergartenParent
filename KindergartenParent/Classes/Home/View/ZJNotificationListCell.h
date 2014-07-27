@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bgImage;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tiemeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *qiandaoBtn;
 @end

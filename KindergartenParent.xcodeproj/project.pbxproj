@@ -142,17 +142,12 @@
 		4B24805A19590DC900C520A9 /* beijing02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FB619590DC900C520A9 /* beijing02@2x.png */; };
 		4B24805B19590DC900C520A9 /* beijing2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FB719590DC900C520A9 /* beijing2@2x.png */; };
 		4B24805C19590DC900C520A9 /* beijing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FB919590DC900C520A9 /* beijing@2x.png */; };
-		4B24805D19590DC900C520A9 /* cookbook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FBA19590DC900C520A9 /* cookbook@2x.png */; };
-		4B24805E19590DC900C520A9 /* dayreport@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FBB19590DC900C520A9 /* dayreport@2x.png */; };
 		4B24805F19590DC900C520A9 /* fenlei@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FBC19590DC900C520A9 /* fenlei@2x.png */; };
 		4B24806019590DC900C520A9 /* honor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FBD19590DC900C520A9 /* honor@2x.png */; };
-		4B24806119590DC900C520A9 /* img1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FBE19590DC900C520A9 /* img1@2x.png */; };
 		4B24806219590DC900C520A9 /* jiazhangming@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FBF19590DC900C520A9 /* jiazhangming@2x.png */; };
 		4B24806319590DC900C520A9 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC019590DC900C520A9 /* menu@2x.png */; };
 		4B24806419590DC900C520A9 /* message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC119590DC900C520A9 /* message@2x.png */; };
-		4B24806519590DC900C520A9 /* shijian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC219590DC900C520A9 /* shijian@2x.png */; };
 		4B24806619590DC900C520A9 /* touxiang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC319590DC900C520A9 /* touxiang@2x.png */; };
-		4B24806719590DC900C520A9 /* yiwushi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC419590DC900C520A9 /* yiwushi@2x.png */; };
 		4B24806819590DC900C520A9 /* bj_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC619590DC900C520A9 /* bj_03@2x.png */; };
 		4B24806919590DC900C520A9 /* bj_27N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC719590DC900C520A9 /* bj_27N@2x.png */; };
 		4B24806A19590DC900C520A9 /* fanhui_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FC819590DC900C520A9 /* fanhui_03@2x.png */; };
@@ -209,6 +204,7 @@
 		4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */; };
 		4BFFDCF01962831100439190 /* ZJPotoWallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */; };
 		7161507419692E5800F6FEB9 /* InsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7161507319692E5800F6FEB9 /* InsetsLabel.m */; };
+		71650C34198353670049BB3F /* DockItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 71650C33198353670049BB3F /* DockItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -472,17 +468,12 @@
 		4B247FB619590DC900C520A9 /* beijing02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beijing02@2x.png"; sourceTree = "<group>"; };
 		4B247FB719590DC900C520A9 /* beijing2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beijing2@2x.png"; sourceTree = "<group>"; };
 		4B247FB919590DC900C520A9 /* beijing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beijing@2x.png"; sourceTree = "<group>"; };
-		4B247FBA19590DC900C520A9 /* cookbook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cookbook@2x.png"; sourceTree = "<group>"; };
-		4B247FBB19590DC900C520A9 /* dayreport@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dayreport@2x.png"; sourceTree = "<group>"; };
 		4B247FBC19590DC900C520A9 /* fenlei@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fenlei@2x.png"; sourceTree = "<group>"; };
 		4B247FBD19590DC900C520A9 /* honor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "honor@2x.png"; sourceTree = "<group>"; };
-		4B247FBE19590DC900C520A9 /* img1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img1@2x.png"; sourceTree = "<group>"; };
 		4B247FBF19590DC900C520A9 /* jiazhangming@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jiazhangming@2x.png"; sourceTree = "<group>"; };
 		4B247FC019590DC900C520A9 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		4B247FC119590DC900C520A9 /* message@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "message@2x.png"; sourceTree = "<group>"; };
-		4B247FC219590DC900C520A9 /* shijian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shijian@2x.png"; sourceTree = "<group>"; };
 		4B247FC319590DC900C520A9 /* touxiang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "touxiang@2x.png"; sourceTree = "<group>"; };
-		4B247FC419590DC900C520A9 /* yiwushi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yiwushi@2x.png"; sourceTree = "<group>"; };
 		4B247FC619590DC900C520A9 /* bj_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj_03@2x.png"; sourceTree = "<group>"; };
 		4B247FC719590DC900C520A9 /* bj_27N@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj_27N@2x.png"; sourceTree = "<group>"; };
 		4B247FC819590DC900C520A9 /* fanhui_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fanhui_03@2x.png"; sourceTree = "<group>"; };
@@ -557,6 +548,8 @@
 		4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPotoWallModel.m; sourceTree = "<group>"; };
 		7161507219692E5800F6FEB9 /* InsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetsLabel.h; sourceTree = "<group>"; };
 		7161507319692E5800F6FEB9 /* InsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetsLabel.m; sourceTree = "<group>"; };
+		71650C32198353670049BB3F /* DockItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DockItem.h; sourceTree = "<group>"; };
+		71650C33198353670049BB3F /* DockItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DockItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -808,6 +801,8 @@
 		4B247EE519590DC900C520A9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				71650C32198353670049BB3F /* DockItem.h */,
+				71650C33198353670049BB3F /* DockItem.m */,
 				4B247EE619590DC900C520A9 /* ZJCookBookTableViewCell.h */,
 				4B247EE719590DC900C520A9 /* ZJCookBookTableViewCell.m */,
 				4B247EE819590DC900C520A9 /* ZJCookBookTableViewCell.xib */,
@@ -1262,17 +1257,12 @@
 			isa = PBXGroup;
 			children = (
 				4B247FB919590DC900C520A9 /* beijing@2x.png */,
-				4B247FBA19590DC900C520A9 /* cookbook@2x.png */,
-				4B247FBB19590DC900C520A9 /* dayreport@2x.png */,
 				4B247FBC19590DC900C520A9 /* fenlei@2x.png */,
 				4B247FBD19590DC900C520A9 /* honor@2x.png */,
-				4B247FBE19590DC900C520A9 /* img1@2x.png */,
 				4B247FBF19590DC900C520A9 /* jiazhangming@2x.png */,
 				4B247FC019590DC900C520A9 /* menu@2x.png */,
 				4B247FC119590DC900C520A9 /* message@2x.png */,
-				4B247FC219590DC900C520A9 /* shijian@2x.png */,
 				4B247FC319590DC900C520A9 /* touxiang@2x.png */,
-				4B247FC419590DC900C520A9 /* yiwushi@2x.png */,
 			);
 			path = HomeImg;
 			sourceTree = "<group>";
@@ -1488,17 +1478,14 @@
 				4B24805F19590DC900C520A9 /* fenlei@2x.png in Resources */,
 				4B24807319590DC900C520A9 /* zhong_05@2x.png in Resources */,
 				4B24805719590DC900C520A9 /* ZJSetingCell.xib in Resources */,
-				4B24806519590DC900C520A9 /* shijian@2x.png in Resources */,
 				4B24800619590DC900C520A9 /* ZJLoginViewController.xib in Resources */,
 				4B24808919590DC900C520A9 /* zhong1_09@2x.png in Resources */,
-				4B24806119590DC900C520A9 /* img1@2x.png in Resources */,
 				4B24800C19590DC900C520A9 /* ZJDrugStatusController.xib in Resources */,
 				4B24802819590DC900C520A9 /* IQKeyboardManager.bundle in Resources */,
 				4B247FF819590DC900C520A9 /* ZJHomeDetialViewController.xib in Resources */,
 				4B1B4304195FD71900EDAE1E /* MJPhotoBrowser.bundle in Resources */,
 				4B24805A19590DC900C520A9 /* beijing02@2x.png in Resources */,
 				4B24806919590DC900C520A9 /* bj_27N@2x.png in Resources */,
-				4B24805E19590DC900C520A9 /* dayreport@2x.png in Resources */,
 				4B24807E19590DC900C520A9 /* bj_27N@2x副本.png in Resources */,
 				4B7111521982537700C77B42 /* ZJNotificationListCell.xib in Resources */,
 				4B24801119590DC900C520A9 /* ZJSystemMsgViewController.xib in Resources */,
@@ -1540,14 +1527,12 @@
 				4B247FF519590DC900C520A9 /* ZJEditPwdViewController.xib in Resources */,
 				4B24805C19590DC900C520A9 /* beijing@2x.png in Resources */,
 				4B998A2D1966B62A00EAECC8 /* MJRefresh.bundle in Resources */,
-				4B24806719590DC900C520A9 /* yiwushi@2x.png in Resources */,
 				4B24808619590DC900C520A9 /* wan_11@2x.png in Resources */,
 				4B24808419590DC900C520A9 /* tianjia_03@2x.png in Resources */,
 				4B24800F19590DC900C520A9 /* ZJMonthCommentViewController.xib in Resources */,
 				4B24807719590DC900C520A9 /* img04@2x.png in Resources */,
 				4B247FFB19590DC900C520A9 /* ZJSignInViewController.xib in Resources */,
 				4B247E8D19590D9200C520A9 /* InfoPlist.strings in Resources */,
-				4B24805D19590DC900C520A9 /* cookbook@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1607,6 +1592,7 @@
 				4B24801B19590DC900C520A9 /* NSString+Helper.m in Sources */,
 				4B7FF1F11979195900779D9C /* ChatMessageCell.m in Sources */,
 				4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */,
+				71650C34198353670049BB3F /* DockItem.m in Sources */,
 				4B24802C19590DC900C520A9 /* IQTitleBarButtonItem.m in Sources */,
 				4B24803919590DC900C520A9 /* NSObject+MJKeyValue.m in Sources */,
 				4B247FF719590DC900C520A9 /* ZJHomeDetialViewController.m in Sources */,

@@ -12,6 +12,7 @@
 #import "UIImageView+MJWebCache.h"
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
+#import <MediaPlayer/MediaPlayer.h>
 static int page = 1;
 @interface ZJPhotWallViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -138,6 +139,7 @@ static int page = 1;
     
     [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
     [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
+    [params setObject:@"1" forKey:@"type"];
     [params setObject:@(page) forKey:@"page"];
     //[params setObject:@"1" forKey:@"cateid"];
     [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
@@ -286,7 +288,14 @@ static int page = 1;
              imageView.tag = i;
             imageView.userInteractionEnabled = YES;
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
-           
+            //如果有视频，就去视频
+            if (![model.videourl isEqualToString:@"null"]) {
+                // MyLog(@"-----%@",model.videourl);
+                [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapVideo:)]];
+            }else{
+                [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
+                
+            }
             if (i == 1) {
                 break;
             }
@@ -400,7 +409,16 @@ static int page = 1;
     return view;
 }
 
-
+-(void)tapVideo:(UITapGestureRecognizer *)tap
+{
+    int tag = tap.view.superview.tag;
+    ZJPotoWallModel *model = _dataArr[tag-100];
+    MPMoviePlayerViewController *player = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:model.videourl]];
+    player.moviePlayer.shouldAutoplay = YES;//设置自动播放为no
+    //player.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;//设置控制器样式
+    player.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:player animated:YES completion:nil];
+}
 #pragma mark 跳转到图片页面
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {

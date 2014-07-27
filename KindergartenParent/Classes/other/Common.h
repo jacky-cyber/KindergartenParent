@@ -39,6 +39,8 @@
 
 #define kPdismiss [SVProgressHUD dismiss];
 
+#define kHttpErrorMsg @"网络连接错误"
+
 #define kScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreenWidth [[UIScreen mainScreen] bounds].size.width
 

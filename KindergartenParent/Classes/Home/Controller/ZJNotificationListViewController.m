@@ -15,6 +15,7 @@
 #import "ZJSignInViewController.h"
 #import "ZJFuyaodanDetailViewController.h"
 #import "ZJHomeModel.h"
+static int page = 1;
 @interface ZJNotificationListViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
@@ -51,17 +52,33 @@
     [self.view addSubview:_tableView];
     
     //重新加载数据
-    [self initData];
-    
+    [self footerRereshing];
+    // 集成刷新控件
+    [self setupRefresh];
 }
 
-#pragma mark 初始化数据
--(void)initData
+
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
 {
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_tableView addHeaderWithTarget:self action:@selector(headerRefreshing)];
+    //#warning 自动刷新(一进入程序就下拉刷新)
+    //[self.tableView headerBeginRefreshing];
     
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
+#pragma mark 初始化数据
+-(void)headerRefreshing
+{
+    page = 1;
+    [_dataArr removeAllObjects];
     NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"type":self.userInfo,
-                             @"page":@(1)};
+                             @"page":@(page)};
     kPBlack(@"数据加载中...");
     [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
@@ -72,10 +89,40 @@
                 [_dataArr addObject:model];
             }
             [_tableView reloadData];
+            page++;
             kPdismiss;
+            [_tableView headerEndRefreshing];
         }
     } failure:^(NSError *error) {
-        kPE(@"网络错误,请稍再试", 0.5);
+        [_tableView headerEndRefreshing];
+        kPE(kHttpErrorMsg, 0.5);
+        MyLog(@"%@",error.localizedDescription);
+    }];
+}
+#pragma mark 初始化数据
+-(void)footerRereshing
+{
+    
+    NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"type":self.userInfo,
+                             @"page":@(page)};
+    kPBlack(@"数据加载中...");
+    [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
+        if ([JSON[@"code"] intValue] == 0) {
+            
+            for (NSDictionary *dict in JSON[@"data"]) {
+                ZJHomeModel *model = [[ZJHomeModel alloc] init];
+                [model setKeyValues:dict];
+                [_dataArr addObject:model];
+            }
+            [_tableView reloadData];
+            page++;
+            kPdismiss;
+            [_tableView footerEndRefreshing];
+        }
+    } failure:^(NSError *error) {
+        kPE(kHttpErrorMsg, 0.5);
+         [_tableView footerEndRefreshing];
         MyLog(@"%@",error.localizedDescription);
     }];
 }
@@ -110,9 +157,12 @@
         cell.bgImage.image = [UIImage imageNamed:@"birthdayNotifi"];
     }else if ( type== 10) {
         cell.bgImage.image = [UIImage imageNamed:@"ActivityNotifi"];
+    }else if ( type== 11) {
+        cell.qiandaoBtn.alpha = 1;
+        cell.bgImage.image = [UIImage imageNamed:@"qiandaoNotifi"];
     }
-    
-    cell.tiemeLabel.text = [model.createtime substringToIndex:16];
+    MyLog(@"%@----",model.createtime);
+    cell.tiemeLabel.text = model.createtime.length>16?[model.createtime substringToIndex:16]:@"";
     cell.contentLabel.text = model.content;
     
         
@@ -140,6 +190,8 @@
         
     }else if ( type== 10) {
         [self pushController:[ZJActivityViewController class] withInfo:model withTitle:@"通知详情"];
+    }else if ( type== 11) {
+        [self pushController:[ZJSignInViewController class] withInfo:model.id withTitle:@"未到原因"];
     }
     
 

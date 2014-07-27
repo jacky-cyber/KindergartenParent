@@ -57,6 +57,11 @@
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName};
     [HttpTool getWithPath:@"course" params:params success:^(id JSON) {
        // MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 1) {
+            kPE(kHttpErrorMsg, 0.5);
+            return ;
+        }
+        
         NSDictionary *data = JSON[@"data"];
         
         

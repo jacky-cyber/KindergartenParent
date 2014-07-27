@@ -82,7 +82,7 @@
             [self addSubViews];
         }
     } failure:^(NSError *error) {
-        
+        kPE(kHttpErrorMsg, 0.5);
     }];
 }
 
