@@ -15,23 +15,33 @@
 #import "ZJSignInViewController.h"
 #import "ZJFuyaodanDetailViewController.h"
 #import "ZJHomeModel.h"
-static int page = 1;
+
 @interface ZJNotificationListViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
     NSMutableArray *_dataArr;
     
+    int page;
+    
 }
+
 
 @end
 
 @implementation ZJNotificationListViewController
 
-
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    page = 1;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    page = 1;
+    
     // Do any additional setup after loading the view.
     //初始化数组
     _dataArr = [NSMutableArray array];
@@ -108,15 +118,18 @@ static int page = 1;
                              @"page":@(page)};
     kPBlack(@"数据加载中...");
     [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
+        MyLog(@"%@",JSON[@"data"]);
         if ([JSON[@"code"] intValue] == 0) {
-            
+            if (((NSArray*)JSON[@"data"]).count) {
+                page++;
+            }
             for (NSDictionary *dict in JSON[@"data"]) {
                 ZJHomeModel *model = [[ZJHomeModel alloc] init];
                 [model setKeyValues:dict];
                 [_dataArr addObject:model];
             }
             [_tableView reloadData];
-            page++;
+            
             kPdismiss;
             [_tableView footerEndRefreshing];
         }
@@ -161,7 +174,7 @@ static int page = 1;
         cell.qiandaoBtn.alpha = 1;
         cell.bgImage.image = [UIImage imageNamed:@"qiandaoNotifi"];
     }
-    MyLog(@"%@----",model.createtime);
+   // MyLog(@"%@----",model.createtime);
     cell.tiemeLabel.text = model.createtime.length>16?[model.createtime substringToIndex:16]:@"";
     cell.contentLabel.text = model.content;
     
@@ -180,12 +193,12 @@ static int page = 1;
     
     int type = [model.type intValue];
     
-    if ( type== 2) {
+    if ( type== 2) {//全园通知
         [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:model.title withOther:nil];
     }else if ( type== 6) {//服药单
         [self pushController:[ZJFuyaodanDetailViewController class] withInfo:model withTitle:model.title withOther:nil];
-    }else if ( type== 8) {
-        
+    }else if ( type== 8) {//本班通知
+        [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:model.title withOther:nil];
     }else if ( type== 9) {
         
     }else if ( type== 10) {

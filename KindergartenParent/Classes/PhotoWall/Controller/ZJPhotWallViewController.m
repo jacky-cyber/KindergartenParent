@@ -13,13 +13,14 @@
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
 #import <MediaPlayer/MediaPlayer.h>
-static int page = 1;
 @interface ZJPhotWallViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
     NSMutableArray *_dataArr;//数据数组
     
     NSArray *_images;//图片数组
+    
+    int page;
 }
 
 @end
@@ -111,10 +112,6 @@ static int page = 1;
     [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
 }
 -(void)initData:(UIButton*)btn{
-    
-
-    
-
     kPBlack(@"正在加载成长记录");
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
         //@{@"classesid":@"1",@"page":@"1"}

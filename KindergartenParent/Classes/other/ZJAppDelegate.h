@@ -11,5 +11,5 @@
 @interface ZJAppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) DDMenuController *menuController;
 @property (strong, nonatomic) UIWindow *window;
-
+@property (assign, nonatomic) NSTimeInterval current;//获取当前时间
 @end

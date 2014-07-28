@@ -202,6 +202,13 @@
 		4B998A321966B62A00EAECC8 /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A281966B62A00EAECC8 /* UIScrollView+Extension.m */; };
 		4B998A331966B62A00EAECC8 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2A1966B62A00EAECC8 /* UIScrollView+MJRefresh.m */; };
 		4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */; };
+		4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E11985EE5500405247 /* libPushSDK.a */; };
+		4BE4B0E41985EECC00405247 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E31985EECC00405247 /* CFNetwork.framework */; };
+		4BE4B0E61985EED600405247 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E51985EED600405247 /* CoreFoundation.framework */; };
+		4BE4B0E81985EEE800405247 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E71985EEE800405247 /* CoreTelephony.framework */; };
+		4BE4B0EA1985EEF000405247 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E91985EEF000405247 /* SystemConfiguration.framework */; };
+		4BE4B0EC1985EF1200405247 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0EB1985EF1200405247 /* libz.dylib */; };
+		4BE4B0EE1985EF4800405247 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BE4B0ED1985EF4800405247 /* PushConfig.plist */; };
 		4BFFDCF01962831100439190 /* ZJPotoWallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */; };
 		7161507419692E5800F6FEB9 /* InsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7161507319692E5800F6FEB9 /* InsetsLabel.m */; };
 		71650C34198353670049BB3F /* DockItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 71650C33198353670049BB3F /* DockItem.m */; };
@@ -544,6 +551,14 @@
 		4B998A2A1966B62A00EAECC8 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		4B998A2B1966B62A00EAECC8 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		4BE4B0E01985EE5500405247 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
+		4BE4B0E11985EE5500405247 /* libPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPushSDK.a; sourceTree = "<group>"; };
+		4BE4B0E31985EECC00405247 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4BE4B0E51985EED600405247 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4BE4B0E71985EEE800405247 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4BE4B0E91985EEF000405247 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BE4B0EB1985EF1200405247 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		4BE4B0ED1985EF4800405247 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		4BFFDCEE1962831100439190 /* ZJPotoWallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPotoWallModel.h; sourceTree = "<group>"; };
 		4BFFDCEF1962831100439190 /* ZJPotoWallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPotoWallModel.m; sourceTree = "<group>"; };
 		7161507219692E5800F6FEB9 /* InsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetsLabel.h; sourceTree = "<group>"; };
@@ -557,8 +572,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B247E8519590D9200C520A9 /* CoreGraphics.framework in Frameworks */,
+				4BE4B0EC1985EF1200405247 /* libz.dylib in Frameworks */,
 				4B247E8719590D9200C520A9 /* UIKit.framework in Frameworks */,
+				4B247E8519590D9200C520A9 /* CoreGraphics.framework in Frameworks */,
+				4BE4B0EA1985EEF000405247 /* SystemConfiguration.framework in Frameworks */,
+				4BE4B0E81985EEE800405247 /* CoreTelephony.framework in Frameworks */,
+				4BE4B0E61985EED600405247 /* CoreFoundation.framework in Frameworks */,
+				4BE4B0E41985EECC00405247 /* CFNetwork.framework in Frameworks */,
+				4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */,
 				4B247E8319590D9200C520A9 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -630,6 +651,11 @@
 		4B247E8119590D9200C520A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BE4B0EB1985EF1200405247 /* libz.dylib */,
+				4BE4B0E91985EEF000405247 /* SystemConfiguration.framework */,
+				4BE4B0E71985EEE800405247 /* CoreTelephony.framework */,
+				4BE4B0E51985EED600405247 /* CoreFoundation.framework */,
+				4BE4B0E31985EECC00405247 /* CFNetwork.framework */,
 				4B247E8219590D9200C520A9 /* Foundation.framework */,
 				4B247E8419590D9200C520A9 /* CoreGraphics.framework */,
 				4B247E8619590D9200C520A9 /* UIKit.framework */,
@@ -653,6 +679,7 @@
 		4B247E8919590D9200C520A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4BE4B0ED1985EF4800405247 /* PushConfig.plist */,
 				4B247E8A19590D9200C520A9 /* KindergartenParent-Info.plist */,
 				4B247E8B19590D9200C520A9 /* InfoPlist.strings */,
 				4B247E8E19590D9200C520A9 /* main.m */,
@@ -967,6 +994,7 @@
 		4B247F2719590DC900C520A9 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				4BE4B0DE1985EE5500405247 /* jPush */,
 				4B998A1C1966B62A00EAECC8 /* MJRefresh */,
 				4B1B4310195FD7E600EDAE1E /* MBProgressHUD */,
 				4B1B42F5195FD71900EDAE1E /* MJPhotoBrowser */,
@@ -1386,6 +1414,23 @@
 			path = MJRefresh;
 			sourceTree = "<group>";
 		};
+		4BE4B0DE1985EE5500405247 /* jPush */ = {
+			isa = PBXGroup;
+			children = (
+				4BE4B0DF1985EE5500405247 /* lib */,
+			);
+			path = jPush;
+			sourceTree = "<group>";
+		};
+		4BE4B0DF1985EE5500405247 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				4BE4B0E01985EE5500405247 /* APService.h */,
+				4BE4B0E11985EE5500405247 /* libPushSDK.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1486,6 +1531,7 @@
 				4B1B4304195FD71900EDAE1E /* MJPhotoBrowser.bundle in Resources */,
 				4B24805A19590DC900C520A9 /* beijing02@2x.png in Resources */,
 				4B24806919590DC900C520A9 /* bj_27N@2x.png in Resources */,
+				4BE4B0EE1985EF4800405247 /* PushConfig.plist in Resources */,
 				4B24807E19590DC900C520A9 /* bj_27N@2x副本.png in Resources */,
 				4B7111521982537700C77B42 /* ZJNotificationListCell.xib in Resources */,
 				4B24801119590DC900C520A9 /* ZJSystemMsgViewController.xib in Resources */,
@@ -1795,7 +1841,11 @@
 				GCC_PREFIX_HEADER = "KindergartenParent/KindergartenParent-Prefix.pch";
 				INFOPLIST_FILE = "KindergartenParent/KindergartenParent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/jPush/lib",
+				);
+				PRODUCT_NAME = KindergartenParent;
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1811,7 +1861,11 @@
 				GCC_PREFIX_HEADER = "KindergartenParent/KindergartenParent-Prefix.pch";
 				INFOPLIST_FILE = "KindergartenParent/KindergartenParent-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/jPush/lib",
+				);
+				PRODUCT_NAME = KindergartenParent;
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
