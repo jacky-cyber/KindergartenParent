@@ -58,13 +58,19 @@
 }
 
 -(void)initData:(BOOL)flag{
-    
+//    username	String	服药人id（老是查看就传老师username）
+//    type	String	(0,个人 1全班，2全员)
+//    page	int	分页（默认 1）
+//    classid	String	班级ID
+//    kid	String	幼儿园id（医务室可以查看全员的服药单）
     
     [SVProgressHUD showWithStatus:@"正在加载服药单" maskType:SVProgressHUDMaskTypeBlack];
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
-                             @"page":@"1"};
+                             @"type":@"0",
+                             @"classid":[LoginUser sharedLoginUser].classid,
+                             @"page":@(self.page)};
     [HttpTool getWithPath:@"fylist" params:params success:^(id JSON) {
-        //MyLog(@"%@",JSON);
+        MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
             
             //这是添加服药单返回来的时候,先删除所有的

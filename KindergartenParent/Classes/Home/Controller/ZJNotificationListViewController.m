@@ -21,7 +21,6 @@
     UITableView *_tableView;
     NSMutableArray *_dataArr;
     
-    int page;
     
 }
 
@@ -40,7 +39,6 @@
 {
     [super viewDidLoad];
     
-    page = 1;
     
     // Do any additional setup after loading the view.
     //初始化数组
@@ -62,7 +60,7 @@
     [self.view addSubview:_tableView];
     
     //重新加载数据
-    [self footerRereshing];
+    [self headerRefreshing];
     // 集成刷新控件
     [self setupRefresh];
 }
@@ -84,11 +82,11 @@
 #pragma mark 初始化数据
 -(void)headerRefreshing
 {
-    page = 1;
+    self.page = 1;
     [_dataArr removeAllObjects];
     NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"type":self.userInfo,
-                             @"page":@(page)};
+                             @"page":@(self.page)};
     kPBlack(@"数据加载中...");
     [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
@@ -99,14 +97,14 @@
                 [_dataArr addObject:model];
             }
             [_tableView reloadData];
-            page++;
+            self.page++;
             kPdismiss;
             [_tableView headerEndRefreshing];
         }
     } failure:^(NSError *error) {
         [_tableView headerEndRefreshing];
         kPE(kHttpErrorMsg, 0.5);
-        MyLog(@"%@",error.localizedDescription);
+       // MyLog(@"%@",error.localizedDescription);
     }];
 }
 #pragma mark 初始化数据
@@ -115,13 +113,13 @@
     
     NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"type":self.userInfo,
-                             @"page":@(page)};
+                             @"page":@(self.page)};
     kPBlack(@"数据加载中...");
     [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
         MyLog(@"%@",JSON[@"data"]);
         if ([JSON[@"code"] intValue] == 0) {
             if (((NSArray*)JSON[@"data"]).count) {
-                page++;
+                self.page++;
             }
             for (NSDictionary *dict in JSON[@"data"]) {
                 ZJHomeModel *model = [[ZJHomeModel alloc] init];

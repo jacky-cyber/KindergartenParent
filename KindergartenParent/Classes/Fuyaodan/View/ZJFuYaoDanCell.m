@@ -9,11 +9,11 @@
 #import "ZJFuYaoDanCell.h"
 #import "ZJFuYaoDanModel.h"
 
+#define kAlpha 0.5
+
 @interface ZJFuYaoDanCell(){
     UILabel *_timeLabel;//时间标签
-    UIImageView *_mornImg;//
-    UIImageView *_noonImg;//中午
-    UIImageView *_eveImg;//晚上
+    
     
 }
 
@@ -26,7 +26,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        
+        self.userInteractionEnabled = YES;
         [self addSubviews];
     }
     return self;
@@ -38,92 +38,96 @@
 }
 -(void)addSubviews
 {
-  
-    //四边红线
-    UIImageView *imageViewL = [[UIImageView alloc]initWithFrame:CGRectMake(20, 5, 1, 35)];
-    UIImageView *imageViewR = [[UIImageView alloc]initWithFrame:CGRectMake(300, 5, 1, 35)];
-    UIImageView *imageViewU = [[UIImageView alloc]initWithFrame:CGRectMake(20, 5, 280, 1)];
-    UIImageView *imageViewD = [[UIImageView alloc]initWithFrame:CGRectMake(20, 40, 280, 1)];
-    imageViewL.image = [UIImage imageNamed:@"xian_03"];
-    imageViewR.image = [UIImage imageNamed:@"xian_03"];
-    imageViewU.image = [UIImage imageNamed:@"xian_03"];
-    imageViewD.image = [UIImage imageNamed:@"xian_03"];
-    [self.contentView addSubview:imageViewD];
-    [self.contentView addSubview:imageViewU];
-    [self.contentView addSubview:imageViewL];
-    [self.contentView addSubview:imageViewR];
+    
+    
+    
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(20, 5, 280, 35)];
+    bgView.layer.borderColor = [UIColor redColor].CGColor;
+    bgView.userInteractionEnabled = YES;
+    bgView.layer.borderWidth = 0.5;
+    [self addSubview:bgView];
+    
+    
     
     //左边时间
     UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 80, 25)];
-    timeLabel.text = @"2014-06-21";
+    //timeLabel.text = @"2014-06-21";
     timeLabel.font = kFont13;
     _timeLabel = timeLabel;
     [self.contentView addSubview:timeLabel];
     
-   
+    
     //早中晚显示 全部显示出来  根据数据 去选择图片实心空心 没有服药 隐藏图片
     
     
-    /*
+    NSArray *imageArr = @[@"zao",@"zhong",@"wan"];
+    NSArray *imageArrH = @[@"zao_h",@"zhong_h",@"wan_h"];
     for (int i = 0; i<3; i++)
     {
-        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
-        imageV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:i]]];
-        
-        [self.contentView addSubview:imageV];
-        
+        UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
+        [statusBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
+        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateSelected];
+        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateHighlighted];
+        //imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
+        [self addSubview:statusBtn];
+        if (i==0) {//早
+            _mornImg = statusBtn;
+        }else if (i==1){//中
+            _noonImg = statusBtn;
+        }else if (i==2){//晚
+            _eveImg = statusBtn;
+        }
     }
-     */
-    
-    NSArray *imageArr = [[NSArray alloc]initWithObjects:@"zao_07",@"zhong_09",@"wan_11", nil];
-    //早
-    UIImageView *imageV1 = [[UIImageView alloc]initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
-    imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
-    [self.contentView addSubview:imageV1];
-    _mornImg = imageV1;
-    //中
-    UIImageView *imageV2 = [[UIImageView alloc]initWithFrame:CGRectMake(120+1*60, 10, 25, 25)];
-    imageV2.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:1]]];
-    [self.contentView addSubview:imageV2];
-    _noonImg = imageV2;
-    //晚
-    UIImageView *imageV3 = [[UIImageView alloc]initWithFrame:CGRectMake(120+2*60, 10, 25, 25)];
-    imageV3.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:2]]];
-    [self.contentView addSubview:imageV3];
-    _eveImg = imageV3;
-    
-    
-    
-    
 }
 
 
 -(void)setFydmodel:(ZJFuYaoDanModel *)fydmodel
 {
     
-    
-    
     _fydmodel = fydmodel;
+    
     
     //设置时间
     _timeLabel.text = [_fydmodel.time substringToIndex:10];
-      if (![self isRang:@"早" withModel:fydmodel]) {
-        _mornImg.alpha = 0.2;
+    
+    if (![self isRang:@"早" withModel:fydmodel]) {
+        _mornImg.alpha = kAlpha;
+        _mornImg.enabled = NO;
     }else{
         _mornImg.alpha = 1;
     }
     
     if (![self isRang:@"中" withModel:fydmodel]) {
-        _noonImg.alpha = 0.2;
+        _noonImg.alpha = kAlpha;
+        _noonImg.enabled = NO;
     }else{
         _noonImg.alpha = 1;
     }
     
     if (![self isRang:@"晚" withModel:fydmodel]) {
-        _eveImg.alpha = 0.2;
+        _eveImg.alpha = kAlpha;
+        _eveImg.enabled = NO;
     }else{
         _eveImg.alpha = 1;
     }
+    
+    
+    //设置是否被已经服药
+    
+    
+
+    //0 未服药 1 已服药
+    if ([fydmodel.moringstatus isEqual:@(1)]) {
+        _mornImg.selected = YES;
+    }
+    if ([fydmodel.noonstatus isEqual:@(1)]) {
+        _noonImg.selected = YES;
+    }
+    if ([fydmodel.evestatus isEqual:@(1)]) {
+        _eveImg.selected = YES;
+    }
+    
+    
 }
 #pragma mark 看是否包含
 -(BOOL)isRang:(NSString*)str withModel:(ZJFuYaoDanModel*)model
@@ -142,7 +146,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

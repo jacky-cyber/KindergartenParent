@@ -27,7 +27,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    
+    self.page = 1;//默认为1
 //    NSLog(@"bounds:%@",NSStringFromCGRect(self.view.bounds));
 //     NSLog(@"frame:%@",NSStringFromCGRect(self.view.frame));
 }

@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextView *commentTextView;
 @property (weak, nonatomic) IBOutlet UITextView *expectTextView;
+@property (weak, nonatomic) IBOutlet UIButton *sendBtn;
 
 @end
 
@@ -24,6 +25,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    
+    _sendBtn.layer.cornerRadius = 5.0;
+    _sendBtn.layer.masksToBounds = YES;
     // Do any additional setup after loading the view from its nib.
     _scrollView.contentSize = CGSizeMake(320, 480);
     
