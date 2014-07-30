@@ -26,6 +26,7 @@
 #import "ZJUIMethods.h"
 #import "UIImage+ZJ.h"
 #import "MJRefresh.h"
+#import <CoreData/CoreData.h>
 #endif
 
 #import <SystemConfiguration/SystemConfiguration.h>

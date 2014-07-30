@@ -12,6 +12,7 @@
 #import "DDMenuController.h"
 #import "UIImage+ZJ.h"
 #import "ZJUserInfoModel.h"
+#import "ZJAppDelegate.h"
 @interface ZJLoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameText;
 @property (weak, nonatomic) IBOutlet UITextField *pwdText;
@@ -94,6 +95,25 @@
             [LoginUser sharedLoginUser].classid = user.classid;
             [LoginUser sharedLoginUser].role = [NSString stringWithFormat:@"%@",user.role];
             MyLog(@"%@",[LoginUser sharedLoginUser].description);
+            
+            
+            [xmppDelegate connectOnFailed:^(kLoginErrorType type) {
+                NSString *msg = nil;
+                if (type == kLoginLogonError) {
+                    msg = @"用户名或者密码错误";
+                } else if (type == kLoginNotConnection) {
+                    msg = @"无法连接到服务器";
+                } else if (type == kLoginRegisterError) {
+                    msg = @"用户名重复，无法注册";
+                }
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                
+                [alert show];
+                
+                
+            }];
+
             
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
             self.view.window.rootViewController = menuController;

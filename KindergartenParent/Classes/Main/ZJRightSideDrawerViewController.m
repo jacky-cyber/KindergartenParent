@@ -149,10 +149,39 @@
        BaseNavigationController *courseNav = [[BaseNavigationController alloc] initWithRootViewController:chat];
     
        // (DDMenuController*)((ZJAppDelegate*)[UIApplication sharedApplication].delegate).menuController;
-    
+     NSDictionary *dict = _contactsArr[indexPath.row];
     if (indexPath.row == 0) {
         return;
     }
+    
+    
+    NSString *domain = [xmppDelegate.xmppStream.myJID domain];
+    NSString *friendText = [NSString stringWithFormat:@"%@@%@", dict[@"username"], domain];
+    
+    
+    
+    // 1. 如果已经是好友，则无需添加
+    // 如果已经添加成好友，好友的信息会记录在本地数据库中
+    // 在本地数据库中直接查找该好友是否存在即可
+    XMPPJID *jid = [XMPPJID jidWithString:friendText];
+    
+    //如果加好友了，就不需要再添加好友了
+    if (![xmppDelegate.xmppRosterCoreDataStorage userExistsWithJID:jid xmppStream:xmppDelegate.xmppStream]) {
+        // 在XMPP中添加好友的方法，叫做：“订阅”，类似于微博中的关注
+        // 发送订阅请求给指定的用户
+        // 2. 添加好友操作
+        [xmppDelegate.xmppRoster subscribePresenceToUser:jid];
+    }
+
+    chat.bareImageStr = dict[@"profileimngurl"];
+    
+    chat.bareJID = jid;
+
+
+
+   
+    
+    
     
     //[self.navigationController pushViewController:chat animated:YES];
     

@@ -118,5 +118,13 @@
     return [dateFormatter stringFromDate:[NSDate date]];
 
 }
-
++(NSString *)timeFormatToDate:(NSDate*)date
+{
+    NSString *format = @"yyyy-MM-dd HH:mm";
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:format];
+    // NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    return [dateFormatter stringFromDate:date];
+}
 @end

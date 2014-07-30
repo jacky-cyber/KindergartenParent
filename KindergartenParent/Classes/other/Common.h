@@ -47,3 +47,6 @@
 #define kBaseUrl @"http://182.18.23.244:8080/"
 
 
+#define kHostName @"182.18.23.244"
+
+#define kFileServerURL @"http://182.18.23.244" //文件服务器路径

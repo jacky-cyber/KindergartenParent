@@ -45,4 +45,43 @@
     [[NSUserDefaults standardUserDefaults] setObject:self forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+- (NSString *)appendToDocumentDir
+{
+    NSString *docDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    
+    return [docDir stringByAppendingPathComponent:self];
+}
+- (NSURL *)appendToDocumentURL
+{
+    return [NSURL fileURLWithPath:[self appendToDocumentDir]];
+}
+
+- (NSString *)base64EncodedString
+{
+    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+    
+    return [data base64EncodedStringWithOptions:0];
+}
+
+- (NSString *)base64DecodeString
+{
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:self options:0];
+    
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)appendDateTime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    
+    return [NSString stringWithFormat:@"%@%@", self, str];
+}
+
+
+-(NSString*)appendStr:(NSString*)str
+{
+    return [NSString stringWithFormat:@"%@%@",self,str];
+}
 @end

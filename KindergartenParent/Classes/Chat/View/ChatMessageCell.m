@@ -11,6 +11,9 @@
 #import "AFNetworking.h"
 #import "NSString+Helper.h"
 #import <AVFoundation/AVFoundation.h>
+#import "XMPPMessageArchiving_Message_CoreDataObject.h"
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 CGRect goBackRect;
 float goBackDuration;
 UIView* goBackgroundView;
@@ -43,25 +46,36 @@ UIViewController* goBackViewController;
 {
     return [img stretchableImageWithLeftCapWidth:img.size.width * 0.5 topCapHeight:img.size.height * 0.6];
 }
-
-- (void)awakeFromNib
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    // 实例化表格行背景使用的图像
-    _receiveImage = [UIImage imageNamed:@"ReceiverTextNodeBkg"];
-    _receiveImageHL = [UIImage imageNamed:@"ReceiverTextNodeBkgHL"];
-    _senderImage = [UIImage imageNamed:@"SenderTextNodeBkg"];
-    _senderImageHL = [UIImage imageNamed:@"SenderTextNodeBkgHL"];
-    
-    // 处理图像拉伸（因为iOS 6不支持图像切片）
-//    _receiveImage = [_receiveImage stretchableImageWithLeftCapWidth:_receiveImage.size.width * 0.5 topCapHeight:_receiveImage.size.height * 0.6];
-    _receiveImage = [self stretcheImage:_receiveImage];
-    _receiveImageHL = [self stretcheImage:_receiveImageHL];
-    _senderImage = [self stretcheImage:_senderImage];
-    _senderImageHL = [self stretcheImage:_senderImageHL];
+    self = [[[NSBundle mainBundle]loadNibNamed:reuseIdentifier owner:self options:nil]objectAtIndex:0];
+    if (self)
+    {
+        // 实例化表格行背景使用的图像
+        _receiveImage = [UIImage imageNamed:@"ReceiverTextNodeBkg"];
+        _receiveImageHL = [UIImage imageNamed:@"ReceiverTextNodeBkgHL"];
+        _senderImage = [UIImage imageNamed:@"SenderTextNodeBkg"];
+        _senderImageHL = [UIImage imageNamed:@"SenderTextNodeBkgHL"];
+        
+        // 处理图像拉伸（因为iOS 6不支持图像切片）
+        //    _receiveImage = [_receiveImage stretchableImageWithLeftCapWidth:_receiveImage.size.width * 0.5 topCapHeight:_receiveImage.size.height * 0.6];
+        _receiveImage = [self stretcheImage:_receiveImage];
+        _receiveImageHL = [self stretcheImage:_receiveImageHL];
+        _senderImage = [self stretcheImage:_senderImage];
+        _senderImageHL = [self stretcheImage:_senderImageHL];
+
+        _headImageView.layer.cornerRadius = 5.0;
+        _headImageView.layer.masksToBounds = YES;
+        
+    }
+    return self;
 }
 
-- (void)setMessage:(NSString *)message isOutgoing:(BOOL)isOutgoing isImageTag:(NSInteger)tag
+
+- (void)setMessage:(XMPPMessageArchiving_Message_CoreDataObject *)messageCoreData isOutgoing:(BOOL)isOutgoing isImageTag:(NSInteger)tag
 {
+    NSString *message = messageCoreData.body;
+    MyLog(@"%d",message.length);
     // 1. 根据isOutgoing判断消息是发送还是接受，依次来设置按钮的背景图片
     if (isOutgoing) {
         [_messageButton setBackgroundImage:_senderImage forState:UIControlStateNormal];
@@ -114,19 +128,27 @@ UIViewController* goBackViewController;
    
       //判断图片是否有有img 如果有，就显示图片
     }else
-        if ([message hasPrefix:@"img:"]) {
+        if (message.length >1000) {
          _messageHeightConstraint.constant = 80+30;
          _messageWeightConstraint.constant = 80+30;
+            
+            
+            NSData *_decodedImageData   = [[NSData alloc] initWithBase64Encoding:message];
+            
+            UIImage *_decodedImage      = [UIImage imageWithData:_decodedImageData];
+            NSLog(@"===Decoded image size: %@", NSStringFromCGSize(_decodedImage.size));
+
         
          UIImageView *imageView = [[UIImageView alloc] init];
          imageView.tag = tag+1;
          NSString *urlStr = [message substringFromIndex:4];
 
          NSURL *url = [NSURL URLWithString:urlStr];
-         UIImage *placeHolderImage = [UIImage imageNamed:@"DefaultProfileHead"];
+         UIImage *placeHolderImage = [UIImage imageNamed:@"timeline_image_loading"];
             
          // 加载图像
-         [imageView setImageWithURL:url placeholderImage:placeHolderImage];
+         //[imageView setImageWithURL:url placeholderImage:placeHolderImage];
+            imageView.image = _decodedImage;
          if (isOutgoing) {
              imageView.frame = CGRectMake(13, 10, 80, 80);
          }else{
@@ -143,8 +165,18 @@ UIViewController* goBackViewController;
          _messageHeightConstraint.constant = size.height + 30.0;
          _messageWeightConstraint.constant = size.width + 30.0;
         // 2.3 设置按钮文字
-         [_messageButton setTitle:message forState:UIControlStateNormal];
+         
+        
+             [_messageButton setTitle:message forState:UIControlStateNormal];
+        
+         
     }
+    
+    
+    
+    
+    //设置消息时间
+    _timestamp.text = [TimeFormatTools timeFormatToDate:messageCoreData.timestamp];
     // 2.4 重新调整布局
     [self layoutIfNeeded];
 }
@@ -155,10 +187,26 @@ UIViewController* goBackViewController;
             UIImageView *imageView = (UIImageView*)obj;
             if (imageView.tag == btn.tag) {
                 UIImageView *img = imageView;
-                [self showImage:img];
+                //[self showImage:img];
+                
+                //photo.url = [NSURL URLWithString:model.images[i]]; // 图片路径
+                MJPhoto *photo = [[MJPhoto alloc] init];
+                photo.srcImageView = img; // 来源于哪个UIImageView
+                // 2.显示相册
+                MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+                browser.currentPhotoIndex = btn.tag; // 弹出相册时显示的第一张图片是？
+                
+                [browser show];
+
             }
         }
     }
+    
+    
+          // 替换为中等尺寸图片
+        //NSString *url = [model.images[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+    
+  
 
    
 }
