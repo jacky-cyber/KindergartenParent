@@ -77,7 +77,7 @@
             [_userModel setKeyValues:JSON[@"data"]];
             
             [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
-            [LoginUser sharedLoginUser].profilImg = _userModel.profileimg;
+            [[LoginUser sharedLoginUser] saveInfo:_userModel];
             kPdismiss;
             [self addSubViews];
         }

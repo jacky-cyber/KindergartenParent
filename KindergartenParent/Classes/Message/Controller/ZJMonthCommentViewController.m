@@ -139,7 +139,7 @@
         if ([JSON[@"code"] intValue] == 0) {
             
             [SVProgressHUD showSuccessWithStatus:@"评论成功" duration:1];
-            
+            [self.navigationController popViewControllerAnimated:YES];
                  }
     } failure:^(NSError *error) {
         kPE(@"月评失败", 1);

@@ -59,7 +59,7 @@
     //初始化数组
     _dataArr = [NSMutableArray array];
     
-    [HttpTool getWithPath:@"recipe" params:@{@"id":self.userInfo} success:^(id JSON) {
+    [HttpTool getWithPath:@"recipe" params:nil success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
             NSArray *data = JSON[@"data"][@"everyday"];
             for (NSDictionary *dict in data) {
@@ -145,8 +145,7 @@
     cell.weekImg.image = [UIImage imageNamed:imageName];
     CookBookModel *model = _dataArr[indexPath.row];
     
-    [cell setModel:model];
-    
+    [cell setModel:model];  
     return cell;
 }
 

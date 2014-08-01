@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
+
+@class ZJUserInfoModel;
+
 @interface LoginUser : NSObject
 single_interface(LoginUser)
 
@@ -43,9 +46,11 @@ single_interface(LoginUser)
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *teacherid;
 @property (strong, nonatomic) NSString *kindergarten;
+@property (strong, nonatomic) NSString *kindergartenid;
 @property (strong, nonatomic) NSString *classid;
 @property (strong, nonatomic) NSString *role;
 -(BOOL)isLogin;
 -(void)loginWithUserName:(NSString*)userName passWord:(NSString*)pwd;
 -(void)loginout;
+-(void)saveInfo:(ZJUserInfoModel*)user;
 @end

@@ -83,14 +83,14 @@
 -(void)headerRefreshing
 {
     self.page = 1;
-    [_dataArr removeAllObjects];
+    
     NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"type":self.userInfo,
                              @"page":@(self.page)};
     kPBlack(@"数据加载中...");
     [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
-            
+            [_dataArr removeAllObjects];
             for (NSDictionary *dict in JSON[@"data"]) {
                 ZJHomeModel *model = [[ZJHomeModel alloc] init];
                 [model setKeyValues:dict];
@@ -194,7 +194,7 @@
     if ( type== 2) {//全园通知
         [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:model.title withOther:nil];
     }else if ( type== 6) {//服药单
-        [self pushController:[ZJFuyaodanDetailViewController class] withInfo:model withTitle:model.title withOther:nil];
+        [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:model.title withOther:nil];
     }else if ( type== 8) {//本班通知
         [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:model.title withOther:nil];
     }else if ( type== 9) {

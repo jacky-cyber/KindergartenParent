@@ -19,8 +19,8 @@
     NSMutableArray *_dataArr;//数据数组
     
     NSArray *_images;//图片数组
+    MPMoviePlayerViewController *_player;//视屏播放器
     
-    int page;
 }
 
 @end
@@ -31,7 +31,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-   // page = 1;
+    // page = 1;
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -44,13 +44,13 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    page = 1;
-
+ 
+    
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.title = @"成长记录";
     
     CGFloat height = H(self.view)-kNavH;
@@ -87,7 +87,7 @@
     [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
     UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
     self.navigationItem.rightBarButtonItem = ItemR;
-
+    
     
     //初始化数组
     _dataArr = [NSMutableArray array];
@@ -97,7 +97,10 @@
     
     // 集成刷新控件
     [self setupRefresh];
+    
 }
+
+
 /**
  *  集成刷新控件
  */
@@ -111,36 +114,33 @@
     // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
     [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
 }
+
+
+- (void)footerRereshing
+{
+    [self getDataHeadOrFooter:nil];
+}
 -(void)initData:(UIButton*)btn{
     kPBlack(@"正在加载成长记录");
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        //@{@"classesid":@"1",@"page":@"1"}
-   
+    //@{@"classesid":@"1",@"page":@"1"}
+    
     //如果有分类
     if (btn.tag != 100 && btn) {
         [params setValue:@(btn.tag) forKey:@"catid"];
         //删除数据并且初始化page
         [_dataArr removeAllObjects];
-        page = 1;
+        self.page = 1;
     }
-    
-    //看自己
-    if (btn.tag == 100) {
-        [_dataArr removeAllObjects];
-        page = 1;
-
-        [params setObject:[LoginUser sharedLoginUser].userName forKey:@"usernma"];
-    }
-    
-    //?classesid=1&cateid=1&username=xuesheng&usernma=xuesheng&page=1
-    
     [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
     [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
     [params setObject:@"1" forKey:@"type"];
-    [params setObject:@(page) forKey:@"page"];
+    [params setObject:[LoginUser sharedLoginUser].kindergartenid forKey:@"kid"];
+    
+    [params setObject:@(self.page) forKey:@"page"];
     //[params setObject:@"1" forKey:@"cateid"];
     [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
-        NSLog(@"%@",JSON);
+        //NSLog(@"%@",JSON);
         for (NSDictionary *dict in JSON[@"data"]) {
             ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
             [model setKeyValues:dict];
@@ -151,55 +151,51 @@
             //MyLog(@"%@",model.images);
         }
         kPdismiss;
-        page ++;
+        self.page ++;
         [_tableView reloadData];
+        [_tableView headerEndRefreshing];
     } failure:^(NSError *error) {
         kPdismiss
         MyLog(@"%@",error.debugDescription);
     }];
     //kPdismiss
 }
-- (void)footerRereshing
-{
-    kPBlack(@"正在加载成长记录");
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
-    [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
-    [params setObject:@(page) forKey:@"page"];
-    [_dataArr removeAllObjects];
-    [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
-        for (NSDictionary *dict in JSON[@"data"]) {
-            ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
-            [model setKeyValues:dict];
-            model.praisecount = [NSString stringWithFormat:@"%@",dict[@"praisecount"]];
-            model.comcount = [NSString stringWithFormat:@"%@",dict[@"comcount"]];
-            model.ispraise = [NSString stringWithFormat:@"%@",dict[@"ispraise"]];
-            [_dataArr addObject:model];
-            //MyLog(@"%@",model.images);
-        }
-        kPdismiss;
-        page ++;
-        [_tableView reloadData];
-        [_tableView footerEndRefreshing];
-    } failure:^(NSError *error) {
-        [_tableView footerEndRefreshing];
-        kPdismiss
-        MyLog(@"%@",error.debugDescription);
-    }];
-    
-}
 
 -(void)headerRefreshing
 {
-    page = 1;
+    [self getDataHeadOrFooter:@"header"];
+}
+
+
+-(void)getDataHeadOrFooter:(NSString*)str
+{
+    
+    //    classesid	int	班级id
+    //    catid	分类	分类id
+    //    username	String	传这个参数区分自己是否赞过
+    //    usernme	String	看自己	（条件筛选，默认为空）
+    //    page	int	页数
+    //    type	String	type 1：全班 2：全员（幼儿园园长可以看全员的）
+    //    kid	String	幼儿园ID
+    if ([str isEqualToString:@"header"]) {
+        self.page = 1;
+    }
+    
     kPBlack(@"正在加载成长记录");
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
     [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
-    [params setObject:@(page) forKey:@"page"];
-    [_dataArr removeAllObjects];
+    [params setObject:@"1" forKey:@"type"];
+    [params setObject:[LoginUser sharedLoginUser].kindergartenid forKey:@"kid"];
+    [params setObject:@(self.page) forKey:@"page"];
+    
     [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
+        //MyLog(@"%@",JSON);
+        if ([str isEqualToString:@"header"]) {
+            [_dataArr removeAllObjects];
+        }
         for (NSDictionary *dict in JSON[@"data"]) {
+            
             ZJPotoWallModel *model = [[ZJPotoWallModel alloc] init];
             [model setKeyValues:dict];
             model.praisecount = [NSString stringWithFormat:@"%@",dict[@"praisecount"]];
@@ -209,11 +205,21 @@
             //MyLog(@"%@",model.images);
         }
         kPdismiss;
-        
+        self.page ++;
         [_tableView reloadData];
-        [_tableView headerEndRefreshing];
+        if ([str isEqualToString:@"header"]) {
+            [_tableView headerEndRefreshing];
+        }else{
+            [_tableView footerEndRefreshing];
+        }
+        
     } failure:^(NSError *error) {
-        [_tableView headerEndRefreshing];
+        
+        if ([str isEqualToString:@"header"]) {
+            [_tableView headerEndRefreshing];
+        }else{
+            [_tableView footerEndRefreshing];
+        }
         kPdismiss
         MyLog(@"%@",error.debugDescription);
     }];
@@ -225,7 +231,7 @@
 {
     
     
-   ZJPotoWallModel *model = _dataArr[section];
+    ZJPotoWallModel *model = _dataArr[section];
     
     UIView *view = [[UIView alloc] init];
     view.backgroundColor  = [UIColor whiteColor];
@@ -253,14 +259,14 @@
     UIView *imageBgView = [[UIView alloc] initWithFrame:CGRectMake(0, kMargin+YH(title), 280, 150)];
     imageBgView.tag = section+100;
     [superView addSubview:imageBgView];
-
+    
     if (model.images.count) {
         //if (section == 0) {
-            _images = model.images;
-
+        _images = model.images;
+        
         //}
-        UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading"];
-
+        UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading.png"];
+        
         //取出图片的张数
         int count = model.images.count;
         
@@ -276,15 +282,14 @@
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kMargin+margin, 0, width, 150)];
             [imageBgView addSubview:imageView];
-
+            
             [imageView setImageURLStr:model.images[i] placeholder:placeholder];
             //if (count==1) {
-                imageView.contentMode = UIViewContentModeScaleAspectFill ;
-                imageView.clipsToBounds = YES;
+            imageView.contentMode = UIViewContentModeScaleAspectFill ;
+            imageView.clipsToBounds = YES;
             //}
-             imageView.tag = i;
+            imageView.tag = i;
             imageView.userInteractionEnabled = YES;
-            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
             //如果有视频，就去视频
             if (![model.videourl isEqualToString:@"null"]) {
                 // MyLog(@"-----%@",model.videourl);
@@ -299,8 +304,6 @@
         }
         
     }
-    
-
     
     //工具条view
     UIView *toolView = [[UIView alloc] init];
@@ -319,30 +322,24 @@
     timeLabel.font = kFont(12);
     [toolView addSubview:timeLabel];
     
-    
-    //设置赞按钮的背景图片
-    NSString *pariseS = nil;
-    
-    //MyLog(@"%@",model.ispraise);
-    if ([model.ispraise isEqualToString:@"0"]) {
-        pariseS = @"p_parise";
-    }else{
-         pariseS = @"p_parise_h";
+    //赞按钮
+    UIButton *praiseBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(150, 0, 20, 20) delegate:self selector:@selector(praiseAction:) tag:section];
+    [praiseBtn setImage:[UIImage imageNamed:@"p_parise"] forState:UIControlStateNormal];
+    [praiseBtn setImage:[UIImage imageNamed:@"p_parise_h"] forState:UIControlStateSelected];
+    // MyLog(@"%@",model.ispraise);
+    if ([model.ispraise isEqualToString:@"1"]) {
+        praiseBtn.selected = YES;
     }
-    
-    UIButton *praiseBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(150, 0, 16, 16) delegate:self selector:@selector(praiseAction:) tag:section];
-    [praiseBtn setImage:[UIImage imageNamed:pariseS] forState:UIControlStateNormal];
     [toolView addSubview:praiseBtn];
     
     //赞
     UILabel *praiseLable = [ZJUIMethods creatLabel:model.praisecount frame:CGRectMake(XW(praiseBtn)+5, 0, 30, 16) font:kFont(12) textColor:nil];
     praiseLable.tag = 10+section;
     praiseLable.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
-    //praiseLable.backgroundColor = [UIColor redColor];
     [toolView addSubview:praiseLable];
     
     //评论按钮
-    UIButton *commentBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(XW(praiseLable)+2*kMargin, 0, 16, 16) delegate:self selector:@selector(commentAction:) tag:[model.id intValue]];
+    UIButton *commentBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(XW(praiseLable)+2*kMargin, 0, 20, 20) delegate:self selector:@selector(commentAction:) tag:[model.id intValue]];
     [commentBtn setImage:[UIImage imageNamed:@"p_comment"] forState:UIControlStateNormal];
     [toolView addSubview:commentBtn];
     
@@ -416,6 +413,7 @@
     player.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:player animated:YES completion:nil];
 }
+
 #pragma mark 跳转到图片页面
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
@@ -423,7 +421,7 @@
     int tag = tap.view.superview.tag;
     ZJPotoWallModel *model = _dataArr[tag-100];
     
-
+    
     int count = model.images.count;
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
@@ -435,9 +433,9 @@
         UIView *imageBgView  = [self.view viewWithTag:tag];
         //只放两张图片，所以i<2
         if (i<2) {
-             photo.srcImageView = imageBgView.subviews[i]; // 来源于哪个UIImageView
+            photo.srcImageView = imageBgView.subviews[i]; // 来源于哪个UIImageView
         }
-       
+        
         [photos addObject:photo];
     }
     
@@ -455,31 +453,38 @@
 -(void)praiseAction:(UIButton*)sender
 {
     
-     ZJPotoWallModel *model = _dataArr[sender.tag];
+    ZJPotoWallModel *model = _dataArr[sender.tag];
     NSString *type = nil;
-    if ([model.ispraise isEqualToString:@"0"]) {
-        type = @"0";
-        [sender setImage:[UIImage imageNamed:@"p_parise_h"] forState:UIControlStateNormal];
-    }else{
+    if (sender.selected) {
         type = @"1";
-        [sender setImage:[UIImage imageNamed:@"p_parise"] forState:UIControlStateNormal];
+        
+    }else{
+        type = @"0";
     }
-    
     
     NSDictionary *params = @{@"pwallid":model.id,
                              @"username":[LoginUser sharedLoginUser].userName,
                              @"type":type
                              };
     
+    UILabel *praiseLb = (UILabel*)[self.view viewWithTag:10+sender.tag];
+    
     [HttpTool getWithPath:@"praise" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue]==0) {
-            
+            if (sender.selected) {
+                MyLog(@"%d",praiseLb.text.intValue);
+                praiseLb.text = [NSString stringWithFormat:@"%d",praiseLb.text.intValue-1];
+                
+            }else{
+                praiseLb.text = [NSString stringWithFormat:@"%d",praiseLb.text.intValue+1];
+            }
+            sender.selected = !sender.selected;
         }
     } failure:^(NSError *error) {
         
     }];
-
+    
 }
 -(void)cateAction
 {
@@ -519,7 +524,7 @@
     
     ZJPotoWallModel *model = _dataArr[indexPath.section];
     //自定义View
-   // NSLog(@"%@",NSStringFromCGRect(cell.frame));
+    // NSLog(@"%@",NSStringFromCGRect(cell.frame));
     if (ISIOS7) {
         
     }
@@ -537,32 +542,32 @@
     CGFloat height = 0;
     for (int i = 0; i < model.comment.count; i ++) {
         NSDictionary *commDict = model.comment[i];
-  
+        
         NSString *cmStr = [NSString stringWithFormat:@"%@:%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
         // 如果想要改变部份文本内容的风格，我们就需要用到NSAttributedString NSMutableAttributedString
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:cmStr];
         
-        int nickNameLengt = (int)((NSString*)commDict[@"cmnickname"]).length;
-//        [attrString addAttribute:(NSString *)kCTForegroundColorAttributeName
-//                            value:[UIColor redColor]
-//                            range:NSMakeRange(0,nickNameLengt )];
-         [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.627 green:0.827 blue:0.149 alpha:1.000] range:NSMakeRange(0,nickNameLengt)];
-       
+        int nickNameLengt = ((NSString*)commDict[@"cmnickname"]).length;
+        //        [attrString addAttribute:(NSString *)kCTForegroundColorAttributeName
+        //                            value:[UIColor redColor]
+        //                            range:NSMakeRange(0,nickNameLengt )];
+        [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.627 green:0.827 blue:0.149 alpha:1.000] range:NSMakeRange(0,nickNameLengt)];
+        
         UILabel *coment = [ZJUIMethods creatLabel:nil frame:CGRectMake(10, height, 280, 16) font:kFont(13) textColor:nil];
         coment.lineBreakMode = NSLineBreakByWordWrapping;
         coment.backgroundColor = [UIColor clearColor];
         [coment setAttributedText:attrString];
         [view addSubview:coment];
-
+        
         //重新计算label 的高度
         CGRect frame = coment.frame;
-    
+        
         //CGSize optimumSize = coment.optimumSize;
         //重新计算label 的高度
         frame.size.height = [self getRTLabelH:cmStr]+5;
-    
+        
         height += frame.size.height+5;
-    
+        
         [coment setFrame:frame];
         //添加分割线
         if (i<model.comment.count -1) {
@@ -570,11 +575,11 @@
             line.backgroundColor = [UIColor colorWithWhite:0.941 alpha:1.000];
             [view addSubview:line];
         }
- 
+        
         //重新设置view frame
         viewFrame.size.height = YH(coment);
         view.frame = viewFrame;
-
+        
         
     }
     return cell;
@@ -595,7 +600,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-     ZJPotoWallModel *model = _dataArr[indexPath.section];
+    ZJPotoWallModel *model = _dataArr[indexPath.section];
     
     CGFloat height = 0;
     
@@ -606,13 +611,13 @@
     for (int i = 0; i < model.comment.count; i ++) {
         height +=10;
         if (i>0) {
-           // height +=10;
+            // height +=10;
         }
         NSDictionary *commDict = model.comment[i];
         
         NSString *commStr = [NSString stringWithFormat:@"%@:%@",commDict[@"cmnickname"],commDict[@"cmcontent"]];
         height += [self getRTLabelH:commStr]>16?[self getRTLabelH:commStr]:16;
-         // MyLog(@"%f------%@",height,commStr);
+        // MyLog(@"%f------%@",height,commStr);
     }
     //MyLog(@"%f------",height);
     

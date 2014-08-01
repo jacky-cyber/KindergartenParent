@@ -29,9 +29,11 @@
     
     
     //判断通知的类型
-    if ([model.type intValue] == 2) {
+    if ([model.type intValue] == 2) {//全员通知
         _typeImage.image = [UIImage imageNamed:@"youeryuan_notif"];
-    }else if ([model.type intValue] == 8) {
+    }else if ([model.type intValue] == 6) {//服药提醒
+        _typeImage.image = [UIImage imageNamed:@"weiyaoNofifi"];
+    }else if ([model.type intValue] == 8) {//本班通知
         _typeImage.image = [UIImage imageNamed:@"classDetialNotifi"];
     }
     

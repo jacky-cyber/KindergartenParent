@@ -46,17 +46,59 @@
     
     [self.view addSubview:_tableView];
     
-    //重新加载数据
-    [self initData];
+ 
 
+    //重新加载数据
+    [self headerRefreshing];
+    // 集成刷新控件
+    [self setupRefresh];
 }
 
-#pragma mark 初始化数据
--(void)initData
+
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
 {
- 
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_tableView addHeaderWithTarget:self action:@selector(headerRefreshing)];
+    //#warning 自动刷新(一进入程序就下拉刷新)
+    //[self.tableView headerBeginRefreshing];
     
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
+#pragma mark 初始化数据
+-(void)headerRefreshing
+{
     
+    NSString *type = @"4";//日报
+    if ([self.userInfo isEqualToString:@"week"]) {
+        type = @"5";//周报
+    }
+    self.page = 1;
+    NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"type":type,
+                             @"page":@(self.page)};
+    kPBlack(@"数据加载中...");
+    [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
+        if ([JSON[@"code"] intValue] == 0) {
+            [_dataArr removeAllObjects];
+            for (NSDictionary *dict in JSON[@"data"]) {
+                [_dataArr addObject:dict];
+            }
+            [_tableView reloadData];
+            kPdismiss;
+        }
+        [_tableView headerEndRefreshing];
+    } failure:^(NSError *error) {
+        kPE(@"网络错误,请稍再试", 0.5);
+        MyLog(@"%@",error.localizedDescription);
+    }];
+}
+#pragma mark 初始化数据
+-(void)footerRereshing
+{
     NSString *type = @"4";//日报
     if ([self.userInfo isEqualToString:@"week"]) {
         type = @"5";//周报
@@ -64,23 +106,25 @@
     
     NSDictionary *parmas = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"type":type,
-                             @"page":@(1)};
+                             @"page":@(self.page)};
     kPBlack(@"数据加载中...");
     [HttpTool getWithPath:@"msglist" params:parmas success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
-           
+            
             for (NSDictionary *dict in JSON[@"data"]) {
                 [_dataArr addObject:dict];
             }
+            self.page ++;
             [_tableView reloadData];
             kPdismiss;
+            [_tableView footerEndRefreshing];
         }
     } failure:^(NSError *error) {
         kPE(@"网络错误,请稍再试", 0.5);
         MyLog(@"%@",error.localizedDescription);
     }];
-}
 
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     

@@ -207,7 +207,7 @@
     if (tag == 1) {
          [self pushController:[ZJNotificationListViewController class] withInfo:@"2,8,9,10" withTitle:_cateTitleArr[tag-1]];
     }else if(tag == 2){//每周食谱
-//        [self pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:_cateTitleArr[tag-1]];
+        [self pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:_cateTitleArr[tag-1]];
     }else if(tag == 3){//签到
         [self pushController:[ZJNotificationListViewController class] withInfo:@"11" withTitle:_cateTitleArr[tag-1]];
     }else if(tag == 4){//月报
@@ -217,7 +217,8 @@
     }else if(tag == 6){//课程
         [self pushController:[ZJCourseViewController class] withInfo:nil withTitle:@"课程表"];
     }else if(tag == 7){//月评
-        [self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:_cateTitleArr[tag-1]];
+        //[self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:_cateTitleArr[tag-1]];
+        [self monthAction];
     }else if(tag == 8){//医务通知
         [self pushController:[ZJNotificationListViewController class] withInfo:@"6" withTitle:_cateTitleArr[tag-1]];
     }else if (tag == 9) {
@@ -227,7 +228,21 @@
     MyLog(@"%d",sender.tag);
 }
 
-
+#pragma makr 判断是否月评
+-(void)monthAction{
+    
+    [HttpTool getWithPath:@"month_cmt_status" params:@{@"username":[LoginUser sharedLoginUser].userName} success:^(id JSON) {
+        MyLog(@"%@",JSON[@"data"]);
+        if ([JSON[@"data"][@"status"] intValue] == 0) {
+            [self pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"家长月评"];
+        }else{
+            kPE(@"您本月已经提交月评，请下月再评", 1.5);
+        }
+    } failure:^(NSError *error) {
+        kPE(kHttpErrorMsg, 0.5);
+    }];
+    
+}
 
 #pragma mark 查看个人信息
 -(void)updateProfileAction

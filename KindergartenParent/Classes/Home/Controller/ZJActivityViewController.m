@@ -82,7 +82,7 @@
     
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
                              @"id":_model.id};
-    [HttpTool getWithPath:@"applystatus" params:params success:^(id JSON) {
+    [HttpTool getWithPath:@"apply" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] == 0) {
             NSDictionary *dict = JSON[@"data"];
@@ -107,7 +107,7 @@
                              @"id":_model.id};
     [HttpTool getWithPath:@"applystatus" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
-        if ([JSON[@"data"][@"status"] isEqual:@2]) {
+        if ([JSON[@"data"][@"status"] isEqual:@0]) {
             [self baomingBtn];
         }
         

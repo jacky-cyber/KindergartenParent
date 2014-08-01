@@ -8,7 +8,9 @@
 
 #import "ZJSystemMsgViewController.h"
 
-@interface ZJSystemMsgViewController ()
+@interface ZJSystemMsgViewController (){
+    NSDictionary *_data;
+}
 
 @end
 
@@ -31,8 +33,7 @@
     //加载数据
     [self loadData];
     
-    //设置页面
-    [self setViews];
+   
 }
 
 #pragma mark 加载数据
@@ -43,6 +44,12 @@
     //[LoginUser sharedLoginUser].userName
     [HttpTool postWithPath:@"loginstatus" params:@{@"username":[LoginUser sharedLoginUser].userName} success:^(id JSON) {
         MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0 ) {
+            _data = JSON[@"data"];
+            //设置页面
+            [self setViews];
+        }
+        
     } failure:^(NSError *error) {
         MyLog(@"%@",error.description);
     }];
@@ -55,7 +62,7 @@
     [self.view addSubview:loginNumImg];
     
     //loging Label
-    UILabel *logingLabel = [ZJUIMethods creatLabel:@"41243" frame:CGRectMake(XW(loginNumImg), Y(loginNumImg), 170, 90) font:kFont(25) textColor:[UIColor colorWithRed:0.314 green:0.510 blue:0.824 alpha:1.000]];
+    UILabel *logingLabel = [ZJUIMethods creatLabel:_data[@"loginnum"] frame:CGRectMake(XW(loginNumImg), Y(loginNumImg), 170, 90) font:kFont(25) textColor:[UIColor colorWithRed:0.314 green:0.510 blue:0.824 alpha:1.000]];
     logingLabel.layer.borderColor = [UIColor colorWithRed:0.314 green:0.510 blue:0.824 alpha:1.000].CGColor;
     logingLabel.layer.borderWidth = 1;
     logingLabel.textAlignment = NSTextAlignmentCenter;
@@ -67,8 +74,8 @@
     [self.view addSubview:loginTimeImg];
     
     //loging Label
-    
-    UILabel *loginTimeLabel = [ZJUIMethods creatLabel:@"40小时" frame:CGRectMake(XW(loginTimeImg), Y(loginTimeImg), 170, 90) font:kFont(25) textColor:[UIColor colorWithRed:0.471 green:0.643 blue:0.055 alpha:1.000]];
+    NSString *loginTimeStr = [NSString stringWithFormat:@"0.1%f",[_data[@"logintime"] floatValue]];
+    UILabel *loginTimeLabel = [ZJUIMethods creatLabel:loginTimeStr frame:CGRectMake(XW(loginTimeImg), Y(loginTimeImg), 170, 90) font:kFont(25) textColor:[UIColor colorWithRed:0.471 green:0.643 blue:0.055 alpha:1.000]];
     loginTimeLabel.layer.borderColor = [UIColor colorWithRed:0.471 green:0.643 blue:0.055 alpha:1.000].CGColor;
     loginTimeLabel.layer.borderWidth = 1;
     loginTimeLabel.textAlignment = NSTextAlignmentCenter;

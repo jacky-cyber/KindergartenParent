@@ -22,6 +22,7 @@
 #define kName @"name"
 #define kTeacherId @"teacherid"
 #define kKindergarten @"kindergarten"
+#define Kkindergartenid @"kindergartenid"
 #define kRole @"role"
 @implementation LoginUser
 single_implementation(LoginUser)
@@ -78,6 +79,16 @@ single_implementation(LoginUser)
 -(NSString *)classid{
     return [self loadStringFromDefaultsWithKey:kClassid];
 }
+
+-(NSString *)kindergartenid{
+    return [self loadStringFromDefaultsWithKey:Kkindergartenid];
+}
+
+-(void)setKindergartenid:(NSString *)kindergartenid
+{
+    [kindergartenid saveToNSDefaultsWithKey:Kkindergartenid];
+}
+
 -(void)setClassid:(NSString *)classid
 {
     [classid saveToNSDefaultsWithKey:kClassid];
@@ -88,10 +99,14 @@ single_implementation(LoginUser)
     [role saveToNSDefaultsWithKey:kRole];
 }
 
+
 -(void)setUserName:(NSString *)userName
 {
     [userName saveToNSDefaultsWithKey:kUserName];
 }
+
+
+
 -(void)setPassword:(NSString *)password
 {
     [password saveToNSDefaultsWithKey:kPassWord];
@@ -135,7 +150,7 @@ single_implementation(LoginUser)
 -(BOOL)isLogin
 {
     BOOL flag = YES;
- 
+    
     NSLog(@"username:%@,password:%@",self.userName,self.password);
     if(self.userName.isEmptyString || self.password.isEmptyString)
     {
@@ -160,4 +175,22 @@ single_implementation(LoginUser)
     self.userName = @"";
     self.password = @"";
 }
+
+-(void)saveInfo:(ZJUserInfoModel*)user
+{
+    
+    [LoginUser sharedLoginUser].userId =user.userid;
+    [LoginUser sharedLoginUser].classes = user.classes;
+    [LoginUser sharedLoginUser].profilImg = user.profileimg;
+    [LoginUser sharedLoginUser].nickname = user.nickname;
+    [LoginUser sharedLoginUser].name = user.name;
+    [LoginUser sharedLoginUser].parentname = user.parentname;
+    [LoginUser sharedLoginUser].tel = user.tel;
+    [LoginUser sharedLoginUser].teacherid = user.teacherid;
+    [LoginUser sharedLoginUser].kindergarten = user.kindergarten;
+    [LoginUser sharedLoginUser].kindergartenid = user.kindergartenid;
+    [LoginUser sharedLoginUser].classid = user.classid;
+    [LoginUser sharedLoginUser].role = [NSString stringWithFormat:@"%@",user.role];
+}
+
 @end

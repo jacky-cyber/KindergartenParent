@@ -75,25 +75,15 @@
     [HttpTool getWithPath:@"login" params:@{@"username":username,@"pwd":pwd} success:^(id JSON) {
         if (JSON[@"data"]) {
             
-            [SVProgressHUD showSuccessWithStatus:@"登录成功" duration:1];
+            [SVProgressHUD showSuccessWithStatus:@"登录成功" duration:0.5];
            
-            [LoginUser sharedLoginUser].userName = username;
+            //[LoginUser sharedLoginUser].userName = username;
             
             ZJUserInfoModel *user = [[ZJUserInfoModel alloc] init];
             [user setKeyValues:JSON[@"data"]];
             
-            [LoginUser sharedLoginUser].password = pwd;
-            [LoginUser sharedLoginUser].userId =user.userid;
-            [LoginUser sharedLoginUser].classes = user.classes;
-            [LoginUser sharedLoginUser].profilImg = user.profileimg;
-            [LoginUser sharedLoginUser].nickname = user.nickname;
-            [LoginUser sharedLoginUser].name = user.name;
-            [LoginUser sharedLoginUser].parentname = user.parentname;
-            [LoginUser sharedLoginUser].tel = user.tel;
-            [LoginUser sharedLoginUser].teacherid = user.teacherid;
-            [LoginUser sharedLoginUser].kindergarten = user.kindergarten;
-            [LoginUser sharedLoginUser].classid = user.classid;
-            [LoginUser sharedLoginUser].role = [NSString stringWithFormat:@"%@",user.role];
+            [[LoginUser sharedLoginUser] saveInfo:user];
+            
             MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
             
@@ -107,9 +97,9 @@
                     msg = @"用户名重复，无法注册";
                 }
                 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                
-                [alert show];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                
+//                [alert show];
                 
                 
             }];
