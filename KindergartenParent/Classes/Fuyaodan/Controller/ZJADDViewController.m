@@ -465,7 +465,7 @@
         if ([JSON[@"code"] intValue] == 0) {
             
             [SVProgressHUD dismiss];
-            [self popController:@"ZJFuyaodanViewController" withSel:@selector(initData:) withObj:@(true)];
+            [self popController:@"ZJFuyaodanViewController" withSel:@selector(getDataForHeaderOrFooter:) withObj:@"header"];
             
             //[self.navigationController popViewControllerAnimated:YES];
         }

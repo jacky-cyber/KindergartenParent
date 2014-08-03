@@ -62,22 +62,45 @@
     
     NSArray *imageArr = @[@"zao",@"zhong",@"wan"];
     NSArray *imageArrH = @[@"zao_h",@"zhong_h",@"wan_h"];
-    for (int i = 0; i<3; i++)
-    {
-        UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
-        [statusBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
-        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateSelected];
-        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateHighlighted];
-        //imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
-        [self addSubview:statusBtn];
-        if (i==0) {//早
-            _mornImg = statusBtn;
-        }else if (i==1){//中
-            _noonImg = statusBtn;
-        }else if (i==2){//晚
-            _eveImg = statusBtn;
-        }
+//    if (!_mornImg && !_noonImg && !_eveImg) {
+//        for (int i = 0; i<3; i++)
+//        {
+//            UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
+//            [statusBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
+//            [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateSelected];
+//            [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateHighlighted];
+//            //imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
+//            [self addSubview:statusBtn];
+//            if (i==0) {//早
+//                _mornImg = statusBtn;
+//            }else if (i==1){//中
+//                _noonImg = statusBtn;
+//            }else if (i==2){//晚
+//                _eveImg = statusBtn;
+//            }
+//        }
+//
+//    }
+    if (!_mornImg) {
+        _mornImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
     }
+    _mornImg.image = [UIImage imageNamed:@"zao"];
+    [self addSubview:_mornImg];
+    
+    
+    if (!_noonImg) {
+        _noonImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+1*60, 10, 25, 25)];
+    }
+    _noonImg.image = [UIImage imageNamed:@"zhong"];
+    [self addSubview:_noonImg];
+    
+    if (!_eveImg) {
+        _eveImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+2*60, 10, 25, 25)];
+    }
+    _eveImg.image = [UIImage imageNamed:@"wan"];
+    [self addSubview:_eveImg];
+    
+    
 }
 
 
@@ -92,41 +115,29 @@
     
     if (![self isRang:@"早" withModel:fydmodel]) {
         _mornImg.alpha = kAlpha;
-        _mornImg.enabled = NO;
+       
     }else{
         _mornImg.alpha = 1;
     }
     
     if (![self isRang:@"中" withModel:fydmodel]) {
         _noonImg.alpha = kAlpha;
-        _noonImg.enabled = NO;
+        
     }else{
         _noonImg.alpha = 1;
     }
     
     if (![self isRang:@"晚" withModel:fydmodel]) {
         _eveImg.alpha = kAlpha;
-        _eveImg.enabled = NO;
+       
     }else{
         _eveImg.alpha = 1;
     }
     
     
-    //设置是否被已经服药
     
     
 
-    //0 未服药 1 已服药
-    if ([fydmodel.moringstatus isEqual:@(1)]) {
-        _mornImg.selected = YES;
-    }
-    if ([fydmodel.noonstatus isEqual:@(1)]) {
-        _noonImg.selected = YES;
-    }
-    if ([fydmodel.evestatus isEqual:@(1)]) {
-        _eveImg.selected = YES;
-    }
-    
     
 }
 #pragma mark 看是否包含
@@ -142,12 +153,30 @@
     return flag;
 }
 
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+-(void)layoutSubviews
 {
-    [super setSelected:selected animated:animated];
+    [super layoutSubviews];
     
-    // Configure the view for the selected state
-}
+  
+    //设置是否被已经服药
+    if (_fydmodel.moringstatus.intValue == 1) {
+        _mornImg.image = [UIImage imageNamed:@"zao_h"];
+    }else{
+        _mornImg.image = [UIImage imageNamed:@"zao"];
+    }
+    
+    if (_fydmodel.noonstatus.intValue == 1) {
+        _noonImg.image = [UIImage imageNamed:@"zhong_h"];
+    }else{
+        _noonImg.image = [UIImage imageNamed:@"zhong"];
+    }
+    
+    if (_fydmodel.evestatus.intValue == 1) {
+        _eveImg.image = [UIImage imageNamed:@"wan_h"];
+    }else{
+        _eveImg.image = [UIImage imageNamed:@"wan"];
+    }
 
+    
+}
 @end

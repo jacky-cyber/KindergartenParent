@@ -178,7 +178,7 @@ single_implementation(LoginUser)
 
 -(void)saveInfo:(ZJUserInfoModel*)user
 {
-    
+    [LoginUser sharedLoginUser].userName =user.username;
     [LoginUser sharedLoginUser].userId =user.userid;
     [LoginUser sharedLoginUser].classes = user.classes;
     [LoginUser sharedLoginUser].profilImg = user.profileimg;

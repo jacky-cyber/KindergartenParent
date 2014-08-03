@@ -32,10 +32,11 @@
     [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     //_tableView.rowHeight = 100;
     _dataArr = [NSMutableArray array];
-    
+    //加载界面
+    [self.view addSubview:_tableView];
     
     //加载数据
-    [self loadData];
+    [self headerRereshing];
     
     // 集成刷新控件
     [self setupRefresh];
@@ -56,82 +57,72 @@
     [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
 }
 
-#pragma mark 开始进入刷新状态
-- (void)headerRereshing
+-(void)headerRereshing
 {
-    NSString *timeStr = [TimeFormatTools timeFormatToNow:@"yyyy-MM-dd"];
-    
-    NSDictionary *params = @{@"date":timeStr,@"username":[LoginUser sharedLoginUser].userName};
-    
-    [HttpTool getWithPath:@"honor" params:params success:^(id JSON) {
-        if ([JSON[@"code"] intValue] ==0) {
-            NSArray *arr = JSON[@"data"];
-            //先删除所有数据
-            [_dataArr removeAllObjects];
-            for (int i = 0; i<arr.count; i++) {
-                ZJHonorModel *model1  = [[ZJHonorModel alloc] init];
-                
-                [model1 setKeyValues:arr[i]];
-                
-                [_dataArr addObject:model1];
-            }
-            
-            //加载界面
-            [_tableView reloadData];
-        }else{
-            [_tableView headerEndRefreshing];
-        }
-    } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"网络连接错误" duration:1];
-    }];
-    [_tableView headerEndRefreshing];
+    [self getDataForHeaderOrFooter:@"header"];
 }
 
 - (void)footerRereshing
 {
-
     
-    // 2.2秒后刷新表格UI
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [self.tableView reloadData];
-        
-        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-        [_tableView footerEndRefreshing];
-    });
+    [self getDataForHeaderOrFooter:@"footer"];
 }
 
-
-
--(void)loadData
+-(void)getDataForHeaderOrFooter:(NSString*)str
 {
-    
     NSString *timeStr = [TimeFormatTools timeFormatToNow:@"yyyy-MM-dd"];
-
+    if ([str isEqualToString:@"footer"]) {
+        MyLog(@"%d",_dataArr.count);
+        ZJHonorModel *model = _dataArr.lastObject;
+        MyLog(@"%@",model.date);
+        timeStr = model.date;
+    }
+    
+    
     kPBlack(@"数据加载中");
     NSDictionary *params = @{@"date":timeStr,@"username":[LoginUser sharedLoginUser].userName};
     
     [HttpTool getWithPath:@"honor" params:params success:^(id JSON) {
+        if ([str isEqualToString:@"header"]) {
+            [_dataArr removeAllObjects];
+        }
         if ([JSON[@"code"] intValue] ==0) {
             NSArray *arr = JSON[@"data"];
             for (int i = 0; i<arr.count; i++) {
                 ZJHonorModel *model1  = [[ZJHonorModel alloc] init];
+                [model1 setKeyValues:arr[i]];
                 
-                 [model1 setKeyValues:arr[i]];
-                
+                if ([str isEqualToString:@"footer"]) {
+                    if (i==0) {//在加载跟多的时候会把当前的日期的数据再加载过来，所以要过滤掉
+                        continue;
+                    }
+                }
                 [_dataArr addObject:model1];
             }
-           
-            //加载界面
-             [self.view addSubview:_tableView];
+            
+            
+            [_tableView reloadData];
+            if ([str isEqualToString:@"header"]) {
+                [_tableView headerEndRefreshing];
+            }else{
+                [_tableView footerEndRefreshing];
+            }
+            
             kPdismiss;
         }else{
+            if ([str isEqualToString:@"header"]) {
+                [_tableView headerEndRefreshing];
+            }else{
+                [_tableView footerEndRefreshing];
+            }
             [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
         }
     } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"网络连接错误" duration:1];
+        kPE(kHttpErrorMsg, 0.5);
     }];
 }
+
+
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

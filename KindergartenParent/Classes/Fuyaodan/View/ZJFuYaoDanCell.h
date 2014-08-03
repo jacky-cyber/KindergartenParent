@@ -11,7 +11,7 @@
 @class ZJFuYaoDanModel;
 @interface ZJFuYaoDanCell : UITableViewCell
 @property (nonatomic,strong) ZJFuYaoDanModel *fydmodel;
-@property (nonatomic,strong) UIButton *mornImg;
-@property (nonatomic,strong) UIButton *noonImg;
-@property (nonatomic,strong) UIButton *eveImg;
+@property (nonatomic,strong) UIImageView *mornImg;
+@property (nonatomic,strong) UIImageView *noonImg;
+@property (nonatomic,strong) UIImageView *eveImg;
 @end

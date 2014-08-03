@@ -107,7 +107,7 @@
                              @"id":_model.id};
     [HttpTool getWithPath:@"applystatus" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
-        if ([JSON[@"data"][@"status"] isEqual:@0]) {
+        if ([JSON[@"data"][@"status"] isEqual:@2]) {
             [self baomingBtn];
         }
         

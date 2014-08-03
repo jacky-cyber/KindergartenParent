@@ -86,43 +86,59 @@
     [_scrollView addSubview:label1];
     
     //左边时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 3, 80, 25)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 80, 25)];
     timeLabel.text = [_model.time substringToIndex:10];
     timeLabel.font = kFont13;
     [label1 addSubview:timeLabel];
     
-    NSArray *imageArr = [[NSArray alloc]initWithObjects:@"zao_03",@"zhong_05",@"wan_07", nil];
-    //早
-    UIImageView *imageV1 = [[UIImageView alloc]initWithFrame:CGRectMake(120+0*60,5, 20, 20)];
-    
-    if ([self isRang:@"早"]) {
-        imageV1.alpha = 0;
-    }
-    
-    imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
-    [label1 addSubview:imageV1];
-    //中
-    UIImageView *imageV2 = [[UIImageView alloc]initWithFrame:CGRectMake(120+1*60, 5, 20, 20)];
-    if ([self isRang:@"中"]) {
-        imageV2.alpha = 0;
-    }
-    
-    imageV2.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:1]]];
-    [label1 addSubview:imageV2];
-    //晚
-    UIImageView *imageV3 = [[UIImageView alloc]initWithFrame:CGRectMake(120+2*60,5, 20, 20)];
-    if ([self isRang:@"晚"]) {
-        imageV3.alpha = 0;
+    NSArray *imageArr = @[@"zao",@"zhong",@"wan"];
+    NSArray *imageArrH = @[@"zao_h",@"zhong_h",@"wan_h"];
+    for (int i = 0; i<3; i++)
+    {
+        UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
+        [statusBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
+        if (i==0) {
+            if (_model.moringstatus.intValue == 1) {
+                [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateNormal];
+                
+            }
+            if ([self isRang:@"早"]) {
+                statusBtn.enabled = NO;
+                statusBtn.alpha = 0.5;
+            }
+        }
+        if (i==1) {
+            if (_model.noonstatus.intValue == 1) {
+                [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateNormal];
+            }
+            if ([self isRang:@"中"]) {
+                statusBtn.enabled = NO;
+                statusBtn.alpha = 0.5;
+            }
+        }
+        if (i==2) {
+            if (_model.evestatus.intValue == 1) {
+                [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateNormal];
+            }
+            if ([self isRang:@"晚"]) {
+                statusBtn.enabled = NO;
+                statusBtn.alpha = 0.5;
+            }
+        }
+        
+//        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateSelected];
+//        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateHighlighted];
+        //imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
+        [label1 addSubview:statusBtn];
+//        if (i==0) {//早
+//            _mornImg = statusBtn;
+//        }else if (i==1){//中
+//            _noonImg = statusBtn;
+//        }else if (i==2){//晚
+//            _eveImg = statusBtn;
+//        }
     }
 
-    if (ISIOS7)
-    {
-        imageV1.frame = CGRectMake(120+0*60,5, 25, 25);
-        imageV2.frame = CGRectMake(120+1*60,5, 25, 25);
-        imageV3.frame = CGRectMake(120+2*60,5, 25, 25);
-    }
-    imageV3.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:2]]];
-    [label1 addSubview:imageV3];
     
     //学生信息
     UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, 63, 280, 75)];

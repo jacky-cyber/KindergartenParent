@@ -54,6 +54,7 @@
 -(void)ladData
 {
     
+    kPBlack(@"正在加载课程表");
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName};
     [HttpTool getWithPath:@"course" params:params success:^(id JSON) {
        // MyLog(@"%@",JSON);
@@ -61,7 +62,7 @@
             kPE(kHttpErrorMsg, 0.5);
             return ;
         }
-        
+        kPdismiss;
         NSDictionary *data = JSON[@"data"];
         
         
