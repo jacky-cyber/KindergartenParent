@@ -136,13 +136,15 @@
                              @"starnum":@(_starArr.count)};
     [HttpTool getWithPath:@"addappraise" params:params success:^(id JSON) {
         MyLog(@"%@",JSON);
-        if ([JSON[@"code"] intValue] == 0) {
-            
+        if ([JSON[@"code"] intValue] >0) {
+            kPE(kHttpErrorMsg, 0.5)
+            return;
+        }
             [SVProgressHUD showSuccessWithStatus:@"评论成功" duration:1];
             [self.navigationController popViewControllerAnimated:YES];
-                 }
+        
     } failure:^(NSError *error) {
-        kPE(@"月评失败", 1);
+        kPE(@"月评失败", 0.5);
     }];
 
     

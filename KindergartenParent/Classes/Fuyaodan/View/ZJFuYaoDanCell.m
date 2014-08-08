@@ -58,29 +58,7 @@
     
     
     //早中晚显示 全部显示出来  根据数据 去选择图片实心空心 没有服药 隐藏图片
-    
-    
-    NSArray *imageArr = @[@"zao",@"zhong",@"wan"];
-    NSArray *imageArrH = @[@"zao_h",@"zhong_h",@"wan_h"];
-//    if (!_mornImg && !_noonImg && !_eveImg) {
-//        for (int i = 0; i<3; i++)
-//        {
-//            UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
-//            [statusBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
-//            [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateSelected];
-//            [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateHighlighted];
-//            //imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
-//            [self addSubview:statusBtn];
-//            if (i==0) {//早
-//                _mornImg = statusBtn;
-//            }else if (i==1){//中
-//                _noonImg = statusBtn;
-//            }else if (i==2){//晚
-//                _eveImg = statusBtn;
-//            }
-//        }
-//
-//    }
+
     if (!_mornImg) {
         _mornImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
     }

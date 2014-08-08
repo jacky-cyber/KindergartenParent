@@ -14,14 +14,14 @@
 #import "MBProgressHUD.h"
 #import "UIImageView+MJWebCache.h"
 #import "IQKeyboardManager.h"
-
 @interface ZJChatViewController ()<UITableViewDataSource, NSFetchedResultsControllerDelegate, UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     // 查询结果控制器
     NSFetchedResultsController *_fetchResultsController;
     SoundTool *_soundTool;
     
-    MBProgressHUD *_HUD;
+    AVAudioPlayer *_player;
+    NSString *_currentMusicName;//当前点击的语音的文件
     
 }
 
@@ -42,12 +42,22 @@
 
 @implementation ZJChatViewController
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [IQKeyboardManager sharedManager].enable = NO;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [IQKeyboardManager sharedManager].enable = YES;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	
-    [IQKeyboardManager sharedManager].enable = NO;
+    
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardStateChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
@@ -55,7 +65,7 @@
     //将字符串切割成数组
     //    NSArray *bareArr = [_bareJID.user componentsSeparatedByString:@"@"];
     //    cell.textLabel.text = bareArr[0];
-    self.title = _bareJID.user;
+    //self.title = _bareJID.user;
     
     // 绑定数据
     [self dataBinding];
@@ -79,16 +89,23 @@
     
     return YES;
 }
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+}
+
 #pragma mark 判断文本框是否有文字，然后显示影藏发送按钮
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    MyLog(@"-----%@---%d--%d",textField.text,range.length,range.location);
     // 1. 检查是否有内容
-    if (string.length > 0) {
+    if (range.location > 0 || range.length !=1) {
         _sendMsgButton.hidden = NO;
-        //[_sendMsgButton setTitle:@"xianshi" forState:UIControlStateNormal];
+       
     }else{
         _sendMsgButton.hidden = YES;
-        //s [_sendMsgButton setTitle:@"ccc" forState:UIControlStateNormal];
+    
     }
     
     return YES;
@@ -116,9 +133,7 @@
         XMPPMessage *message = [XMPPMessage messageWithType:type to:_bareJID];
         
         [message addBody:str];
-        
-        
-        
+
         [xmppDelegate.xmppStream sendElement:message];
         
     }
@@ -173,7 +188,6 @@
         // 打开键盘
         _inputViewConstraint.constant = rect.size.height;
     }
-    
     // 取出动画时长
     NSTimeInterval duration = [notifcation.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
@@ -217,22 +231,22 @@
         flag = message.isOutgoing;
         if (flag) {
             CellIdentifier = FromID;
-            if ([message.body hasPrefix:@"img:"]) {
+            if ([message.body hasSuffix:@".png"]) {
                 CellIdentifier = @"ImageChatFromCell";
                 //MusicChatFromCell
             }
-            if ([message.body hasPrefix:@"mp3:"]) {
+            if ([message.body hasSuffix:@".mp3"]) {
                 CellIdentifier = @"MusicChatFromCell";
                 //MusicChatFromCell
             }
             
         } else {
             CellIdentifier = ToID;
-            if ([message.body hasPrefix:@"img:"]) {
+            if ([message.body hasSuffix:@".png"]) {
                 CellIdentifier = @"ImageChatToCell";
                 //MusicChatFromCell
             }
-            if ([message.body hasPrefix:@"mp3:"]) {
+            if ([message.body hasSuffix:@".mp3"]) {
                 CellIdentifier = @"MusicChatToCell";
                 //MusicChatFromCell
             }
@@ -243,17 +257,23 @@
     if (cell == nil) {
         cell = [[ChatMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.messageButton.tag = indexPath.row;
      [cell setMessage:message isOutgoing:flag isImageTag:indexPath.row];
     
-
-    if (flag) {
-        [cell.headImageView setImageURLStr:[LoginUser sharedLoginUser].profilImg placeholder:[UIImage imageNamed:@"profile"]];
-    } else {
-        [cell.headImageView setImageURLStr:self.bareImageStr placeholder:[UIImage imageNamed:@"profile"]];
-        
-    }
     
-    //MyLog(@"%@",message.body);
+        if (flag) {
+            [cell.headImageView setImageURLStr:[LoginUser sharedLoginUser].profilImg placeholder:[UIImage imageNamed:@"profile"]];
+        } else {
+            [cell.headImageView setImageURLStr:self.bareImageStr placeholder:[UIImage imageNamed:@"profile"]];
+            
+        }
+    
+        //如果是语音，点击的时候开始下载并且播放
+        if ([message.body hasSuffix:@".mp3"]) {
+            [cell.messageButton addTarget:self action:@selector(playSoundAction:) forControlEvents:UIControlEventTouchUpInside];
+        }
+
+   
     return cell;
 }
 #pragma mark - 滚动到表格的末尾
@@ -286,15 +306,13 @@
     
     //如果是图片的话，就显示图片高度，固定120
     //NSLog(@"----->%@",message.body);
-    if ([message.body hasPrefix:@"img:"]) {
-        return 120;
+    if ([message.body hasSuffix:@".png"]) {
+        return 130;
     }
-    if ([message.body hasPrefix:@"mp3:"]) {
-        return 60;
+    if ([message.body hasSuffix:@".mp3"]) {
+        return 70;
     }
-    if (message.body.length>1000) {
-        return 140;
-    }
+    
     
     // 3. 根据文本空间计算行高
     if (size.height + 50.0 > 80.0) {
@@ -313,48 +331,40 @@
     picker.delegate = self;
     
     [self presentViewController:picker animated:YES completion:nil];
+     _inputViewConstraint.constant = 0.0;
 }
 
 #pragma mark UIImagePickerController代理方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    // 提示：UIImage不能为空
-    // NSData *data = UIImagePNGRepresentation(self.imageView.image);
     UIImage *image = info[UIImagePickerControllerOriginalImage];
-    NSData *data = UIImageJPEGRepresentation(image,0.5);
-    
-    
-    
- 
-    NSString *_encodedImageStr = [data base64Encoding];
-    
-    
-     [self chat:_encodedImageStr];
-    
-    NSLog(@"===Encoded image:\n%@", _encodedImageStr);
-
-    
+    [HttpTool updateFileWithPath:@"xmppuploadfile" params:nil withImag:image success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0) {
+            [self chat:JSON[@"data"][@"url"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark - 语音聊天操作
 #pragma mark 开始录影
-- (IBAction)startRecord:(UIButton*)sender {
+
+- (IBAction)startRecord:(id)sender {
     [sender setTitle:@"松开结束" forState:UIControlStateHighlighted];
     _soundTool = [[SoundTool alloc] init];
     [_soundTool startRecord];
-    
 }
+- (IBAction)stopRecord:(id)sender {
 
-- (IBAction)stopRecord {
+
     [_soundTool stopRecord];
     //判断录音时间是否太短
     if (_soundTool.currentTime < 1.0 ) {
-        _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-        [self.navigationController.view addSubview:_HUD];
-        _HUD.labelText = @"录音时间太短！";
-        [_HUD show:YES];
-        [_HUD hide:YES afterDelay:0.3];
+        //[SVProgressHUD showWithStatus:@"录音时间太短！"];
+        kPE(@"录音时间太短！", 0.5);
         return;
     }
     NSString *mp3Path =  [_soundTool mp3Path];
@@ -362,32 +372,124 @@
     
     NSURL *fileUrl = [NSURL fileURLWithPath:mp3Path isDirectory:YES];
     
-    NSURL *url = [NSURL URLWithString:kFileServerURL];
-    AFHTTPClient *httpClient = [AFHTTPClient clientWithBaseURL:url];
-    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"/upload.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileURL:fileUrl name:@"file" error:nil];
-        
+    [HttpTool updateFileWithPath:@"xmppuploadfile" withMp3URL:fileUrl success:^(id JSON) {
+        NSLog(@"%@",JSON);
+        if (JSON[@"data"]) {
+            [self chat:JSON[@"data"][@"url"]];
+        }
+    } failure:^(NSError *error) {
+        kPE(kHttpErrorMsg, 0.5);
     }];
-    // 准备做上传的工作！
-    // 3. operation
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc]initWithRequest:request];
-    
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //时长
-        NSString *soundTime = [NSString stringWithFormat:@"%.0f",_soundTool.currentTime];
-        NSString *uploadPath = [NSString stringWithFormat:@"%@/upload/%@?%@",kFileServerURL,[[SoundTool sharedSoundTool] fileName],soundTime];
-        //        // 发送消息给好友，通知发送了图像
-        // 设置消息的正文
-        NSString *msg = [NSString stringWithFormat:@"mp3:%@", uploadPath];
-        [self chat:msg];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"1上传文件失败 %@", error);
-    }];
-    // 4. operation start
-    [op start];
 }
 
+#pragma mark 下载并播放音乐
+-(void)playSoundAction:(UIButton*)sender
+{
+
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(sender.tag) inSection:0];
+    
+    XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchResultsController objectAtIndexPath:indexPath];
+    NSString *str = message.body;
+    MyLog(@"%@",str);
+    _currentMusicName  = [str substringFromIndex:str.length-18];
+    NSString *downloadPath = [[NSString stringWithFormat:@"/%@",_currentMusicName] documentsPath];
+    
+    //判断文件是否存在，不存在就系在，存在就算了
+    NSFileManager *fileManger = [NSFileManager defaultManager];
+    if (![fileManger fileExistsAtPath:downloadPath isDirectory:nil]) {
+        [self download:str];
+    }else{
+        [self soundIng];
+    }
+
+    
+    
+}
+
+- (void)download:(NSString*)urlStr
+{
+    // 1. NSURL
+    // NSString *urlStr = [[kFileServerURL appendStr:@"/upload/"] appendStr:_currentMusicName];
+       // 如果有中文或者空格，需要加百分号
+    MyLog(@"%@",urlStr);
+    
+    
+    
+    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    // 2. NSURLRequest
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    // 3. 定义Operation
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc]initWithRequest:request];
+    
+    // 下载文件—》要告诉op下载到哪里？
+    // 输出流（数据在网络上都是以流的方式传输的）
+    // 所谓输出流，就是让数据流流到哪里-》保存到沙箱
+    
+    // 指定下载路径
+    
+    NSString *downloadPath = [[NSString stringWithFormat:@"/%@",_currentMusicName] documentsPath];
+
+    [op setOutputStream:[NSOutputStream outputStreamToFileAtPath:downloadPath append:NO]];
+    
+    // 设置下载进度代码
+    /**
+     bytesRead      此次下载的字节数(5k)
+     totalBytesRead 已经下载完成的字节数(80k)
+     totalBytesExpectedToRead 文件总字节数(100k)
+     */
+    [op setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        
+        float percent = (float)totalBytesRead / totalBytesExpectedToRead;
+        NSLog(@"%f", percent);
+    }];
+    
+    // 设置下载完成块代码
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        //NSLog(@"下载完成");
+        //下载完成后开始播放
+        [self soundIng];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"下载失败");
+    }];
+    [op start];
+    
+    
+    
+}
+-(void)soundIng
+{
+    
+    if (_player.playing) {
+        [_player stop];
+        return;
+    }
+    
+    NSString *filePath = [[NSString stringWithFormat:@"/%@",_currentMusicName] documentsPath];
+    NSURL *url = [NSURL fileURLWithPath:filePath isDirectory:YES];
+    /**
+     AVAudioPlayer只能播放本地的音频,而不能播放网络音频!
+     */
+    NSError *error = nil;
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    if (error != nil) {
+        NSLog(@"%@", error.localizedDescription);
+        return;
+    }
+    // -1 表示无限循环播放
+    // 0 表示1次
+    // 1 表示2次
+    _player.numberOfLoops = 0;
+    _player.volume = 1.0;
+    // 准备播放器,将URL指定的文件做一个预加载,从而可以在需要播放的时候,立即播出声音
+    [_player prepareToPlay];
+    
+    [_player play];
+    
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

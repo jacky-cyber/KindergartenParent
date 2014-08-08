@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="ChatToCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ImageChatToCell" rowHeight="80" id="yeV-pN-VFO" customClass="ChatMessageCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yeV-pN-VFO" id="AFi-fm-vBI">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="GLU-h2-D65">
+                        <rect key="frame" x="10" y="20" width="40" height="40"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="VQy-YH-Gpf"/>
+                            <constraint firstAttribute="width" constant="40" id="ZOQ-5J-Hzt"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="uRp-BV-ujK">
+                        <rect key="frame" x="53" y="20" width="200" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="Gpy-B8-4au"/>
+                            <constraint firstAttribute="width" constant="200" id="OIR-eV-xy4"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="20"/>
+                        <state key="normal" backgroundImage="ReceiverTextNodeBkg">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gaz-sx-GPJ">
+                        <rect key="frame" x="100" y="0.0" width="120" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="GLU-h2-D65" firstAttribute="top" secondItem="uRp-BV-ujK" secondAttribute="top" id="4aS-Ha-MGe"/>
+                    <constraint firstItem="uRp-BV-ujK" firstAttribute="top" secondItem="AFi-fm-vBI" secondAttribute="top" constant="20" id="B3b-7T-sKz"/>
+                    <constraint firstItem="GLU-h2-D65" firstAttribute="leading" secondItem="AFi-fm-vBI" secondAttribute="leading" constant="10" id="Ig9-Wv-ODi"/>
+                    <constraint firstItem="uRp-BV-ujK" firstAttribute="leading" secondItem="GLU-h2-D65" secondAttribute="trailing" constant="3" id="aO7-eb-Y6o"/>
+                    <constraint firstItem="GLU-h2-D65" firstAttribute="top" secondItem="AFi-fm-vBI" secondAttribute="top" constant="20" id="cGS-di-kBF"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GLU-h2-D65" secondAttribute="bottom" constant="9" id="odW-cK-zmm"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="headImageView" destination="GLU-h2-D65" id="bkB-12-8rV"/>
+                <outlet property="messageButton" destination="uRp-BV-ujK" id="4yp-ih-1NH"/>
+                <outlet property="messageHeightConstraint" destination="Gpy-B8-4au" id="C0N-ID-8pP"/>
+                <outlet property="messageWeightConstraint" destination="OIR-eV-xy4" id="trK-ML-2ij"/>
+                <outlet property="timestamp" destination="gaz-sx-GPJ" id="btt-2x-VfW"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ReceiverTextNodeBkg" width="66" height="54"/>
+        <image name="profile" width="70" height="70"/>
+    </resources>
+</document>

@@ -330,7 +330,10 @@
                 [self popController:@"ZJFuyaodanViewController" withSel:@selector(initData:) withObj:@(true)];
                 
                 [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                kPE(JSON[@"msg"], 0.5);
             }
+
         } failure:^(NSError *error) {
             
         }];

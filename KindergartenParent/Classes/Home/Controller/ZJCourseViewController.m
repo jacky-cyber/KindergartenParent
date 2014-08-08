@@ -29,7 +29,7 @@
        // height -=20;
     }
     
-    self.title = @"每周课程";
+    self.title = @"课程安排";
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, W(self.view),height) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -94,6 +94,7 @@
        // MyLog(@"%@",_dataArr);
         
     } failure:^(NSError *error) {
+         kPE(kHttpErrorMsg, 0.5);
         MyLog(@"%@",error.localizedDescription);
     }];
    

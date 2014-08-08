@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <MediaPlayer/MediaPlayer.h>
 typedef void (^HttpSuccessBlock)(id JSON);
 typedef void (^HttpFailureBlock)(NSError *error);
 
@@ -21,6 +21,7 @@ typedef void (^HttpFailureBlock)(NSError *error);
 
 #pragma mark 上传图像
 + (void)updateFileWithPath:(NSString *)path params:(NSDictionary *)params withImag:(UIImage*)image withURL:(NSURL*)withurl withArr:(NSArray*)array success:(HttpSuccessBlock)success failure:(HttpFailureBlock)failure;
++ (void)updateFileWithPath:(NSString *)path withMp3URL:(NSURL*)withurl success:(HttpSuccessBlock)success failure:(HttpFailureBlock)failure;
 //+ (void)downloadImage:(NSString *)url place:(UIImage *)place imageView:(UIImageView *)imageView;
-
++(UIImage *)fFirstVideoFrame:(NSString *)path;
 @end

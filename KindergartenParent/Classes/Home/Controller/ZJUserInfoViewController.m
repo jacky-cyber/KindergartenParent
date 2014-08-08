@@ -10,6 +10,8 @@
 #import "ZJUserInfoModel.h"
 #import "ZJEditPwdViewController.h"
 #import "ZJEditUserViewController.h"
+#import "XMPPvCardTemp.h"
+#import "ZJAppDelegate.h"
 @interface ZJUserInfoViewController ()<EditUserInfoViewControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
 {
     ZJUserInfoModel *_userModel;//用户模型
@@ -39,17 +41,10 @@
     //设置footView
     _footView.layer.borderWidth = 1;
     _footView.layer.borderColor = [UIColor colorWithRed:0.000 green:0.678 blue:0.427 alpha:1.000].CGColor;
-    
-    //设置模型
-    //_userModel = self.userInfo;
-   // _userModel.profileimg = @"http://img.icoin.cn/_files/201405/13/fd25c3295ddc4873a81567e1120fb91b.jpg";
-//    _userModel.address = @"这是我的地址，地址地址地址地址地址这是我的地址，地址地址地址地址地址这是我的地址，地址地址地址地址地址";
-//    _userModel.guominshi = @"没有过敏史,非常健康";
-//    _userModel.remark = @"孩子不吃饭，快用江中牌，孩子不吃饭，快用江中牌孩子不吃饭，快用江中牌，孩子不吃饭，快用江中牌";
-    
+
     
     //设置头像
-    [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
+    [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:[UIImage imageNamed:@"profile"]];
     self.prifileImg.tag = 100;
     self.prifileImg.layer.cornerRadius = 5;
     self.prifileImg.layer.masksToBounds = YES;
@@ -76,7 +71,7 @@
         if ([JSON[@"code"] intValue] == 0) {
             [_userModel setKeyValues:JSON[@"data"]];
             
-            [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:nil];
+            [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:[UIImage imageNamed:@"profile"]];
             [[LoginUser sharedLoginUser] saveInfo:_userModel];
             kPdismiss;
             [self addSubViews];
@@ -360,12 +355,24 @@
     [HttpTool updateFileWithPath:@"updateuserinfo" params:params withImag:img success:^(id JSON) {
         //重新加载数据
         [self loadData];
+        [self savevCard:img];
     } failure:^(NSError *error) {
         
     }];
     
   }
 
+#pragma mark 修改xmpp 头像
+-(void)savevCard:(UIImage*)img
+{
+    XMPPvCardTemp *myCard = [xmppDelegate xmppvCardTempModule].myvCardTemp;
+    
+    myCard.photo = UIImagePNGRepresentation(img);
+    
+    // 保存名片
+    [[xmppDelegate xmppvCardTempModule] updateMyvCardTemp:myCard];
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

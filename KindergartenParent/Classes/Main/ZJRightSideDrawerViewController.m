@@ -132,7 +132,12 @@
          [cell addSubview:imageView];
          
          [imageView setImageURLStr:dict[@"profileimngurl"] placeholder:[UIImage imageNamed:@"profile"]];
-         //cell.textLabel.text = @"xxxxx";
+         imageView.layer.cornerRadius = 5;
+         imageView.layer.masksToBounds = YES;
+         imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+         imageView.layer.borderWidth = 2.0;
+         imageView.tag = 1;
+
      }
     
      
@@ -172,10 +177,12 @@
         // 2. 添加好友操作
         [xmppDelegate.xmppRoster subscribePresenceToUser:jid];
     }
-
+    
+    
     chat.bareImageStr = dict[@"profileimngurl"];
     
     chat.bareJID = jid;
+    chat.title = dict[@"name"];
 
 
 

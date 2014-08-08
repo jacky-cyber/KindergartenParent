@@ -7,7 +7,8 @@
 //
 
 #import "ZJEditUserViewController.h"
-
+#import "XMPPvCardTemp.h"
+#import "ZJAppDelegate.h"
 @interface ZJEditUserViewController ()
 {
     UITextField *_textField;
@@ -74,7 +75,10 @@
     //[_delegate editUserInfoViewControllerDidFinished];
     //相应代理
     [self.delegate performSelector:@selector(editUserInfoViewControllerDidFinished:withLabel:) withObject:contentStr withObject:_contentLable];
-    
+    //修改xmpp 昵称
+    if ([_param isEqualToString:@"nickname"]) {
+        [self savevCard:contentStr];
+    }
     
     
     //[SVProgressHUD showWithStatus:@"修改用户信息" maskType:SVProgressHUDMaskTypeBlack];
@@ -84,12 +88,11 @@
                              @"username":[LoginUser sharedLoginUser].userName};
     
     [HttpTool updateFileWithPath:@"updateuserinfo" params:params withImag:nil success:^(id JSON) {
-        if ([JSON isEqualToString:@"{\"code\": 0, \"msg\":\"success\"}"]) {
-            kPS(@"修改成功", 0);
-            
-            
-            
+        if ([JSON[@"code"] intValue] == 0) {
+             kPS(@"修改成功", 0);
             [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            kPE(JSON[@"msg"], 0.5);
         }
     } failure:^(NSError *error) {
          kPE(@"系统异常", 1);
@@ -103,6 +106,25 @@
 
 }
 
+-(void)savevCard:(NSString*)str
+{
+    XMPPvCardTemp *myCard = [xmppDelegate xmppvCardTempModule].myvCardTemp;
+    
+    //myCard.photo = UIImagePNGRepresentation(_headerImagerView.image);
+    myCard.nickname = str;
+    //    myCard.orgName = _orgNameLabel.text;
+    //
+    //    DDLogCInfo(@"%@",_orgUnitLabel.text);
+    //
+    //    myCard.orgUnits = @[_orgUnitLabel.text]?@[_orgUnitLabel.text]:nil;
+    //    myCard.title = _titleLabel.text;
+    //    myCard.note = _telLabel.text;
+    //    myCard.mailer = _emailLabel.text;
+    
+    // 保存名片
+    [[xmppDelegate xmppvCardTempModule] updateMyvCardTemp:myCard];
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

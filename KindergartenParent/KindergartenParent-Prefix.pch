@@ -22,6 +22,7 @@
 #import "BaseNavigationController.h"
 #import "TimeFormatTools.h"
 #import "UIImageView+WebCache.h"
+#import "UIImageView+MJWebCache.h"
 #import "ZJUserInfoModel.h"
 #import "ZJUIMethods.h"
 #import "UIImage+ZJ.h"

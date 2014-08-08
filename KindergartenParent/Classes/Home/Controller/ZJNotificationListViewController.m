@@ -169,11 +169,21 @@
     }else if ( type== 10) {
         cell.bgImage.image = [UIImage imageNamed:@"ActivityNotifi"];
     }else if ( type== 11) {
-        cell.qiandaoBtn.alpha = 1;
         cell.bgImage.image = [UIImage imageNamed:@"qiandaoNotifi"];
     }
    // MyLog(@"%@----",model.createtime);
     cell.tiemeLabel.text = model.createtime.length>16?[model.createtime substringToIndex:16]:@"";
+    
+    if ([model.content isEqualToString:@"您的孩子还未入园，请填写未到原因！"]||
+        [model.content isEqualToString:@"您的孩子未签退！"]
+        )
+    {
+        cell.contentLabel.textColor = [UIColor colorWithRed:0.988 green:0.341 blue:0.000 alpha:1.000];
+    }
+    if ([model.content isEqualToString:@"您的孩子还未入园，请填写未到原因！"]) {
+        cell.qiandaoBtn.alpha = 1;
+    }
+    
     cell.contentLabel.text = model.content;
     
         
@@ -202,7 +212,10 @@
     }else if ( type== 10) {
         [self pushController:[ZJActivityViewController class] withInfo:model withTitle:@"通知详情"];
     }else if ( type== 11) {
-        [self pushController:[ZJSignInViewController class] withInfo:model.id withTitle:@"未到原因"];
+        if ([model.content isEqualToString:@"您的孩子还未入园，请填写未到原因！"]) {
+            [self pushController:[ZJSignInViewController class] withInfo:model.id withTitle:@"未到原因"];
+        }
+        
     }
     
 

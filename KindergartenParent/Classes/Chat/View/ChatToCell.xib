@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultProfileHead" translatesAutoresizingMaskIntoConstraints="NO" id="EVz-Dg-BwH">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="EVz-Dg-BwH">
                         <rect key="frame" x="10" y="20" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <constraints>
@@ -62,7 +62,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="DefaultProfileHead" width="35" height="35"/>
         <image name="ReceiverTextNodeBkg" width="66" height="54"/>
+        <image name="profile" width="70" height="70"/>
     </resources>
 </document>

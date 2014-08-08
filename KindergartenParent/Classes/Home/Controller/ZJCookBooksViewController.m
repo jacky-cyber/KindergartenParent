@@ -58,7 +58,7 @@
     
     //初始化数组
     _dataArr = [NSMutableArray array];
-    
+    kPBlack(@"正在加载本周食谱")
     [HttpTool getWithPath:@"recipe" params:nil success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
             NSArray *data = JSON[@"data"][@"everyday"];
@@ -85,13 +85,14 @@
                 
             }
             
-            
+            kPdismiss;
         }
         
 //        CookBookModel *dict = _dataArr[1];
 //        NSLog(@"%d",dict.count);
         
     } failure:^(NSError *error) {
+        kPE(kHttpErrorMsg, 0.5);
         MyLog(@"%@",error.localizedDescription);
     }];
 }

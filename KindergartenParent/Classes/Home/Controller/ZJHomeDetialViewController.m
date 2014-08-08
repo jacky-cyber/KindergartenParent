@@ -24,9 +24,14 @@
     // Do any additional setup after loading the view.
     ZJHomeModel *model = self.userInfo;
     TimeFormatTools *timeTool = [[TimeFormatTools alloc] init];
-    _createTime.text = [timeTool timeToNow:model.createtime];
+    NSString *timeStr = [timeTool timeToNow:model.createtime];
     
+    if (timeStr.length >10) {
+        timeStr = [timeStr substringToIndex:10];
+    }
+    _createTime.text = timeStr;
     
+//    MyLog(@"type:%@   content:%@---%@",model.type,model.content,[timeTool timeToNow:model.createtime]);
     
     //判断通知的类型
     if ([model.type intValue] == 2) {//全员通知

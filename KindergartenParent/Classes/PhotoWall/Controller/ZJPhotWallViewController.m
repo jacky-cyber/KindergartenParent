@@ -307,8 +307,8 @@
     
     //工具条view
     UIView *toolView = [[UIView alloc] init];
-    toolView.frame = CGRectMake(kMargin,  kMargin+YH(imageBgView), 280, 16);
-    toolView.backgroundColor = [UIColor whiteColor];
+    toolView.frame = CGRectMake(kMargin,  kMargin+YH(imageBgView), 280, 20);
+    toolView.backgroundColor = [UIColor clearColor];
     [superView addSubview:toolView];
     
     //时间图标
@@ -333,20 +333,19 @@
     [toolView addSubview:praiseBtn];
     
     //赞
-    UILabel *praiseLable = [ZJUIMethods creatLabel:model.praisecount frame:CGRectMake(XW(praiseBtn)+5, 0, 30, 16) font:kFont(12) textColor:nil];
+    UILabel *praiseLable = [ZJUIMethods creatLabel:model.praisecount frame:CGRectMake(XW(praiseBtn)+0, 2, 30, 16) font:kFont(12) textColor:nil];
     praiseLable.tag = 10+section;
     praiseLable.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
     [toolView addSubview:praiseLable];
     
     //评论按钮
-    UIButton *commentBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(XW(praiseLable)+2*kMargin, 0, 20, 20) delegate:self selector:@selector(commentAction:) tag:[model.id intValue]];
+    UIButton *commentBtn = [ZJUIMethods creatButton:nil frame:CGRectMake(XW(praiseLable)+kMargin, 0, 20, 20) delegate:self selector:@selector(commentAction:) tag:[model.id intValue]];
     [commentBtn setImage:[UIImage imageNamed:@"p_comment"] forState:UIControlStateNormal];
     [toolView addSubview:commentBtn];
     
     //评论
-    UILabel *commentLb = [ZJUIMethods creatLabel:model.comcount frame:CGRectMake(XW(commentBtn)+5, 0, 30, 16) font:kFont(12) textColor:nil];
+    UILabel *commentLb = [ZJUIMethods creatLabel:model.comcount frame:CGRectMake(XW(commentBtn)+0, 2, 30, 16) font:kFont(12) textColor:nil];
     commentLb.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
-    //commentLb.backgroundColor = [UIColor redColor];
     [toolView addSubview:commentLb];
     
     //标签按钮

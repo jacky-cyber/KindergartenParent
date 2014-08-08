@@ -370,9 +370,9 @@
     }
     else if(k == 2)
     {
-        NSString *szao = [[NSString alloc]init];
-        NSString *szhong = [[NSString alloc]init];
-        NSString *swan = [[NSString alloc]init];
+        NSString *szao = nil;
+        NSString *szhong = nil;
+        NSString *swan = nil;
         if (zao == YES)
         {
             szao = @"早";
@@ -468,6 +468,9 @@
             [self popController:@"ZJFuyaodanViewController" withSel:@selector(getDataForHeaderOrFooter:) withObj:@"header"];
             
             //[self.navigationController popViewControllerAnimated:YES];
+            
+        }else{
+            kPE(JSON[@"msg"], 0.5);
         }
     } failure:^(NSError *error) {
         kPdismiss;

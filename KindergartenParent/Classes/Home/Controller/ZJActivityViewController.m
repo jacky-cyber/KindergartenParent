@@ -87,6 +87,7 @@
         if ([JSON[@"code"] intValue] == 0) {
             NSDictionary *dict = JSON[@"data"];
             if ([dict[@"status"] isEqual:@1]) {
+                  [self setBaoming];
                 kPS(@"报名成功", 1);
             }else{
                 kPE(@"报名失败", 1);
@@ -109,13 +110,28 @@
         MyLog(@"%@",JSON);
         if ([JSON[@"data"][@"status"] isEqual:@2]) {
             [self baomingBtn];
+        }else{
+            [self setBaoming];
         }
         
     } failure:^(NSError *error) {
         
     }];
 }
-
+-(void)setBaoming
+{
+    //报名
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 0, 60, 25);
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    btnR.enabled = NO;
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    [btnR setTitle:@"已报名" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

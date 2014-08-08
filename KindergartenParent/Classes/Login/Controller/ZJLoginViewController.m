@@ -75,27 +75,33 @@
     [HttpTool getWithPath:@"login" params:@{@"username":username,@"pwd":pwd} success:^(id JSON) {
         if (JSON[@"data"]) {
             
+
+            
             [SVProgressHUD showSuccessWithStatus:@"登录成功" duration:0.5];
            
             //[LoginUser sharedLoginUser].userName = username;
             
             ZJUserInfoModel *user = [[ZJUserInfoModel alloc] init];
+            if ([user.role intValue]!=0) {
+                kPE(@"用户名/密码错误", 0.5);
+                return ;
+            }
             [user setKeyValues:JSON[@"data"]];
-            
+            [LoginUser sharedLoginUser].password = pwd;
             [[LoginUser sharedLoginUser] saveInfo:user];
             
             MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
             
             [xmppDelegate connectOnFailed:^(kLoginErrorType type) {
-                NSString *msg = nil;
-                if (type == kLoginLogonError) {
-                    msg = @"用户名或者密码错误";
-                } else if (type == kLoginNotConnection) {
-                    msg = @"无法连接到服务器";
-                } else if (type == kLoginRegisterError) {
-                    msg = @"用户名重复，无法注册";
-                }
+//                NSString *msg = nil;
+//                if (type == kLoginLogonError) {
+//                    msg = @"用户名或者密码错误";
+//                } else if (type == kLoginNotConnection) {
+//                    msg = @"无法连接到服务器";
+//                } else if (type == kLoginRegisterError) {
+//                    msg = @"用户名重复，无法注册";
+//                }
                 
 //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
 //                
@@ -128,7 +134,8 @@
     return YES;
 }
 
-- (IBAction)jizhupwdAction:(id)sender {
+- (IBAction)wangjipwdAction:(id)sender {
+    kPS(@"请联系管理员", 2);
 }
 
 - (void)didReceiveMemoryWarning

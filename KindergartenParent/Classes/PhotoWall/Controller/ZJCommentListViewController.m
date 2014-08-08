@@ -47,7 +47,8 @@ int page = 1;
     // 1. 利用通知中心监听键盘的变化（打开、关闭、中英文切换）
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    
+    _commentTextField.layer.borderColor = [UIColor colorWithRed:0.109 green:0.502 blue:0.273 alpha:1.000].CGColor;
+    _commentTextField.layer.borderWidth = 1.0;
     //初始化数组
     _dataArr = [NSMutableArray array];
 
@@ -74,17 +75,33 @@ int page = 1;
     [self.tableView  addFooterWithTarget:self action:@selector(footerRereshing)];
 }
 
-#pragma mark 开始进入刷新状态
-- (void)headerRereshing
+-(void)headerRereshing
 {
-    page = 1;
-    NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@(page)};
+    [self getDataForHeaderOrFooter:@"header"];
+}
+
+- (void)footerRereshing
+{
     
+    [self getDataForHeaderOrFooter:@"footer"];
+}
+
+-(void)getDataForHeaderOrFooter:(NSString*)str
+{
+    if ([str isEqualToString:@"header"]) {
+        self.page = 1;
+    }
+    kPBlack(@"数据加载中");
+    //182.18.23.244:8080/kindergarten/service/app!ntfilist.action?page=1&username=hzl&role=3
+     NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@(self.page)};
     [HttpTool getWithPath:@"commentlist" params:params success:^(id JSON) {
-        MyLog(@"%@",JSON);
+        MyLog(@"%@",JSON[@"data"]);
         
         if ([JSON[@"code"] intValue] == 0) {
-            
+            //删除所有的数据先
+            if ([str isEqualToString:@"header"]) {
+                [_dataArr removeAllObjects];
+            }
             for (NSDictionary *dict in JSON[@"data"]) {
                 ZJCommentModel *model = [[ZJCommentModel alloc] init];
                 [model setKeyValues:dict];
@@ -96,42 +113,26 @@ int page = 1;
             
             //滚动到顶部
             if (page == 1) {
-                 [self scrollToTableBottom];
+                [self scrollToTableBottom];
             }
-           
-            page ++;
-            
-        }
-    } failure:^(NSError *error) {
-        MyLog(@"%@",error.debugDescription);
-    }];
-    [self.tableView headerEndRefreshing];
-}
-
-- (void)footerRereshing
-{
-    NSDictionary *params = @{@"pwallid":self.userInfo,@"page":@(page)};
-    
-    [HttpTool getWithPath:@"commentlist" params:params success:^(id JSON) {
-        MyLog(@"%@",JSON);
-        
-        if ([JSON[@"code"] intValue] == 0) {
-            
-            for (NSDictionary *dict in JSON[@"data"]) {
-                ZJCommentModel *model = [[ZJCommentModel alloc] init];
-                [model setKeyValues:dict];
-                [_dataArr addObject:model];
-                
+            if (((NSArray*)JSON[@"data"]).count) {
+               self.page++;
             }
+            
+            kPdismiss;
             [self.tableView reloadData];
-            page ++;
-    
+        }else{
+            kPE(JSON[@"msg"], 0.5);
         }
-        
+        if ([str isEqualToString:@"header"]) {
+            [self.tableView headerEndRefreshing];
+        }else{
+            [self.tableView footerEndRefreshing];
+        }
     } failure:^(NSError *error) {
-        MyLog(@"%@",error.debugDescription);
+        kPE(kHttpErrorMsg, 0.5);
+        MyLog(@"%@",error.localizedDescription);
     }];
-    [self.tableView footerEndRefreshing];
 }
 
 
@@ -262,6 +263,8 @@ int page = 1;
             //将文本内容清空
             _commentTextField.text = @"";
             
+        }else{
+            kPS(JSON[@"msg"], 0.5);
         }
     } failure:^(NSError *error) {
         kPdismiss;

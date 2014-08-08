@@ -97,13 +97,13 @@
     
 //    if (button.tag) {
 //        // 显示表情选择视图
-//        [_inputText setInputView:_emoteView];
+//        //[_inputText setInputView:_emoteView];
 //        
 //        // 切换按钮图标，显示键盘选择图像
 //        [self setButton:button imgName:@"ToolViewInputText" imgHLName:@"ToolViewInputTextHL"];
 //    } else {
 //        // 显示系统默认键盘
-//        [_inputText setInputView:nil];
+//        //[_inputText setInputView:nil];
 //        
 //        // 切换按钮图标，显示表情选择图像
 //        [self setButton:button imgName:@"ToolViewEmotion" imgHLName:@"ToolViewEmotionHL"];

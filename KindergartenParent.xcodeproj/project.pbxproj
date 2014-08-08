@@ -138,11 +138,7 @@
 		4B0676C8198889280031754B /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676C7198889280031754B /* libresolv.dylib */; };
 		4B0676CA198889360031754B /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676C9198889360031754B /* libxml2.dylib */; };
 		4B0676CC1988893F0031754B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676CB1988893F0031754B /* Security.framework */; };
-		4B0676D319889E2F0031754B /* InputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0676D219889E2F0031754B /* InputTextView.m */; };
 		4B0676D919889F550031754B /* SoundTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0676D819889F550031754B /* SoundTool.m */; };
-		4B0676DD1988A17B0031754B /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676DC1988A17B0031754B /* libmp3lame.a */; };
-		4B0676DF1988C2230031754B /* ChatFromCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0676DE1988C2230031754B /* ChatFromCell.xib */; };
-		4B0676E11988C3020031754B /* ChatToCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0676E01988C3020031754B /* ChatToCell.xib */; };
 		4B0B6E50195A92FC0053BC9E /* ZJActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */; };
 		4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */; };
 		4B1B4303195FD71900EDAE1E /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42F7195FD71900EDAE1E /* MJPhoto.m */; };
@@ -304,9 +300,6 @@
 		4B71114D198252C900C77B42 /* ZJNotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B71114C198252C900C77B42 /* ZJNotificationListViewController.m */; };
 		4B7111511982537700C77B42 /* ZJNotificationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B71114F1982537700C77B42 /* ZJNotificationListCell.m */; };
 		4B7111521982537700C77B42 /* ZJNotificationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7111501982537700C77B42 /* ZJNotificationListCell.xib */; };
-		4B7FF1ED19790ED700779D9C /* ZJChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FF1EB19790ED700779D9C /* ZJChatViewController.m */; };
-		4B7FF1EE19790ED700779D9C /* ZJChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7FF1EC19790ED700779D9C /* ZJChatViewController.xib */; };
-		4B7FF1F11979195900779D9C /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FF1F01979195900779D9C /* ChatMessageCell.m */; };
 		4B832D06198795F4002BEE63 /* bj_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B832CF5198795F4002BEE63 /* bj_03@2x.png */; };
 		4B832D07198795F4002BEE63 /* fanhui_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B832CF6198795F4002BEE63 /* fanhui_03@2x.png */; };
 		4B832D08198795F4002BEE63 /* fasong_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B832CF7198795F4002BEE63 /* fasong_03.png */; };
@@ -331,6 +324,17 @@
 		4B998A321966B62A00EAECC8 /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A281966B62A00EAECC8 /* UIScrollView+Extension.m */; };
 		4B998A331966B62A00EAECC8 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2A1966B62A00EAECC8 /* UIScrollView+MJRefresh.m */; };
 		4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */; };
+		4BA318AA199070490039001E /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA318A9199070490039001E /* libmp3lame.a */; };
+		4BA318B61990E09F0039001E /* ChatFromCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA318AC1990E09F0039001E /* ChatFromCell.xib */; };
+		4BA318B71990E09F0039001E /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA318AE1990E09F0039001E /* ChatMessageCell.m */; };
+		4BA318B81990E09F0039001E /* ChatToCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA318AF1990E09F0039001E /* ChatToCell.xib */; };
+		4BA318B91990E09F0039001E /* ImageChatFromCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA318B01990E09F0039001E /* ImageChatFromCell.xib */; };
+		4BA318BA1990E09F0039001E /* ImageChatToCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA318B11990E09F0039001E /* ImageChatToCell.xib */; };
+		4BA318BB1990E09F0039001E /* InputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA318B31990E09F0039001E /* InputTextView.m */; };
+		4BA318BC1990E09F0039001E /* MusicChatFromCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA318B41990E09F0039001E /* MusicChatFromCell.xib */; };
+		4BA318BD1990E09F0039001E /* MusicChatToCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA318B51990E09F0039001E /* MusicChatToCell.xib */; };
+		4BBC92101991BCB400B464A2 /* ZJChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBC920E1991BCB400B464A2 /* ZJChatViewController.m */; };
+		4BBC92131991C39300B464A2 /* ZJChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BBC92121991C39300B464A2 /* ZJChatViewController.xib */; };
 		4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E11985EE5500405247 /* libPushSDK.a */; };
 		4BE4B0E41985EECC00405247 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E31985EECC00405247 /* CFNetwork.framework */; };
 		4BE4B0E61985EED600405247 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E51985EED600405247 /* CoreFoundation.framework */; };
@@ -622,14 +626,9 @@
 		4B0676C7198889280031754B /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		4B0676C9198889360031754B /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		4B0676CB1988893F0031754B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		4B0676D119889E2F0031754B /* InputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextView.h; sourceTree = "<group>"; };
-		4B0676D219889E2F0031754B /* InputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextView.m; sourceTree = "<group>"; };
 		4B0676D719889F550031754B /* SoundTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTool.h; sourceTree = "<group>"; };
 		4B0676D819889F550031754B /* SoundTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundTool.m; sourceTree = "<group>"; };
 		4B0676DB1988A17B0031754B /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
-		4B0676DC1988A17B0031754B /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
-		4B0676DE1988C2230031754B /* ChatFromCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatFromCell.xib; sourceTree = "<group>"; };
-		4B0676E01988C3020031754B /* ChatToCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatToCell.xib; sourceTree = "<group>"; };
 		4B0B6E4D195A92FC0053BC9E /* ZJActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJActivityViewController.h; sourceTree = "<group>"; };
 		4B0B6E4E195A92FC0053BC9E /* ZJActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJActivityViewController.m; sourceTree = "<group>"; };
 		4B0B6E4F195A92FC0053BC9E /* ZJActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJActivityViewController.xib; sourceTree = "<group>"; };
@@ -912,11 +911,6 @@
 		4B71114E1982537700C77B42 /* ZJNotificationListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJNotificationListCell.h; sourceTree = "<group>"; };
 		4B71114F1982537700C77B42 /* ZJNotificationListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJNotificationListCell.m; sourceTree = "<group>"; };
 		4B7111501982537700C77B42 /* ZJNotificationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJNotificationListCell.xib; sourceTree = "<group>"; };
-		4B7FF1EA19790ED700779D9C /* ZJChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJChatViewController.h; sourceTree = "<group>"; };
-		4B7FF1EB19790ED700779D9C /* ZJChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJChatViewController.m; sourceTree = "<group>"; };
-		4B7FF1EC19790ED700779D9C /* ZJChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJChatViewController.xib; sourceTree = "<group>"; };
-		4B7FF1EF1979195900779D9C /* ChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageCell.h; sourceTree = "<group>"; };
-		4B7FF1F01979195900779D9C /* ChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageCell.m; sourceTree = "<group>"; };
 		4B832CF5198795F4002BEE63 /* bj_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj_03@2x.png"; sourceTree = "<group>"; };
 		4B832CF6198795F4002BEE63 /* fanhui_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fanhui_03@2x.png"; sourceTree = "<group>"; };
 		4B832CF7198795F4002BEE63 /* fasong_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fasong_03.png; sourceTree = "<group>"; };
@@ -949,6 +943,20 @@
 		4B998A2A1966B62A00EAECC8 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		4B998A2B1966B62A00EAECC8 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		4BA318A9199070490039001E /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		4BA318AC1990E09F0039001E /* ChatFromCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatFromCell.xib; sourceTree = "<group>"; };
+		4BA318AD1990E09F0039001E /* ChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageCell.h; sourceTree = "<group>"; };
+		4BA318AE1990E09F0039001E /* ChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageCell.m; sourceTree = "<group>"; };
+		4BA318AF1990E09F0039001E /* ChatToCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatToCell.xib; sourceTree = "<group>"; };
+		4BA318B01990E09F0039001E /* ImageChatFromCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageChatFromCell.xib; sourceTree = "<group>"; };
+		4BA318B11990E09F0039001E /* ImageChatToCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageChatToCell.xib; sourceTree = "<group>"; };
+		4BA318B21990E09F0039001E /* InputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextView.h; sourceTree = "<group>"; };
+		4BA318B31990E09F0039001E /* InputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextView.m; sourceTree = "<group>"; };
+		4BA318B41990E09F0039001E /* MusicChatFromCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicChatFromCell.xib; sourceTree = "<group>"; };
+		4BA318B51990E09F0039001E /* MusicChatToCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicChatToCell.xib; sourceTree = "<group>"; };
+		4BBC920D1991BCB400B464A2 /* ZJChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJChatViewController.h; sourceTree = "<group>"; };
+		4BBC920E1991BCB400B464A2 /* ZJChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJChatViewController.m; sourceTree = "<group>"; };
+		4BBC92121991C39300B464A2 /* ZJChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJChatViewController.xib; sourceTree = "<group>"; };
 		4BE4B0E01985EE5500405247 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
 		4BE4B0E11985EE5500405247 /* libPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPushSDK.a; sourceTree = "<group>"; };
 		4BE4B0E31985EECC00405247 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -983,7 +991,7 @@
 				4BE4B0E61985EED600405247 /* CoreFoundation.framework in Frameworks */,
 				4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */,
 				4B247E8319590D9200C520A9 /* Foundation.framework in Frameworks */,
-				4B0676DD1988A17B0031754B /* libmp3lame.a in Frameworks */,
+				4BA318AA199070490039001E /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1788,7 +1796,7 @@
 			isa = PBXGroup;
 			children = (
 				4B0676DB1988A17B0031754B /* lame.h */,
-				4B0676DC1988A17B0031754B /* libmp3lame.a */,
+				4BA318A9199070490039001E /* libmp3lame.a */,
 			);
 			path = lame;
 			sourceTree = "<group>";
@@ -2524,21 +2532,11 @@
 		4B7FF1E619790E0C00779D9C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				4B7FF1E719790E0C00779D9C /* Controller */,
+				4BBC920C1991BCB400B464A2 /* Controller */,
+				4BA318AB1990E09F0039001E /* View */,
 				4B7FF1E819790E0C00779D9C /* Model */,
-				4B7FF1E919790E0C00779D9C /* View */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		4B7FF1E719790E0C00779D9C /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				4B7FF1EA19790ED700779D9C /* ZJChatViewController.h */,
-				4B7FF1EB19790ED700779D9C /* ZJChatViewController.m */,
-				4B7FF1EC19790ED700779D9C /* ZJChatViewController.xib */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		4B7FF1E819790E0C00779D9C /* Model */ = {
@@ -2546,19 +2544,6 @@
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		4B7FF1E919790E0C00779D9C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4B0676D119889E2F0031754B /* InputTextView.h */,
-				4B0676D219889E2F0031754B /* InputTextView.m */,
-				4B7FF1EF1979195900779D9C /* ChatMessageCell.h */,
-				4B7FF1F01979195900779D9C /* ChatMessageCell.m */,
-				4B0676DE1988C2230031754B /* ChatFromCell.xib */,
-				4B0676E01988C3020031754B /* ChatToCell.xib */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		4B832CF4198795F4002BEE63 /* images */ = {
@@ -2612,6 +2597,33 @@
 				4B998A2C1966B62A00EAECC8 /* UIView+Extension.m */,
 			);
 			path = MJRefresh;
+			sourceTree = "<group>";
+		};
+		4BA318AB1990E09F0039001E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4BA318AC1990E09F0039001E /* ChatFromCell.xib */,
+				4BA318AD1990E09F0039001E /* ChatMessageCell.h */,
+				4BA318AE1990E09F0039001E /* ChatMessageCell.m */,
+				4BA318AF1990E09F0039001E /* ChatToCell.xib */,
+				4BA318B01990E09F0039001E /* ImageChatFromCell.xib */,
+				4BA318B11990E09F0039001E /* ImageChatToCell.xib */,
+				4BA318B21990E09F0039001E /* InputTextView.h */,
+				4BA318B31990E09F0039001E /* InputTextView.m */,
+				4BA318B41990E09F0039001E /* MusicChatFromCell.xib */,
+				4BA318B51990E09F0039001E /* MusicChatToCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4BBC920C1991BCB400B464A2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4BBC920D1991BCB400B464A2 /* ZJChatViewController.h */,
+				4BBC920E1991BCB400B464A2 /* ZJChatViewController.m */,
+				4BBC92121991C39300B464A2 /* ZJChatViewController.xib */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		4BE4B0DE1985EE5500405247 /* jPush */ = {
@@ -2726,13 +2738,15 @@
 				4B832D06198795F4002BEE63 /* bj_03@2x.png in Resources */,
 				4B24805719590DC900C520A9 /* ZJSetingCell.xib in Resources */,
 				4B832D0F198795F4002BEE63 /* tianjia_03@2x.png in Resources */,
+				4BA318BC1990E09F0039001E /* MusicChatFromCell.xib in Resources */,
 				4B24800619590DC900C520A9 /* ZJLoginViewController.xib in Resources */,
 				4B24800C19590DC900C520A9 /* ZJDrugStatusController.xib in Resources */,
 				4B832D11198795F4002BEE63 /* wan_h@2x.png in Resources */,
 				4B832D0C198795F4002BEE63 /* xian_03@2x.png in Resources */,
+				4BA318B91990E09F0039001E /* ImageChatFromCell.xib in Resources */,
 				4B24802819590DC900C520A9 /* IQKeyboardManager.bundle in Resources */,
 				4B0676C0198889020031754B /* README.txt in Resources */,
-				4B0676DF1988C2230031754B /* ChatFromCell.xib in Resources */,
+				4BA318B61990E09F0039001E /* ChatFromCell.xib in Resources */,
 				4B832D12198795F4002BEE63 /* zao@2x.png in Resources */,
 				4B832D0B198795F4002BEE63 /* tiao_03@2x.png in Resources */,
 				4B247FF819590DC900C520A9 /* ZJHomeDetialViewController.xib in Resources */,
@@ -2747,15 +2761,17 @@
 				4B24807519590DC900C520A9 /* img02@2x.png in Resources */,
 				4B24801419590DC900C520A9 /* ZJYijianViewController.xib in Resources */,
 				4B24806319590DC900C520A9 /* menu@2x.png in Resources */,
+				4BA318BD1990E09F0039001E /* MusicChatToCell.xib in Resources */,
 				4B832D15198795F4002BEE63 /* zhong_h@2x.png in Resources */,
+				4BA318BA1990E09F0039001E /* ImageChatToCell.xib in Resources */,
 				4B24807919590DC900C520A9 /* img06@2x.png in Resources */,
 				4B1B4317195FD7E600EDAE1E /* MBProgressHUD.bundle in Resources */,
-				4B7FF1EE19790ED700779D9C /* ZJChatViewController.xib in Resources */,
 				4B247FFD19590DC900C520A9 /* ZJUserInfoViewController.xib in Resources */,
 				4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */,
-				4B0676E11988C3020031754B /* ChatToCell.xib in Resources */,
+				4BA318B81990E09F0039001E /* ChatToCell.xib in Resources */,
 				4B24807B19590DC900C520A9 /* nav_menu_icon@2x.png in Resources */,
 				4B832D0A198795F4002BEE63 /* tianjia_05@2x.png in Resources */,
+				4BBC92131991C39300B464A2 /* ZJChatViewController.xib in Resources */,
 				4B24800219590DC900C520A9 /* ZJCookBookTableViewCell.xib in Resources */,
 				4B24807A19590DC900C520A9 /* 201277441619594489.jpg in Resources */,
 				4B24804A19590DC900C520A9 /* SVProgressHUD.bundle in Resources */,
@@ -2872,7 +2888,7 @@
 				4B06764C198889020031754B /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				4B24801B19590DC900C520A9 /* NSString+Helper.m in Sources */,
 				4B067681198889020031754B /* XMPPvCardTemp.m in Sources */,
-				4B7FF1F11979195900779D9C /* ChatMessageCell.m in Sources */,
+				4BA318B71990E09F0039001E /* ChatMessageCell.m in Sources */,
 				4B998A341966B62A00EAECC8 /* UIView+Extension.m in Sources */,
 				71650C34198353670049BB3F /* DockItem.m in Sources */,
 				4B0676A4198889020031754B /* XMPPMessageDeliveryReceipts.m in Sources */,
@@ -2884,13 +2900,13 @@
 				4B24803919590DC900C520A9 /* NSObject+MJKeyValue.m in Sources */,
 				4B06768F198889020031754B /* XMPPMessage+XEP_0066.m in Sources */,
 				4B247FF719590DC900C520A9 /* ZJHomeDetialViewController.m in Sources */,
+				4BBC92101991BCB400B464A2 /* ZJChatViewController.m in Sources */,
 				4B06766F198889020031754B /* XMPPRoomCoreDataStorage.m in Sources */,
 				4B0676B4198889020031754B /* RFImageToDataTransformer.m in Sources */,
 				4B24802419590DC900C520A9 /* AFURLConnectionOperation.m in Sources */,
 				4B06766B198889020031754B /* XMPPIQ+LastActivity.m in Sources */,
 				4B067676198889020031754B /* XMPPRoomMemoryStorage.m in Sources */,
 				4B06767E198889020031754B /* XMPPvCardCoreDataStorage.m in Sources */,
-				4B0676D319889E2F0031754B /* InputTextView.m in Sources */,
 				4B0676B1198889020031754B /* NSXMLElement+XEP_0335.m in Sources */,
 				4B247FF419590DC900C520A9 /* ZJEditPwdViewController.m in Sources */,
 				4B24800B19590DC900C520A9 /* ZJDrugStatusController.m in Sources */,
@@ -2909,10 +2925,10 @@
 				4B24803519590DC900C520A9 /* MJMethod.m in Sources */,
 				4B067691198889020031754B /* XMPPDateTimeProfiles.m in Sources */,
 				4B24803719590DC900C520A9 /* MJTypeEncoding.m in Sources */,
+				4BA318BB1990E09F0039001E /* InputTextView.m in Sources */,
 				4B0676B2198889020031754B /* DDList.m in Sources */,
 				4B1B430F195FD7AD00EDAE1E /* SDWebImageManager+MJ.m in Sources */,
 				4B0676A2198889020031754B /* XMPPPresence+XEP_0172.m in Sources */,
-				4B7FF1ED19790ED700779D9C /* ZJChatViewController.m in Sources */,
 				4B998A301966B62A00EAECC8 /* MJRefreshFooterView.m in Sources */,
 				4B067680198889020031754B /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
 				4B24804519590DC900C520A9 /* UIButton+WebCache.m in Sources */,
@@ -3158,6 +3174,7 @@
 		4B247EB219590D9200C520A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -3176,6 +3193,7 @@
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/XMPP/Vender/libidn",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/lame",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = KindergartenParent;
 				VALID_ARCHS = "arm64 armv7s armv7";
@@ -3186,6 +3204,7 @@
 		4B247EB319590D9200C520A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -3204,6 +3223,7 @@
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/XMPP/Vender/libidn",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/lame",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = KindergartenParent;
 				VALID_ARCHS = "arm64 armv7s armv7";

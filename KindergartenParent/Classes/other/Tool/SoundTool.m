@@ -51,7 +51,7 @@ single_implementation(SoundTool)
     NSMutableDictionary *setting = [[NSMutableDictionary alloc] init];
     
     
-
+    
     //录音设置
     NSMutableDictionary *settings = [[NSMutableDictionary alloc] init];
     //录音格式 无法使用
@@ -64,7 +64,7 @@ single_implementation(SoundTool)
     //[recordSettings setValue :[NSNumber numberWithInt:16] forKey: AVLinearPCMBitDepthKey];
     //音频质量,采样质量
     [settings setValue:[NSNumber numberWithInt:AVAudioQualityMin] forKey:AVEncoderAudioQualityKey];
-
+    
     
     // 音频格式
     [setting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
@@ -149,7 +149,7 @@ single_implementation(SoundTool)
 
 #pragma mark - 播放器代理方法
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{    
+{
     if (_playCompletionBlock != nil) {
         _playCompletionBlock();
     }
@@ -157,16 +157,16 @@ single_implementation(SoundTool)
 #pragma mark -返回文件的路径
 -(NSString *)recordPath
 {
-    return [[NSString stringWithFormat:@"%@",_fileName] documentsPath];
+    return [[NSString stringWithFormat:@"/%@",_fileName] documentsPath];
 }
 #pragma mark -返回文件的路径
 -(NSString *)mp3Path
 {
-    return [[NSString stringWithFormat:@"%@.mp3",_fileNm] documentsPath];
+    return [[NSString stringWithFormat:@"/%@.mp3",_fileNm] documentsPath];
 }
 -(NSString *)fileName
 {
-    return [NSString stringWithFormat:@"%@.mp3",_fileNm];
+    return [NSString stringWithFormat:@"/%@.mp3",_fileNm];
 }
 -(NSInteger)soundTimeLong
 {
@@ -183,7 +183,7 @@ single_implementation(SoundTool)
     }
     
     
-    NSString *mp3FilePath = [[NSString stringWithFormat:@"%@.mp3",_fileNm] documentsPath];
+    NSString *mp3FilePath = [[NSString stringWithFormat:@"/%@.mp3",_fileNm] documentsPath];
     
     @try {
         int read, write;

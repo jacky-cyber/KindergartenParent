@@ -14,9 +14,20 @@
 #import "LoginUser.h"
 #import "ZJLoginViewController.h"
 #import "ZJPhotWallViewController.h"
+#import "ZJNotificationListCell.h"
+#import "ZJDayReportViewController.h"
+#import "ZJWeekReportsViewController.h"
 #import "IQKeyboardManager.h"
 #import "APService.h"
-
+#import "BaseController.h"
+#import "ZJWeekReportsViewController.h"
+#import "ZJNotificationListViewController.h"
+#import "ZJHomeDetialViewController.h"
+#import "ZJHomeModel.h"
+#import "ZJCookBooksViewController.h"
+#import "ZJActivityViewController.h"
+#import "ZJHonorViewController.h"
+#import "ZJMonthCommentViewController.h"
 #define kcurrentTIme @"currentTIme"
 // 赋值语句不能够写在.h中，只能写在.m中
 // 使用此种方式，可以保证常量字符串在内存中有且仅有一个地址
@@ -30,6 +41,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     
     XMPPReconnect           *_xmppReconnect;                // 重新连接的模块
     XMPPvCardCoreDataStorage    *_xmppvCardCoreDataStorage; // 电子名片数据存储扩展
+    
+    ZJHomeViewController *_viewController;
 }
 
 /**
@@ -73,7 +86,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     ZJRightSideDrawerViewController * rightSideDrawerViewController = [[ZJRightSideDrawerViewController alloc] init];
     
     ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
-    
+    _viewController = centerViewController;
     BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];
 
     
@@ -110,7 +123,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     [APService setupWithOption:launchOptions];
     
 
-    [APService setAlias:@"xuesheng" callbackSelector:nil object:nil];
+    [APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
     
     
     //获取当前时间保存沙河
@@ -130,20 +143,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 {
     // Required
     [APService registerDeviceToken:deviceToken];
-    NSLog(@"deviceToken : %@", deviceToken);
-    // 1. 从系统偏好取之前的token
-//    NSData *oldToken = [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"];
-//    // 2. 新旧token进行比较
-//    if (![oldToken isEqualToData:deviceToken]) {
-//        // 3. 如果不一致，保存token到系统偏好
-//        [[NSUserDefaults standardUserDefaults]setObject:deviceToken forKey:@"deviceToken"];
-//        
-//        // 4. 使用post请求传输新旧token至服务器
-//        // 1) url
-//        // 具体的URL地址以及POST请求中的参数和格式，是由公司的后端程序员提供的
-//        // 2) request POST body（包含新旧token的数据）
-//        // 3) connection 的异步
-//    }
+
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -154,15 +154,71 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     //在此处理接收到的消息。
     // Required
     [APService handleRemoteNotification:userInfo];
+    
+    int  type  =  [userInfo[@"type"] intValue];
+    
+//    [self pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
+    NSLog(@"Receive remote notification : %@",userInfo);
+    
+    
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"订阅消息" message:userInfo.description delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
+//    
+//    
+//      [alert show];
 
-    MyLog(@"Receive remote notification : %@",userInfo);
+//    1	系统消息
+//    2	幼儿园通知  ---
+//    3	本周食谱 ----
+//    4	每日一报 ----
+//    5	每周一报 ---
+//    6	医务室通知 ------
+//    7	荣誉榜 -----
+//    8	老师通知 ----
+//    9	生日提醒 ----
+//    10	活动通知 ---
+//    11	签到/签退 ----
+//    12	月评 -----
+//    13	回复通知
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"订阅消息" message:userInfo.description delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
+//    全园通知（您有一条新的全园通知），点击进入详情页
+//    活动通知（您有一条新的活动通知），点击进入详情页
+//    本班通知（您有一条新的本班通知），点击进入详情页
+    
+    ZJHomeModel *model = [[ZJHomeModel alloc] init];
+    model.type = userInfo[@"type"];
+    model.id = userInfo[@"id"];
+    model.content = userInfo[@"content"];
     
     
-      [alert show];
-
-   
+    if(type == 2){
+        
+        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"幼儿园通知"];
+        
+    }else if(type == 3){//本周食谱
+        [_viewController pushController:[ZJCookBooksViewController class] withInfo:model withTitle:@"本周食谱"];
+    }else if(type == 4 ) {//每日一报
+        [_viewController pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
+        
+    }else if(type == 5){//每周一报
+        [_viewController pushController:[ZJWeekReportsViewController class] withInfo:userInfo[@"id"] withTitle:@"每周一报"];
+    }else if(type == 6){//医务通知
+        
+        [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"6" withTitle:@"服药提醒"];
+    }else if(type == 7){//荣誉榜
+         [_viewController pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
+    }else if(type == 8){//本班通知
+        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"本班通知"];
+    }else if(type == 9){//通知公告
+        [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"2,8,9,10" withTitle:@"通知公告"];
+    }else if(type == 10){//活动通知
+        [_viewController pushController:[ZJActivityViewController class] withInfo:model withTitle:@"活动通知"];
+    }else if(type == 11){//签到/签退
+        [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"11" withTitle:@"签到/签退"];
+    }else if(type == 12){//签到/签退
+        [_viewController pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"家长月评"];
+    }
+    
 }
 
 
@@ -293,14 +349,13 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     // 1. 实例化
     _xmppStream = [[XMPPStream alloc] init];
     
-    _xmppStream.enableBackgroundingOnSocket = YES;
-    
     // 2. 实例化要扩展的模块
     // 1> 重新连接
     _xmppReconnect = [[XMPPReconnect alloc] init];
-
- 
-    
+    // 2> 电子名片
+    _xmppvCardCoreDataStorage = [XMPPvCardCoreDataStorage sharedInstance];
+    _xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_xmppvCardCoreDataStorage];
+    _xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_xmppvCardTempModule];
     
     // 3> 花名册
     _xmppRosterCoreDataStorage = [[XMPPRosterCoreDataStorage alloc] init];
@@ -310,19 +365,24 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     [_xmppRoster setAutoAcceptKnownPresenceSubscriptionRequests:YES];
     // 自动从服务器加载好友信息
     [_xmppRoster setAutoFetchRoster:YES];
-
+    
     // 4> 消息归档
     // 提示：不要使用sharedInstance，否则不同账号的聊天记录会保存在同一个CoreData数据库中
     _xmppMessageArchivingCoreDataStorage = [[XMPPMessageArchivingCoreDataStorage alloc] init];
     _xmppMessageArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:_xmppMessageArchivingCoreDataStorage];
-   
+    //5>聊天室
+//    _xmppRoomCoreDataStorage = [[XMPPRoomCoreDataStorage alloc] init];
+    //     _xmppStream.myJID = [XMPPJID jidWithUser:@"lisi" domain:@"zhengjing.local" resource:nil];
+    //    _xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:_xmppStream.myJID];
+    
+    //[_xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
     // 3. 激活扩展模块
     [_xmppReconnect activate:_xmppStream];
+    [_xmppvCardTempModule activate:_xmppStream];
+    [_xmppvCardAvatarModule activate:_xmppStream];
     [_xmppRoster activate:_xmppStream];
     [_xmppMessageArchiving activate:_xmppStream];
-
-    
     //[_xmppRoom activate:_xmppStream];
     //[_xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
@@ -344,16 +404,27 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     
     // 3. 停止模块
     [_xmppReconnect deactivate];
+    [_xmppvCardTempModule deactivate];
+    [_xmppvCardAvatarModule deactivate];
     [_xmppRoster deactivate];
     [_xmppMessageArchiving deactivate];
     
     // 4. 清理内存
     _xmppReconnect = nil;
+    
+    _xmppvCardAvatarModule = nil;
+    _xmppvCardCoreDataStorage = nil;
+    _xmppvCardTempModule = nil;
+    
+    _xmppRosterCoreDataStorage = nil;
+    _xmppRoster = nil;
+    
     _xmppMessageArchivingCoreDataStorage = nil;
     _xmppMessageArchiving = nil;
     
     _xmppStream = nil;
 }
+
 
 - (void)connect
 {
@@ -497,27 +568,27 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 -(void)xmppStream:(XMPPStream*)sender didReceiveMessage:(XMPPMessage *)message
 {
     //程序运行在前台，消息正常显示
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-    {
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertAction = @"Ok";
-        localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",@"test",@"This is a test message"];//通知主体
-        localNotification.soundName = @"crunch.wav";//通知声音
-        localNotification.applicationIconBadgeNumber = 1;//标记数
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
-        
-    }else{//如果程序在后台运行，收到消息以通知类型来显示
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.alertAction = @"Ok";
-        localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",@"test",@"This is a test message"];//通知主体
-        localNotification.soundName = @"crunch.wav";//通知声音
-        localNotification.applicationIconBadgeNumber = 1;//标记数
-        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
-    }
-    
-    UIImage *imag = [UIImage imageNamed:@"message"];
-    
-    MyLog(@"-----%@",message.to);
+//    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+//    {
+//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//        localNotification.alertAction = @"Ok";
+//        localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",@"test",@"This is a test message"];//通知主体
+//        localNotification.soundName = @"crunch.wav";//通知声音
+//        localNotification.applicationIconBadgeNumber = 1;//标记数
+//        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
+//        
+//    }else{//如果程序在后台运行，收到消息以通知类型来显示
+//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//        localNotification.alertAction = @"Ok";
+//        localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",@"test",@"This is a test message"];//通知主体
+//        localNotification.soundName = @"crunch.wav";//通知声音
+//        localNotification.applicationIconBadgeNumber = 1;//标记数
+//        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
+//    }
+//    
+//    UIImage *imag = [UIImage imageNamed:@"message"];
+//    
+//    MyLog(@"-----%@",message.to);
 }
 
 
