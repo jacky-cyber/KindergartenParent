@@ -153,6 +153,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 {
     //在此处理接收到的消息。
     // Required
+    application.applicationIconBadgeNumber = 0;
     [APService handleRemoteNotification:userInfo];
     
     int  type  =  [userInfo[@"type"] intValue];

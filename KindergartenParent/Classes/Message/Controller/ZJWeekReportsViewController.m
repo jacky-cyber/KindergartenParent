@@ -10,7 +10,7 @@
 #import "ZJWeekReportView.h"
 #import "ZJWeekReportModel.h"
 
-#define kMarginH 20
+#define kMarginH 10
 
 @interface ZJWeekReportsViewController ()
 {

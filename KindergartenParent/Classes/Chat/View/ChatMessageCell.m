@@ -1,10 +1,4 @@
-//
-//  ChatMessageCell.m
-//  企信通
-//
-//  Created by apple on 13-12-4.
-//  Copyright (c) 2013年 itcast. All rights reserved.
-//
+
 
 #import "ChatMessageCell.h"
 #import "UIImageView+WebCache.h"
@@ -14,12 +8,8 @@
 #import "MJPhotoBrowser.h"
 #import "MJPhoto.h"
 #import "XMPPMessageArchiving_Message_CoreDataObject.h"
-CGRect goBackRect;
-float goBackDuration;
-UIView* goBackgroundView;
-UIImageView* goBackImageView;
-UIImageView* goBackFakeImageView;
-UIViewController* goBackViewController;
+#import "MLEmojiLabel.h"
+
 
 @interface ChatMessageCell()
 {
@@ -32,8 +22,10 @@ UIViewController* goBackViewController;
     NSString *_currentMusicName;//当前点击的语音的文件
     
     XMPPMessageArchiving_Message_CoreDataObject *_messageCoreData;
+    
+    UIView *_msgView;
 }
-
+@property (nonatomic, strong) MLEmojiLabel *emojiLabel;
 @end
 
 @implementation ChatMessageCell
@@ -80,7 +72,7 @@ UIViewController* goBackViewController;
     
     // 2. 设置按钮文字
     // 2.1 计算文字占用的区间
-    CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:CGSizeMake(180, 10000.0)];
+    CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:CGSizeMake(180, MAXFLOAT)];
     
     // 2.2 使用文本占用空间设置按钮的约束
     // 提示：需要考虑到在Stroyboard中设置的间距
@@ -126,14 +118,33 @@ UIViewController* goBackViewController;
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
             [view addSubview:imageView];
             [_messageButton addSubview:view];
-            // _messageButton.tag = tag+1;
-            //        [_messageButton addTarget:self action:@selector(imageAction:) forControlEvents:UIControlEventTouchUpInside];
         }else{
+            
+            
             [_messageButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 0, 0, 0)];
-            _messageHeightConstraint.constant = size.height + 10.0;
-            _messageWeightConstraint.constant = size.width + 30.0;
+            
+            
+            MyLog(@"%@", NSStringFromCGSize(size));
             // 2.3 设置按钮文字
-            [_messageButton setTitle:message forState:UIControlStateNormal];
+            //[self.view addSubview:self.emojiLabel];
+            
+            if (isOutgoing) {
+                self.emojiLabel.frame= CGRectMake(5, 5, size.width, size.height);
+            }else{
+                self.emojiLabel.frame= CGRectMake(15, 5, size.width, size.height);
+            }
+            
+            
+            [self.emojiLabel setEmojiText:message];
+            [self.emojiLabel sizeToFit];
+            
+            _messageHeightConstraint.constant = H(self.emojiLabel) + 10.0;
+            _messageWeightConstraint.constant = W(self.emojiLabel) + 20.0;
+            
+            
+            [_messageButton addSubview:self.emojiLabel];
+            
+            //[_messageButton setTitle:message forState:UIControlStateNormal];
         }
     
     //NSLog(@"%@",fileName);
@@ -142,6 +153,27 @@ UIViewController* goBackViewController;
     // 2.4 重新调整布局
     //[self layoutIfNeeded];
 }
+
+
+- (MLEmojiLabel *)emojiLabel
+{
+	if (!_emojiLabel) {
+        _emojiLabel = [[MLEmojiLabel alloc]init];
+        //_emojiLabel.backgroundColor = [UIColor brownColor];
+        _emojiLabel.numberOfLines = 0;
+        _emojiLabel.font = [UIFont systemFontOfSize:14.0f];
+        NSLog(@"%f",_emojiLabel.font.lineHeight);
+        //_emojiLabel.emojiDelegate = self;
+        //        _emojiLabel.textAlignment = NSTextAlignmentCenter;
+        _emojiLabel.backgroundColor = [UIColor clearColor];
+        _emojiLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        _emojiLabel.isNeedAtAndPoundSign = YES;
+        _emojiLabel.customEmojiRegex = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+        _emojiLabel.customEmojiPlistName = @"expressionImage_custom.plist";
+    }
+	return _emojiLabel;
+}
+
 
 #pragma mark 跳转到图片页面
 - (void)tapImage:(UITapGestureRecognizer *)tap
@@ -270,5 +302,9 @@ UIViewController* goBackViewController;
     
     [_player play];
 }
+
+//
+
+
 
 @end

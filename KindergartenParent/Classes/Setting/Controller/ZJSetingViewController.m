@@ -10,6 +10,7 @@
 #import "ZJSetingCell.h"
 #import "ZJYijianViewController.h"
 #import "ZJAboutMeViewController.h"
+#import "ZJLoginViewController.h"
 @interface ZJSetingViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *_dataArr;//数据源
@@ -45,7 +46,7 @@
     [self.view addSubview:_talbeView];
     _talbeView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    _dataArr = @[@"消息推送",@"意见反馈",@"关于我们",@"版本信息"];
+    _dataArr = @[@"消息推送",@"意见反馈",@"关于我们",@"版本信息",@"注销"];
     
 //     [_talbeView registerNib:[UINib nibWithNibName:@"ZJSetingCell" bundle:nil] forCellReuseIdentifier:[ZJSetingCell ID]];
     
@@ -53,8 +54,19 @@
     //判断是否打开推送开关
     [self pushmsgstatus];
     
+    
 }
-
+#pragma mark 登出
+-(void)loginoutAction
+{
+    UIViewController * main = [[ZJLoginViewController alloc] init];
+    
+    BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:main];
+    self.view.window.rootViewController =navigationController ;
+    
+    [[LoginUser sharedLoginUser] loginout];
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -84,7 +96,25 @@
         [cell.bgView addSubview:swh];
         [swh addTarget:self action:@selector(upStatusAction:) forControlEvents:UIControlEventValueChanged];
     }else if (indexPath.row == 3){
+        NSString *key = (NSString *)kCFBundleVersionKey;
+        
+        // 1.从Info.plist中取出版本号
+        NSString *version = [NSBundle mainBundle].infoDictionary[key];
+        
+        cell.versionLabel.text = version;
         cell.versionLabel.alpha = 1;
+    }else if (indexPath.row == 4){
+        cell.titleLb.alpha = 0;
+        cell.bgView.backgroundColor = [UIColor redColor];
+        cell.bgView.layer.backgroundColor = [UIColor redColor].CGColor;
+        cell.bgView.layer.cornerRadius = 5;
+        cell.bgView.layer.masksToBounds = YES;
+        UILabel *lael = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 120, 21)];
+        lael.text = _dataArr[indexPath.row];
+        [lael setTextColor:[UIColor whiteColor]];
+        lael.backgroundColor = [UIColor redColor];
+        lael.textAlignment = NSTextAlignmentCenter;
+        [cell addSubview:lael];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -94,7 +124,9 @@
     if (indexPath.row == 1) {
         [self pushController:[ZJYijianViewController class] withInfo:nil withTitle:@"意见反馈"];
     }else if(indexPath.row ==2){
-         [self pushController:[ZJAboutMeViewController class] withInfo:nil withTitle:@"意见反馈"];
+         [self pushController:[ZJAboutMeViewController class] withInfo:nil withTitle:@"关于我们"];
+    }else if (indexPath.row == 4){
+        [self loginoutAction];
     }
 }
 

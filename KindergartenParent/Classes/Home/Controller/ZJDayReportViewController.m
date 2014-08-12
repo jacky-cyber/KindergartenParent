@@ -67,11 +67,11 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSString *otherStr = @"今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，今天天气很好很，";
-    CGFloat height = 70;
+    CGFloat height = 60;
     if (indexPath.row == 5) {
         height = [_dataDict[@"other"] getHeightByWidth:150 font:kFont(14)]+20;
-        if (height<70) {
-            height=70;
+        if (height<60) {
+            height=60;
         }
     }
     return height;

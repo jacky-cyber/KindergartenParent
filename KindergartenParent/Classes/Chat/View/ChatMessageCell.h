@@ -1,10 +1,4 @@
-//
-//  ChatMessageCell.h
-//  企信通
-//
-//  Created by apple on 13-12-4.
-//  Copyright (c) 2013年 itcast. All rights reserved.
-//
+
 
 #import <UIKit/UIKit.h>
 @class XMPPMessageArchiving_Message_CoreDataObject;

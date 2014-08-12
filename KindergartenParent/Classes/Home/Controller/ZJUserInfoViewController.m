@@ -40,6 +40,8 @@
     
     //设置footView
     _footView.layer.borderWidth = 1;
+    _footView.layer.cornerRadius = 3;
+    _footView.layer.masksToBounds = YES;
     _footView.layer.borderColor = [UIColor colorWithRed:0.000 green:0.678 blue:0.427 alpha:1.000].CGColor;
 
     

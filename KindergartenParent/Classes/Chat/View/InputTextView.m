@@ -7,10 +7,14 @@
 //
 
 #import "InputTextView.h"
+#import "EmoteSelectorView.h"
 
-@interface InputTextView() <UITextFieldDelegate>
+@interface InputTextView() <EmoteSelectorViewDelegate,UITextFieldDelegate,UIScrollViewDelegate>{
+    int _currentPage;
+}
 
-
+// 表情选择视图
+@property (strong, nonatomic) EmoteSelectorView *emoteView;
 
 // 输入文本
 @property (weak, nonatomic) IBOutlet UITextField *inputText;
@@ -39,7 +43,28 @@
     [_recorderButton setBackgroundImage:image forState:UIControlStateNormal];
     [_recorderButton setBackgroundImage:imageHL forState:UIControlStateHighlighted];
     
+    // 实例化表情选择视图
+    _emoteView = [[EmoteSelectorView alloc] initWithFrame:CGRectMake(0, 0, 320, 216)];
+    _emoteView.contentSize = CGSizeMake(320*3, 216);
+    [_emoteView loadEmojiItem:0];
+    _emoteView.delegate = self;
+    //设置代理
+    _emoteView.delegates = self;
 }
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // 得到每页宽度
+    CGFloat pageWidth = scrollView.frame.size.width;
+    // 根据当前的x坐标和页宽度计算出当前页数
+    NSInteger currentPage = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    
+    if (_currentPage != currentPage) {
+        [_emoteView loadEmojiItem:currentPage];
+    }
+    _currentPage = currentPage;
+}
+
 
 #pragma mark 设置按钮的图像
 - (void)setButton:(UIButton *)button imgName:(NSString *)imgName imgHLName:(NSString *)imgHLName
@@ -76,7 +101,7 @@
         [self setButton:button imgName:@"chat_bottom_voice_nor" imgHLName:@"chat_bottom_voice_nor"];
         
         // 2) 打开键盘
-       // [_inputText becomeFirstResponder];
+        // [_inputText becomeFirstResponder];
     }
 }
 
@@ -95,19 +120,19 @@
     // 2) 激活键盘
     [_inputText becomeFirstResponder];
     
-//    if (button.tag) {
-//        // 显示表情选择视图
-//        //[_inputText setInputView:_emoteView];
-//        
-//        // 切换按钮图标，显示键盘选择图像
-//        [self setButton:button imgName:@"ToolViewInputText" imgHLName:@"ToolViewInputTextHL"];
-//    } else {
-//        // 显示系统默认键盘
-//        //[_inputText setInputView:nil];
-//        
-//        // 切换按钮图标，显示表情选择图像
-//        [self setButton:button imgName:@"ToolViewEmotion" imgHLName:@"ToolViewEmotionHL"];
-//    }
+    if (button.tag) {
+        // 显示表情选择视图
+        [_inputText setInputView:_emoteView];
+        
+        // 切换按钮图标，显示键盘选择图像
+        [self setButton:button imgName:@"ToolViewInputText" imgHLName:@"ToolViewInputTextHL"];
+    } else {
+        // 显示系统默认键盘
+        [_inputText setInputView:nil];
+        
+        // 切换按钮图标，显示表情选择图像
+        [self setButton:button imgName:@"ToolViewEmotion" imgHLName:@"ToolViewEmotionHL"];
+    }
     
     // 3. 刷新键盘的输入视图
     [_inputText reloadInputViews];
@@ -120,7 +145,7 @@
     // 拼接现有文本
     // 1. 取出文本
     NSMutableString *strM = [NSMutableString stringWithString:_inputText.text];
-
+    
     // 2. 拼接字符串
     [strM appendString:emote];
     
@@ -134,8 +159,13 @@
     // 1. 取出文本
     NSString *str = _inputText.text;
     
+    if (str.length<4) {
+        return;
+    }
+    
+    
     // 2. 删除最末尾的字符，并设置文本
-    _inputText.text =  [str substringToIndex:(str.length - 1)];
+    _inputText.text =  [str substringToIndex:(str.length - 4)];
 }
 
 

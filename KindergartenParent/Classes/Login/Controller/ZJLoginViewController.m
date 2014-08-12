@@ -27,7 +27,6 @@
 
 - (void)viewDidLoad
 {
-    self.title = @"登陆";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     UIImage *bgImage = [UIImage imageNamed:@"login_beijing"];
