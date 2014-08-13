@@ -13,6 +13,8 @@
 #import "UIImage+ZJ.h"
 #import "ZJUserInfoModel.h"
 #import "ZJAppDelegate.h"
+#import "ZJHomeViewController.h"
+#import "APService.h"
 @interface ZJLoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameText;
 @property (weak, nonatomic) IBOutlet UITextField *pwdText;
@@ -29,7 +31,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIImage *bgImage = [UIImage imageNamed:@"login_beijing"];
+    UIImage *bgImage = [UIImage imageNamed:@"bg_iphone4"];
+    
+    if (iPhone5) {
+        bgImage = [UIImage imageNamed:@"bg_iphone5"];
+    }
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
     
     UIImage *loginImg = [UIImage resizedImage:@"denglu_10"];
@@ -109,8 +116,12 @@
                 
             }];
 
-            
+             [APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+            ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
+            BaseNavigationController *navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];
+            menuController.rootViewController = navigationController;
+            
             self.view.window.rootViewController = menuController;
             
             //[[ZJUserInfoModel sharedZJUserInfoModel] setKeyValues:JSON[@"data"]];
@@ -121,6 +132,7 @@
         }
         NSLog(@"%@",JSON);
     } failure:^(NSError *error) {
+        kPE(kHttpErrorMsg, 0.5);
         MyLog(@"%@",error);
     }];
     

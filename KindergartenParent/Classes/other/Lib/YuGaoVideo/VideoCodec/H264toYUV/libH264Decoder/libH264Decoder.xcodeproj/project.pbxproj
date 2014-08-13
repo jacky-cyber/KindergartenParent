@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		180478D31580A95F00A8E329 /* access.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478AB1580A95F00A8E329 /* access.c */; };
+		180478D41580A95F00A8E329 /* access.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478AC1580A95F00A8E329 /* access.h */; };
+		180478D71580A95F00A8E329 /* bitstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478B01580A95F00A8E329 /* bitstream.h */; };
+		180478D81580A95F00A8E329 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478B11580A95F00A8E329 /* common.c */; };
+		180478D91580A95F00A8E329 /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478B21580A95F00A8E329 /* common.h */; };
+		180478DA1580A95F00A8E329 /* dct.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478B31580A95F00A8E329 /* dct.c */; };
+		180478DB1580A95F00A8E329 /* dct.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478B41580A95F00A8E329 /* dct.h */; };
+		180478DC1580A95F00A8E329 /* dpb.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478B51580A95F00A8E329 /* dpb.c */; };
+		180478DD1580A95F00A8E329 /* dpb.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478B61580A95F00A8E329 /* dpb.h */; };
+		180478DE1580A95F00A8E329 /* global.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478B71580A95F00A8E329 /* global.c */; };
+		180478DF1580A95F00A8E329 /* global.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478B81580A95F00A8E329 /* global.h */; };
+		180478E01580A95F00A8E329 /* H264Core.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478B91580A95F00A8E329 /* H264Core.c */; };
+		180478E11580A95F00A8E329 /* H264Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478BA1580A95F00A8E329 /* H264Core.h */; };
+		180478E21580A95F00A8E329 /* h264dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478BB1580A95F00A8E329 /* h264dec.c */; };
+		180478E31580A95F00A8E329 /* h264dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478BC1580A95F00A8E329 /* h264dec.h */; };
+		180478E41580A95F00A8E329 /* interpolate.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478BD1580A95F00A8E329 /* interpolate.c */; };
+		180478E51580A95F00A8E329 /* interpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478BE1580A95F00A8E329 /* interpolate.h */; };
+		180478E61580A95F00A8E329 /* intrapred.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478BF1580A95F00A8E329 /* intrapred.c */; };
+		180478E71580A95F00A8E329 /* intrapred.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478C01580A95F00A8E329 /* intrapred.h */; };
+		180478E81580A95F00A8E329 /* loopfilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478C11580A95F00A8E329 /* loopfilter.c */; };
+		180478E91580A95F00A8E329 /* loopfilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478C21580A95F00A8E329 /* loopfilter.h */; };
+		180478EA1580A95F00A8E329 /* macroblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478C31580A95F00A8E329 /* macroblock.c */; };
+		180478EB1580A95F00A8E329 /* macroblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478C41580A95F00A8E329 /* macroblock.h */; };
+		180478EC1580A95F00A8E329 /* nalu.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478C51580A95F00A8E329 /* nalu.c */; };
+		180478ED1580A95F00A8E329 /* nalu.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478C61580A95F00A8E329 /* nalu.h */; };
+		180478EE1580A95F00A8E329 /* parset.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478C71580A95F00A8E329 /* parset.c */; };
+		180478EF1580A95F00A8E329 /* parset.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478C81580A95F00A8E329 /* parset.h */; };
+		180478F01580A95F00A8E329 /* poc.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478C91580A95F00A8E329 /* poc.c */; };
+		180478F11580A95F00A8E329 /* poc.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478CA1580A95F00A8E329 /* poc.h */; };
+		180478F21580A95F00A8E329 /* recon.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478CB1580A95F00A8E329 /* recon.c */; };
+		180478F31580A95F00A8E329 /* recon.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478CC1580A95F00A8E329 /* recon.h */; };
+		180478F41580A95F00A8E329 /* slice.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478CD1580A95F00A8E329 /* slice.c */; };
+		180478F51580A95F00A8E329 /* slice.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478CE1580A95F00A8E329 /* slice.h */; };
+		180478F61580A95F00A8E329 /* syntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478CF1580A95F00A8E329 /* syntax.c */; };
+		180478F71580A95F00A8E329 /* syntax.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478D01580A95F00A8E329 /* syntax.h */; };
+		180478F81580A95F00A8E329 /* vlc.c in Sources */ = {isa = PBXBuildFile; fileRef = 180478D11580A95F00A8E329 /* vlc.c */; };
+		180478F91580A95F00A8E329 /* vlc.h in Headers */ = {isa = PBXBuildFile; fileRef = 180478D21580A95F00A8E329 /* vlc.h */; };
+		AA747D9F0F9514B9006C5449 /* libH264Decoder_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* libH264Decoder_Prefix.pch */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		180478AB1580A95F00A8E329 /* access.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = access.c; sourceTree = "<group>"; };
+		180478AC1580A95F00A8E329 /* access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = access.h; sourceTree = "<group>"; };
+		180478B01580A95F00A8E329 /* bitstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitstream.h; sourceTree = "<group>"; };
+		180478B11580A95F00A8E329 /* common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
+		180478B21580A95F00A8E329 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		180478B31580A95F00A8E329 /* dct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dct.c; sourceTree = "<group>"; };
+		180478B41580A95F00A8E329 /* dct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dct.h; sourceTree = "<group>"; };
+		180478B51580A95F00A8E329 /* dpb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dpb.c; sourceTree = "<group>"; };
+		180478B61580A95F00A8E329 /* dpb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dpb.h; sourceTree = "<group>"; };
+		180478B71580A95F00A8E329 /* global.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = global.c; sourceTree = "<group>"; };
+		180478B81580A95F00A8E329 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		180478B91580A95F00A8E329 /* H264Core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = H264Core.c; sourceTree = "<group>"; };
+		180478BA1580A95F00A8E329 /* H264Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264Core.h; sourceTree = "<group>"; };
+		180478BB1580A95F00A8E329 /* h264dec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = h264dec.c; sourceTree = "<group>"; };
+		180478BC1580A95F00A8E329 /* h264dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264dec.h; sourceTree = "<group>"; };
+		180478BD1580A95F00A8E329 /* interpolate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interpolate.c; sourceTree = "<group>"; };
+		180478BE1580A95F00A8E329 /* interpolate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolate.h; sourceTree = "<group>"; };
+		180478BF1580A95F00A8E329 /* intrapred.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intrapred.c; sourceTree = "<group>"; };
+		180478C01580A95F00A8E329 /* intrapred.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrapred.h; sourceTree = "<group>"; };
+		180478C11580A95F00A8E329 /* loopfilter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loopfilter.c; sourceTree = "<group>"; };
+		180478C21580A95F00A8E329 /* loopfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loopfilter.h; sourceTree = "<group>"; };
+		180478C31580A95F00A8E329 /* macroblock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macroblock.c; sourceTree = "<group>"; };
+		180478C41580A95F00A8E329 /* macroblock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macroblock.h; sourceTree = "<group>"; };
+		180478C51580A95F00A8E329 /* nalu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nalu.c; sourceTree = "<group>"; };
+		180478C61580A95F00A8E329 /* nalu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nalu.h; sourceTree = "<group>"; };
+		180478C71580A95F00A8E329 /* parset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parset.c; sourceTree = "<group>"; };
+		180478C81580A95F00A8E329 /* parset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parset.h; sourceTree = "<group>"; };
+		180478C91580A95F00A8E329 /* poc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = poc.c; sourceTree = "<group>"; };
+		180478CA1580A95F00A8E329 /* poc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poc.h; sourceTree = "<group>"; };
+		180478CB1580A95F00A8E329 /* recon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = recon.c; sourceTree = "<group>"; };
+		180478CC1580A95F00A8E329 /* recon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = recon.h; sourceTree = "<group>"; };
+		180478CD1580A95F00A8E329 /* slice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = slice.c; sourceTree = "<group>"; };
+		180478CE1580A95F00A8E329 /* slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slice.h; sourceTree = "<group>"; };
+		180478CF1580A95F00A8E329 /* syntax.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = syntax.c; sourceTree = "<group>"; };
+		180478D01580A95F00A8E329 /* syntax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syntax.h; sourceTree = "<group>"; };
+		180478D11580A95F00A8E329 /* vlc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vlc.c; sourceTree = "<group>"; };
+		180478D21580A95F00A8E329 /* vlc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vlc.h; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* libH264Decoder_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libH264Decoder_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* liblibH264Decoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibH264Decoder.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* liblibH264Decoder.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* libH264Decoder */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AEFE84172EC02AAC07 /* Classes */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = libH264Decoder;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				180478AA1580A95F00A8E329 /* H264Decoder */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		180478AA1580A95F00A8E329 /* H264Decoder */ = {
+			isa = PBXGroup;
+			children = (
+				180478AB1580A95F00A8E329 /* access.c */,
+				180478AC1580A95F00A8E329 /* access.h */,
+				180478B01580A95F00A8E329 /* bitstream.h */,
+				180478B11580A95F00A8E329 /* common.c */,
+				180478B21580A95F00A8E329 /* common.h */,
+				180478B31580A95F00A8E329 /* dct.c */,
+				180478B41580A95F00A8E329 /* dct.h */,
+				180478B51580A95F00A8E329 /* dpb.c */,
+				180478B61580A95F00A8E329 /* dpb.h */,
+				180478B71580A95F00A8E329 /* global.c */,
+				180478B81580A95F00A8E329 /* global.h */,
+				180478B91580A95F00A8E329 /* H264Core.c */,
+				180478BA1580A95F00A8E329 /* H264Core.h */,
+				180478BB1580A95F00A8E329 /* h264dec.c */,
+				180478BC1580A95F00A8E329 /* h264dec.h */,
+				180478BD1580A95F00A8E329 /* interpolate.c */,
+				180478BE1580A95F00A8E329 /* interpolate.h */,
+				180478BF1580A95F00A8E329 /* intrapred.c */,
+				180478C01580A95F00A8E329 /* intrapred.h */,
+				180478C11580A95F00A8E329 /* loopfilter.c */,
+				180478C21580A95F00A8E329 /* loopfilter.h */,
+				180478C31580A95F00A8E329 /* macroblock.c */,
+				180478C41580A95F00A8E329 /* macroblock.h */,
+				180478C51580A95F00A8E329 /* nalu.c */,
+				180478C61580A95F00A8E329 /* nalu.h */,
+				180478C71580A95F00A8E329 /* parset.c */,
+				180478C81580A95F00A8E329 /* parset.h */,
+				180478C91580A95F00A8E329 /* poc.c */,
+				180478CA1580A95F00A8E329 /* poc.h */,
+				180478CB1580A95F00A8E329 /* recon.c */,
+				180478CC1580A95F00A8E329 /* recon.h */,
+				180478CD1580A95F00A8E329 /* slice.c */,
+				180478CE1580A95F00A8E329 /* slice.h */,
+				180478CF1580A95F00A8E329 /* syntax.c */,
+				180478D01580A95F00A8E329 /* syntax.h */,
+				180478D11580A95F00A8E329 /* vlc.c */,
+				180478D21580A95F00A8E329 /* vlc.h */,
+			);
+			name = H264Decoder;
+			path = ../H264Decoder;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AA747D9E0F9514B9006C5449 /* libH264Decoder_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA747D9F0F9514B9006C5449 /* libH264Decoder_Prefix.pch in Headers */,
+				180478D41580A95F00A8E329 /* access.h in Headers */,
+				180478D71580A95F00A8E329 /* bitstream.h in Headers */,
+				180478D91580A95F00A8E329 /* common.h in Headers */,
+				180478DB1580A95F00A8E329 /* dct.h in Headers */,
+				180478DD1580A95F00A8E329 /* dpb.h in Headers */,
+				180478DF1580A95F00A8E329 /* global.h in Headers */,
+				180478E11580A95F00A8E329 /* H264Core.h in Headers */,
+				180478E31580A95F00A8E329 /* h264dec.h in Headers */,
+				180478E51580A95F00A8E329 /* interpolate.h in Headers */,
+				180478E71580A95F00A8E329 /* intrapred.h in Headers */,
+				180478E91580A95F00A8E329 /* loopfilter.h in Headers */,
+				180478EB1580A95F00A8E329 /* macroblock.h in Headers */,
+				180478ED1580A95F00A8E329 /* nalu.h in Headers */,
+				180478EF1580A95F00A8E329 /* parset.h in Headers */,
+				180478F11580A95F00A8E329 /* poc.h in Headers */,
+				180478F31580A95F00A8E329 /* recon.h in Headers */,
+				180478F51580A95F00A8E329 /* slice.h in Headers */,
+				180478F71580A95F00A8E329 /* syntax.h in Headers */,
+				180478F91580A95F00A8E329 /* vlc.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* libH264Decoder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "libH264Decoder" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libH264Decoder;
+			productName = libH264Decoder;
+			productReference = D2AAC07E0554694100DB518D /* liblibH264Decoder.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libH264Decoder" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* libH264Decoder */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* libH264Decoder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				180478D31580A95F00A8E329 /* access.c in Sources */,
+				180478D81580A95F00A8E329 /* common.c in Sources */,
+				180478DA1580A95F00A8E329 /* dct.c in Sources */,
+				180478DC1580A95F00A8E329 /* dpb.c in Sources */,
+				180478DE1580A95F00A8E329 /* global.c in Sources */,
+				180478E01580A95F00A8E329 /* H264Core.c in Sources */,
+				180478E21580A95F00A8E329 /* h264dec.c in Sources */,
+				180478E41580A95F00A8E329 /* interpolate.c in Sources */,
+				180478E61580A95F00A8E329 /* intrapred.c in Sources */,
+				180478E81580A95F00A8E329 /* loopfilter.c in Sources */,
+				180478EA1580A95F00A8E329 /* macroblock.c in Sources */,
+				180478EC1580A95F00A8E329 /* nalu.c in Sources */,
+				180478EE1580A95F00A8E329 /* parset.c in Sources */,
+				180478F01580A95F00A8E329 /* poc.c in Sources */,
+				180478F21580A95F00A8E329 /* recon.c in Sources */,
+				180478F41580A95F00A8E329 /* slice.c in Sources */,
+				180478F61580A95F00A8E329 /* syntax.c in Sources */,
+				180478F81580A95F00A8E329 /* vlc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		180482321581D68100A8E329 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.0;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+			};
+			name = Distribution;
+		};
+		180482331581D68100A8E329 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/libH264Decoder.dst;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libH264Decoder_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PRODUCT_NAME = libH264Decoder;
+				SDKROOT = iphoneos4.0;
+			};
+			name = Distribution;
+		};
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libH264Decoder.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libH264Decoder_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PRODUCT_NAME = libH264Decoder;
+				SDKROOT = iphoneos4.0;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/libH264Decoder.dst;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libH264Decoder_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PRODUCT_NAME = libH264Decoder;
+				SDKROOT = iphoneos4.0;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_CFLAGS = "-fno-asm";
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.1;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.0;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "libH264Decoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+				180482331581D68100A8E329 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libH264Decoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+				180482321581D68100A8E329 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

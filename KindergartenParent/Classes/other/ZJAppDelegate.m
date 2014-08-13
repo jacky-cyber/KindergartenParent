@@ -100,8 +100,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     if ([LoginUser sharedLoginUser].isLogin) {
         self.window.rootViewController = _menuController;
     }else{
-        BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:[[ZJLoginViewController alloc] init]];
-        self.window.rootViewController =navigationController ;
+        ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
+        self.window.rootViewController =login ;
     }
     
     
@@ -160,10 +160,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     
 //    [self pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
     NSLog(@"Receive remote notification : %@",userInfo);
-    
-    
-    
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"订阅消息" message:userInfo.description delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
+
 //    
 //    
 //      [alert show];

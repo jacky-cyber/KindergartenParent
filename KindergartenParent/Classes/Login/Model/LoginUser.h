@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
+#import "Singletons.h"
 
 @class ZJUserInfoModel;
 

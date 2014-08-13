@@ -59,10 +59,8 @@
 #pragma mark 登出
 -(void)loginoutAction
 {
-    UIViewController * main = [[ZJLoginViewController alloc] init];
-    
-    BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:main];
-    self.view.window.rootViewController =navigationController ;
+    ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
+    self.view.window.rootViewController =login ;
     
     [[LoginUser sharedLoginUser] loginout];
     
@@ -150,7 +148,7 @@
         }
         [_talbeView reloadData];
     } failure:^(NSError *error) {
-        
+        kPE(kHttpErrorMsg, 0.5);
     }];
     
 }

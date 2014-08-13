@@ -1,0 +1,273 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		188C98741536A01100005194 /* TsDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 188C98731536A01100005194 /* TsDecoder.cpp */; };
+		18B77F1812DC3A450024BE3B /* singleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B77F0F12DC3A450024BE3B /* singleton.h */; };
+		18B77F1912DC3A450024BE3B /* TSDataStruct.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B77F1012DC3A450024BE3B /* TSDataStruct.h */; };
+		18B77F1B12DC3A450024BE3B /* TsDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B77F1212DC3A450024BE3B /* TsDecoder.h */; };
+		18B77F1C12DC3A450024BE3B /* TsDecoderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B77F1312DC3A450024BE3B /* TsDecoderInterface.cpp */; };
+		18B77F1D12DC3A450024BE3B /* TsDecoderInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B77F1412DC3A450024BE3B /* TsDecoderInterface.h */; };
+		18B77F1E12DC3A450024BE3B /* TsDecoderManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18B77F1512DC3A450024BE3B /* TsDecoderManager.cpp */; };
+		18B77F1F12DC3A450024BE3B /* TsDecoderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B77F1612DC3A450024BE3B /* TsDecoderManager.h */; };
+		AA747D9F0F9514B9006C5449 /* libTsDecoder_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* libTsDecoder_Prefix.pch */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		188C98731536A01100005194 /* TsDecoder.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = TsDecoder.cpp; sourceTree = "<group>"; };
+		18B77F0F12DC3A450024BE3B /* singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = singleton.h; sourceTree = "<group>"; };
+		18B77F1012DC3A450024BE3B /* TSDataStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSDataStruct.h; sourceTree = "<group>"; };
+		18B77F1212DC3A450024BE3B /* TsDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TsDecoder.h; sourceTree = "<group>"; };
+		18B77F1312DC3A450024BE3B /* TsDecoderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TsDecoderInterface.cpp; sourceTree = "<group>"; };
+		18B77F1412DC3A450024BE3B /* TsDecoderInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TsDecoderInterface.h; sourceTree = "<group>"; };
+		18B77F1512DC3A450024BE3B /* TsDecoderManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TsDecoderManager.cpp; sourceTree = "<group>"; };
+		18B77F1612DC3A450024BE3B /* TsDecoderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TsDecoderManager.h; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* libTsDecoder_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libTsDecoder_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* liblibTsDecoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibTsDecoder.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* liblibTsDecoder.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* libTsDecoder */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AEFE84172EC02AAC07 /* Classes */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = libTsDecoder;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				18B77F0D12DC3A450024BE3B /* TsDecoder */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		18B77F0D12DC3A450024BE3B /* TsDecoder */ = {
+			isa = PBXGroup;
+			children = (
+				18B77F0F12DC3A450024BE3B /* singleton.h */,
+				18B77F1012DC3A450024BE3B /* TSDataStruct.h */,
+				18B77F1212DC3A450024BE3B /* TsDecoder.h */,
+				188C98731536A01100005194 /* TsDecoder.cpp */,
+				18B77F1312DC3A450024BE3B /* TsDecoderInterface.cpp */,
+				18B77F1412DC3A450024BE3B /* TsDecoderInterface.h */,
+				18B77F1512DC3A450024BE3B /* TsDecoderManager.cpp */,
+				18B77F1612DC3A450024BE3B /* TsDecoderManager.h */,
+			);
+			name = TsDecoder;
+			path = ../TsDecoder;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AA747D9E0F9514B9006C5449 /* libTsDecoder_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA747D9F0F9514B9006C5449 /* libTsDecoder_Prefix.pch in Headers */,
+				18B77F1812DC3A450024BE3B /* singleton.h in Headers */,
+				18B77F1912DC3A450024BE3B /* TSDataStruct.h in Headers */,
+				18B77F1B12DC3A450024BE3B /* TsDecoder.h in Headers */,
+				18B77F1D12DC3A450024BE3B /* TsDecoderInterface.h in Headers */,
+				18B77F1F12DC3A450024BE3B /* TsDecoderManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC07D0554694100DB518D /* libTsDecoder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "libTsDecoder" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libTsDecoder;
+			productName = libTsDecoder;
+			productReference = D2AAC07E0554694100DB518D /* liblibTsDecoder.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libTsDecoder" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* libTsDecoder */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* libTsDecoder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18B77F1C12DC3A450024BE3B /* TsDecoderInterface.cpp in Sources */,
+				18B77F1E12DC3A450024BE3B /* TsDecoderManager.cpp in Sources */,
+				188C98741536A01100005194 /* TsDecoder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libTsDecoder.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libTsDecoder_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_DEBUG=1",
+					"DEBUG=1",
+				);
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = libTsDecoder;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/libTsDecoder.dst;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = libTsDecoder_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NDEBUG=1",
+					"RELEASE=1",
+				);
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = libTsDecoder;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.0;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "libTsDecoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "libTsDecoder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

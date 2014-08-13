@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
+#import "Singletons.h"
 @interface ZJUserInfoModel : NSObject
-single_interface(ZJUserInfoModel)
+single_interface(ZJUserInfoModel);
 @property(nonatomic,copy) NSString *address;
 @property(nonatomic,copy) NSString *classid;
 @property(nonatomic,copy) NSString *classes;
