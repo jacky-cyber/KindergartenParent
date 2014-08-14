@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *pwdText;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UIButton *forgetPwd;
+@property (weak, nonatomic) IBOutlet UIView *superBgView;
 
 @end
 
@@ -31,11 +32,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    UIImage *bgImage = [UIImage imageNamed:@"bg_iphone4"];
+    UIImage *bgImage = [UIImage imageNamed:@"login_backgroundImage"];
     
-    if (iPhone5) {
-        bgImage = [UIImage imageNamed:@"bg_iphone5"];
-    }
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
     
@@ -50,8 +48,20 @@
     _forgetPwd.backgroundColor = [UIColor clearColor];
     
     
+    //冲洗设置文本框高度
     [self setupTextFiel:_userNameText];
     [self setupTextFiel:_pwdText];
+    
+    //设置背景的局地不的高度
+    CGRect bgFrame = _superBgView.frame;
+    CGFloat heihgt = kScreenHeight;
+    if (!ISIOS7) {
+        heihgt-=20;
+    }
+    bgFrame.origin.y = heihgt-H(_superBgView)-40;
+    _superBgView.frame = bgFrame;
+
+    
 }
 
 //设置textfield
@@ -96,7 +106,7 @@
             [LoginUser sharedLoginUser].password = pwd;
             [[LoginUser sharedLoginUser] saveInfo:user];
             
-            MyLog(@"%@",[LoginUser sharedLoginUser].description);
+           // MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
             
             [xmppDelegate connectOnFailed:^(kLoginErrorType type) {
@@ -128,7 +138,7 @@
             
 
         }else{
-            [SVProgressHUD showErrorWithStatus:@"登录失败，请检查您用户名密码是否正确" duration:1];
+            [SVProgressHUD showErrorWithStatus:@"用户名/密码错误" duration:1];
         }
         NSLog(@"%@",JSON);
     } failure:^(NSError *error) {

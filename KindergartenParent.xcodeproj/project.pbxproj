@@ -187,7 +187,6 @@
 		4B24800219590DC900C520A9 /* ZJCookBookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B247EE819590DC900C520A9 /* ZJCookBookTableViewCell.xib */; };
 		4B24800319590DC900C520A9 /* ZJHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247EEA19590DC900C520A9 /* ZJHomeCell.m */; };
 		4B24800419590DC900C520A9 /* ZJUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247EEC19590DC900C520A9 /* ZJUserInfoCell.m */; };
-		4B24800519590DC900C520A9 /* ZJLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247EF019590DC900C520A9 /* ZJLoginViewController.m */; };
 		4B24800719590DC900C520A9 /* LoginUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247EF419590DC900C520A9 /* LoginUser.m */; };
 		4B24800819590DC900C520A9 /* ZJLeftSideDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247EF719590DC900C520A9 /* ZJLeftSideDrawerViewController.m */; };
 		4B24800919590DC900C520A9 /* ZJRightSideDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247EF919590DC900C520A9 /* ZJRightSideDrawerViewController.m */; };
@@ -259,7 +258,7 @@
 		4B24804C19590DC900C520A9 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9119590DC900C520A9 /* HttpTool.m */; };
 		4B24804D19590DC900C520A9 /* TimeFormatTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9419590DC900C520A9 /* TimeFormatTools.m */; };
 		4B24804E19590DC900C520A9 /* ZJUIMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9619590DC900C520A9 /* ZJUIMethods.m */; };
-		4B24804F19590DC900C520A9 /* ZJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9819590DC900C520A9 /* ZJAppDelegate.m */; };
+		4B24804F19590DC900C520A9 /* ZJAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9819590DC900C520A9 /* ZJAppDelegate.mm */; };
 		4B24805019590DC900C520A9 /* ZJCommentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9C19590DC900C520A9 /* ZJCommentListViewController.m */; };
 		4B24805119590DC900C520A9 /* ZJCommentListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B247F9D19590DC900C520A9 /* ZJCommentListViewController.xib */; };
 		4B24805219590DC900C520A9 /* ZJPhotWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247F9F19590DC900C520A9 /* ZJPhotWallViewController.m */; };
@@ -291,7 +290,6 @@
 		4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B24808D1959796100C520A9 /* ZJHomeModel.m */; };
 		4B2C156F1963A6C300BB2335 /* timeline_image_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */; };
 		4B2C15701963A6C300BB2335 /* timeline_image_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */; };
-		4B38259D199B0FF500595557 /* ZJLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B38259C199B0FF500595557 /* ZJLoginViewController.xib */; };
 		4B3827B5199B5E3100595557 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3827B4199B5E3100595557 /* MobileCoreServices.framework */; };
 		4B3827B7199B5E4100595557 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3827B6199B5E4100595557 /* libSystem.dylib */; };
 		4B382991199B6A4C00595557 /* libMobileClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3828C5199B6A4C00595557 /* libMobileClient.a */; };
@@ -353,6 +351,8 @@
 		4B3829C9199B6A4C00595557 /* rgb2bmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B38298A199B6A4C00595557 /* rgb2bmp.cpp */; };
 		4B3829CA199B6A4C00595557 /* YUV2RGB2BMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B38298D199B6A4C00595557 /* YUV2RGB2BMP.cpp */; };
 		4B3829CB199B6A4C00595557 /* yuvrgb24.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B38298F199B6A4C00595557 /* yuvrgb24.c */; };
+		4B3829E6199C9BB700595557 /* ZJLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3829E4199C9BB700595557 /* ZJLoginViewController.m */; };
+		4B3829E7199C9BB700595557 /* ZJLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B3829E5199C9BB700595557 /* ZJLoginViewController.xib */; };
 		4B4115DC195D05840048446C /* readme in Resources */ = {isa = PBXBuildFile; fileRef = 4B4115DB195D05840048446C /* readme */; };
 		4B71113A1981F30D00C77B42 /* ZJHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7111381981F30D00C77B42 /* ZJHomeViewController.m */; };
 		4B7111411982361700C77B42 /* ZJDayAndWeekReportListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7111401982361700C77B42 /* ZJDayAndWeekReportListViewController.m */; };
@@ -897,8 +897,6 @@
 		4B247EEA19590DC900C520A9 /* ZJHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeCell.m; sourceTree = "<group>"; };
 		4B247EEB19590DC900C520A9 /* ZJUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJUserInfoCell.h; sourceTree = "<group>"; };
 		4B247EEC19590DC900C520A9 /* ZJUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJUserInfoCell.m; sourceTree = "<group>"; };
-		4B247EEF19590DC900C520A9 /* ZJLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJLoginViewController.h; sourceTree = "<group>"; };
-		4B247EF019590DC900C520A9 /* ZJLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJLoginViewController.m; sourceTree = "<group>"; };
 		4B247EF319590DC900C520A9 /* LoginUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginUser.h; sourceTree = "<group>"; };
 		4B247EF419590DC900C520A9 /* LoginUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginUser.m; sourceTree = "<group>"; };
 		4B247EF619590DC900C520A9 /* ZJLeftSideDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJLeftSideDrawerViewController.h; sourceTree = "<group>"; };
@@ -1044,7 +1042,7 @@
 		4B247F9519590DC900C520A9 /* ZJUIMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJUIMethods.h; sourceTree = "<group>"; };
 		4B247F9619590DC900C520A9 /* ZJUIMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJUIMethods.m; sourceTree = "<group>"; };
 		4B247F9719590DC900C520A9 /* ZJAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJAppDelegate.h; sourceTree = "<group>"; };
-		4B247F9819590DC900C520A9 /* ZJAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJAppDelegate.m; sourceTree = "<group>"; };
+		4B247F9819590DC900C520A9 /* ZJAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZJAppDelegate.mm; sourceTree = "<group>"; };
 		4B247F9B19590DC900C520A9 /* ZJCommentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJCommentListViewController.h; sourceTree = "<group>"; };
 		4B247F9C19590DC900C520A9 /* ZJCommentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJCommentListViewController.m; sourceTree = "<group>"; };
 		4B247F9D19590DC900C520A9 /* ZJCommentListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJCommentListViewController.xib; sourceTree = "<group>"; };
@@ -1084,7 +1082,6 @@
 		4B24808D1959796100C520A9 /* ZJHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeModel.m; sourceTree = "<group>"; };
 		4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_image_loading.png; sourceTree = "<group>"; };
 		4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeline_image_loading@2x.png"; sourceTree = "<group>"; };
-		4B38259C199B0FF500595557 /* ZJLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLoginViewController.xib; sourceTree = "<group>"; };
 		4B3827B4199B5E3100595557 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		4B3827B6199B5E4100595557 /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = usr/lib/libSystem.dylib; sourceTree = SDKROOT; };
 		4B3828C5199B6A4C00595557 /* libMobileClient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobileClient.a; sourceTree = "<group>"; };
@@ -1262,6 +1259,9 @@
 		4B38298E199B6A4C00595557 /* YUV2RGB2BMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUV2RGB2BMP.h; sourceTree = "<group>"; };
 		4B38298F199B6A4C00595557 /* yuvrgb24.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yuvrgb24.c; sourceTree = "<group>"; };
 		4B382990199B6A4C00595557 /* yuvrgb24.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yuvrgb24.h; sourceTree = "<group>"; };
+		4B3829E3199C9BB700595557 /* ZJLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJLoginViewController.h; sourceTree = "<group>"; };
+		4B3829E4199C9BB700595557 /* ZJLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJLoginViewController.m; sourceTree = "<group>"; };
+		4B3829E5199C9BB700595557 /* ZJLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJLoginViewController.xib; sourceTree = "<group>"; };
 		4B4115DB195D05840048446C /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
 		4B7111371981F30D00C77B42 /* ZJHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeViewController.h; sourceTree = "<group>"; };
 		4B7111381981F30D00C77B42 /* ZJHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeViewController.m; sourceTree = "<group>"; };
@@ -2550,20 +2550,10 @@
 		4B247EED19590DC900C520A9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				4B247EEE19590DC900C520A9 /* Controller */,
+				4B3829E2199C9BB700595557 /* Controller */,
 				4B247EF219590DC900C520A9 /* Model */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		4B247EEE19590DC900C520A9 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				4B247EEF19590DC900C520A9 /* ZJLoginViewController.h */,
-				4B247EF019590DC900C520A9 /* ZJLoginViewController.m */,
-				4B38259C199B0FF500595557 /* ZJLoginViewController.xib */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		4B247EF219590DC900C520A9 /* Model */ = {
@@ -2655,7 +2645,7 @@
 				4B247F2719590DC900C520A9 /* Lib */,
 				4B247F8F19590DC900C520A9 /* Tool */,
 				4B247F9719590DC900C520A9 /* ZJAppDelegate.h */,
-				4B247F9819590DC900C520A9 /* ZJAppDelegate.m */,
+				4B247F9819590DC900C520A9 /* ZJAppDelegate.mm */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -3420,6 +3410,16 @@
 			path = YUV2RGB2BMP;
 			sourceTree = "<group>";
 		};
+		4B3829E2199C9BB700595557 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4B3829E3199C9BB700595557 /* ZJLoginViewController.h */,
+				4B3829E4199C9BB700595557 /* ZJLoginViewController.m */,
+				4B3829E5199C9BB700595557 /* ZJLoginViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		4B7FF1E619790E0C00779D9C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -3830,6 +3830,7 @@
 				4B3829A1199B6A4C00595557 /* libavutil.pc in Resources */,
 				4BA318B91990E09F0039001E /* ImageChatFromCell.xib in Resources */,
 				4B24802819590DC900C520A9 /* IQKeyboardManager.bundle in Resources */,
+				4B3829E7199C9BB700595557 /* ZJLoginViewController.xib in Resources */,
 				4BE9CE501999E0F500A70BB5 /* Expression_2@2x.png in Resources */,
 				4BE9CE711999E0F500A70BB5 /* Expression_5@2x.png in Resources */,
 				4BE9CE841999E0F500A70BB5 /* Expression_77@2x.png in Resources */,
@@ -3896,7 +3897,6 @@
 				4B0B6E51195A92FC0053BC9E /* ZJActivityViewController.xib in Resources */,
 				4BA318B81990E09F0039001E /* ChatToCell.xib in Resources */,
 				4BE9CE451999E0F500A70BB5 /* Expression_1@2x.png in Resources */,
-				4B38259D199B0FF500595557 /* ZJLoginViewController.xib in Resources */,
 				4BE9CE7B1999E0F500A70BB5 /* Expression_69@2x.png in Resources */,
 				4BE9CE5B1999E0F500A70BB5 /* Expression_3@2x.png in Resources */,
 				4B3829A0199B6A4C00595557 /* libavformat.pc in Resources */,
@@ -4157,7 +4157,6 @@
 				4B06765F198889020031754B /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				4B06767B198889020031754B /* XMPPRoom.m in Sources */,
 				4B06769C198889020031754B /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
-				4B24800519590DC900C520A9 /* ZJLoginViewController.m in Sources */,
 				4B067663198889020031754B /* XMPPResourceMemoryStorageObject.m in Sources */,
 				4B24801219590DC900C520A9 /* ZJWeekReportsViewController.m in Sources */,
 				4B1B4303195FD71900EDAE1E /* MJPhoto.m in Sources */,
@@ -4235,7 +4234,7 @@
 				4B24803819590DC900C520A9 /* NSObject+MJCoding.m in Sources */,
 				4B24803F19590DC900C520A9 /* SDWebImageCompat.m in Sources */,
 				4B0676C1198889020031754B /* NSString+DDXML.m in Sources */,
-				4B24804F19590DC900C520A9 /* ZJAppDelegate.m in Sources */,
+				4B24804F19590DC900C520A9 /* ZJAppDelegate.mm in Sources */,
 				4B06765B198889020031754B /* XMPPGoogleSharedStatus.m in Sources */,
 				4B24801319590DC900C520A9 /* ZJYijianViewController.m in Sources */,
 				4B24804919590DC900C520A9 /* UIImageView+WebCache.m in Sources */,
@@ -4248,6 +4247,7 @@
 				4B067697198889020031754B /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
 				4B3829B9199B6A4C00595557 /* recon.c in Sources */,
 				4B067658198889020031754B /* XMPPStream.m in Sources */,
+				4B3829E6199C9BB700595557 /* ZJLoginViewController.m in Sources */,
 				4B0676B0198889020031754B /* XMPPMessage+XEP_0333.m in Sources */,
 				4B24802D19590DC900C520A9 /* IQToolbar.m in Sources */,
 				4B247FEE19590DC900C520A9 /* ZJFuyaodanViewController.m in Sources */,
@@ -4393,7 +4393,7 @@
 		4B247EB219590D9200C520A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -4420,6 +4420,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = KindergartenParent;
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
@@ -4428,7 +4429,7 @@
 		4B247EB319590D9200C520A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -4455,6 +4456,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = KindergartenParent;
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};

@@ -28,6 +28,8 @@
 #import "ZJActivityViewController.h"
 #import "ZJHonorViewController.h"
 #import "ZJMonthCommentViewController.h"
+#import "OCMobClientSDK.h"
+#import "ffmpeg_h264.h"
 #define kcurrentTIme @"currentTIme"
 // 赋值语句不能够写在.h中，只能写在.m中
 // 使用此种方式，可以保证常量字符串在内存中有且仅有一个地址
@@ -129,6 +131,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     //获取当前时间保存沙河
     [self setCurrentTime];
     
+    
+    [VGMobClientSDK MobClientSDKInit];
     
     
     // 1. 实例化XMPPStream

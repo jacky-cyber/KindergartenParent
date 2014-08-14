@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *recorderButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *voiceButton;
-
+@property (weak, nonatomic) IBOutlet UIButton* sendMsgButton;
 // 点击声音切换按钮
 - (IBAction)clickVoice:(UIButton *)button;
 // 点击表情切换按钮
@@ -151,6 +151,8 @@
     
     // 3. 设置文本
     _inputText.text = strM;
+    
+    _sendMsgButton.hidden = NO;
 }
 
 // 删除字符串
@@ -166,6 +168,9 @@
     
     // 2. 删除最末尾的字符，并设置文本
     _inputText.text =  [str substringToIndex:(str.length - 4)];
+    if (_inputText.text.isEmptyString) {
+        _sendMsgButton.hidden = YES;
+    }
 }
 
 

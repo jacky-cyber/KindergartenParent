@@ -7,7 +7,6 @@
 //
 
 #import "ZJUserInfoModel.h"
-#import "Singleton.h"
 @implementation ZJUserInfoModel
 single_implementation(ZJUserInfoModel)
 

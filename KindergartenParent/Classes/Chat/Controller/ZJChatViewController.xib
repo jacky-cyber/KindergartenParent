@@ -94,6 +94,7 @@
                     <connections>
                         <outlet property="inputText" destination="p2U-aC-4l7" id="O8V-q5-89q"/>
                         <outlet property="recorderButton" destination="iWK-f4-im8" id="g3r-uA-k8d"/>
+                        <outlet property="sendMsgButton" destination="a5x-zS-7dQ" id="PmO-NK-gjB"/>
                         <outlet property="voiceButton" destination="3w8-gm-2WE" id="fR9-kr-aZL"/>
                     </connections>
                 </view>
