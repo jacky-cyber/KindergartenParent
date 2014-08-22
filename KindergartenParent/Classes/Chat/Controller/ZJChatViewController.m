@@ -14,14 +14,20 @@
 #import "MBProgressHUD.h"
 #import "UIImageView+MJWebCache.h"
 #import "IQKeyboardManager.h"
-@interface ZJChatViewController ()<UITableViewDataSource, NSFetchedResultsControllerDelegate, UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface ZJChatViewController ()<UITableViewDataSource, NSFetchedResultsControllerDelegate, UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
 {
     // 查询结果控制器
     NSFetchedResultsController *_fetchResultsController;
+    
+    
+    // 查询结果控制器
+    NSFetchedResultsController *_fetchedResultsController;
     SoundTool *_soundTool;
     
     AVAudioPlayer *_player;
     NSString *_currentMusicName;//当前点击的语音的文件
+    
+    BOOL _isKeyBoardBecome;//判断是否键盘弹起
     
 }
 
@@ -60,22 +66,51 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardStateChanged:) name:UIKeyboardWillChangeFrameNotification object:nil];
-    
-    
-    //将字符串切割成数组
-    //    NSArray *bareArr = [_bareJID.user componentsSeparatedByString:@"@"];
-    //    cell.textLabel.text = bareArr[0];
-    //self.title = _bareJID.user;
-    
     // 绑定数据
     [self dataBinding];
     
     [self scrollToTableBottom];
     
+    //加入电话按钮
+    [self callBtn];
     
+    [self loadData];
     
 }
 
+
+#pragma mark 打电话
+-(void)callBtn
+{
+    //报名
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 0, 30, 30);
+    [btnR addTarget:self action:@selector(callAction) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *backgroundImg= [UIImage imageNamed:@"icon_call_"];
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
+    
+}
+#pragma mark 打电话
+-(void)callAction
+{
+    if (_tel.isEmptyString || _tel ==nil) {
+        kPE(@"老师没有设置电话号码", 0.5);
+        return;
+    }
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:_tel otherButtonTitles:@"拨打", nil];
+    [sheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+     MyLog(@"%d", buttonIndex);
+    if (buttonIndex==1) {
+    NSString *telUrl = [NSString stringWithFormat:@"telprompt:%@",_tel];
+    NSURL *url = [[NSURL alloc] initWithString:telUrl];
+    [[UIApplication sharedApplication] openURL:url];
+    }
+}
 #pragma mark - 文本框代理方法
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -90,15 +125,15 @@
     return YES;
 }
 
+
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    
+    _isKeyBoardBecome = YES;
 }
 
 #pragma mark 判断文本框是否有文字，然后显示影藏发送按钮
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    MyLog(@"-----%@---%d--%d",textField.text,range.length,range.location);
     // 1. 检查是否有内容
     if (range.location > 0 || range.length !=1) {
         _sendMsgButton.hidden = NO;
@@ -141,7 +176,36 @@
     
     _sendMsgButton.hidden = YES;
 }
-
+-(void)loadData
+{
+    //1.获取花名册上下文
+    NSManagedObjectContext *context = xmppDelegate.xmppRosterCoreDataStorage.mainThreadManagedObjectContext;
+    //2.查询请求
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"XMPPUserCoreDataStorageObject"];
+    
+    //3.排序
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
+    
+    request.sortDescriptors = @[sort];
+    
+    //4.实例化查询控制器
+    
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:@"sectionNum" cacheName:nil];
+    //5.设置代理
+    _fetchedResultsController.delegate = self;
+    //6.控制器查询
+    NSError *error = nil;
+    if (![_fetchedResultsController performFetch:&error]) {
+        NSLog(@"%@",error);
+    }
+    NSArray *frends = [_fetchedResultsController fetchedObjects];
+    
+    for (int i = 0; i < frends.count; i++) {
+        XMPPUserCoreDataStorageObject *user = frends[i];
+        MyLog(@"------%@--------",user.displayName);
+    }
+    
+}
 
 #pragma mark - 绑定数据
 - (void)dataBinding
@@ -156,7 +220,7 @@
         [request setSortDescriptors:@[sort]];
         // 4. 需要过滤查询条件，谓词，过滤当前对话双发的聊天记录，将“lisi”的聊天内容取出来
     
-//    NSLog(@"%@", [LoginUser sharedLoginUser].myJIDName);
+//    MyLog(@"%@", [LoginUser sharedLoginUser].myJIDName);
 //    request.predicate = [NSPredicate predicateWithFormat:@"bareJidStr CONTAINS[cd] %@ AND streamBareJidStr CONTAINS[cd] %@", _bareJidStr, [LoginUser sharedLoginUser].myJIDName];
 //    [request setSortDescriptors:@[sort]];
 
@@ -170,7 +234,7 @@
         //6.控制器查询
         NSError *error = nil;
         if (![_fetchResultsController performFetch:&error]) {
-            NSLog(@"%@",error);
+            MyLog(@"%@",error);
         }
     
 }
@@ -227,7 +291,7 @@
     
 
         XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchResultsController objectAtIndexPath:indexPath];
-        //NSLog(@"---%@",xmppDelegate.xmppStream.myJID.domain);
+        //MyLog(@"---%@",xmppDelegate.xmppStream.myJID.domain);
         flag = message.isOutgoing;
         if (flag) {
             CellIdentifier = FromID;
@@ -305,7 +369,7 @@
     CGSize size = [str sizeWithFont:[UIFont systemFontOfSize:14.0] constrainedToSize:CGSizeMake(180, 10000.0)];
     
     //如果是图片的话，就显示图片高度，固定120
-    //NSLog(@"----->%@",message.body);
+    //MyLog(@"----->%@",message.body);
     if ([message.body hasSuffix:@".png"]) {
         return 130;
     }
@@ -373,10 +437,15 @@
     NSURL *fileUrl = [NSURL fileURLWithPath:mp3Path isDirectory:YES];
     
     [HttpTool updateFileWithPath:@"xmppuploadfile" withMp3URL:fileUrl success:^(id JSON) {
-        NSLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 1) {
+            kPE(@"发送语音失败", 0.5);
+            return ;
+        }
+        MyLog(@"%@",JSON);
         if (JSON[@"data"]) {
             [self chat:JSON[@"data"][@"url"]];
         }
+        kPdismiss;
     } failure:^(NSError *error) {
         kPE(kHttpErrorMsg, 0.5);
     }];
@@ -391,7 +460,7 @@
     XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchResultsController objectAtIndexPath:indexPath];
     NSString *str = message.body;
     MyLog(@"%@",str);
-    _currentMusicName  = [str substringFromIndex:str.length-18];
+    _currentMusicName  = [str substringFromIndex:str.length-20];
     NSString *downloadPath = [[NSString stringWithFormat:@"/%@",_currentMusicName] documentsPath];
     
     //判断文件是否存在，不存在就系在，存在就算了
@@ -405,7 +474,6 @@
     
     
 }
-
 - (void)download:(NSString*)urlStr
 {
     // 1. NSURL
@@ -442,17 +510,17 @@
     [op setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         
         float percent = (float)totalBytesRead / totalBytesExpectedToRead;
-        NSLog(@"%f", percent);
+        MyLog(@"%f", percent);
     }];
     
     // 设置下载完成块代码
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        //NSLog(@"下载完成");
+        //MyLog(@"下载完成");
         //下载完成后开始播放
         [self soundIng];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"下载失败");
+        MyLog(@"下载失败");
     }];
     [op start];
     
@@ -475,7 +543,7 @@
     NSError *error = nil;
     _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     if (error != nil) {
-        NSLog(@"%@", error.localizedDescription);
+        MyLog(@"%@", error.localizedDescription);
         return;
     }
     // -1 表示无限循环播放
@@ -490,10 +558,27 @@
     
     
 }
+CGFloat lastContentOffset;
+-(void)scrollViewWillBeginDragging:(UIScrollView*)scrollView{
+    lastContentOffset = scrollView.contentOffset.y;
+    _isKeyBoardBecome = NO;
+}
+-( void )scrollViewDidScroll:( UIScrollView *)scrollView {
+    if (scrollView. contentOffset.y <lastContentOffset )
+    {
+        if (_inputViewConstraint.constant >0 && !_isKeyBoardBecome) {
+            _inputViewConstraint.constant = 0.0;
+            [_inputTextField resignFirstResponder];
+        }
+    }
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
 }
 
 

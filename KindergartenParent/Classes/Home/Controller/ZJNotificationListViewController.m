@@ -10,7 +10,6 @@
 #import "ZJNotificationListCell.h"
 #import "ZJDayReportViewController.h"
 #import "ZJWeekReportsViewController.h"
-#import "ZJActivityViewController.h"
 #import "ZJHomeDetialViewController.h"
 #import "ZJSignInViewController.h"
 #import "ZJFuyaodanDetailViewController.h"
@@ -210,7 +209,8 @@
     }else if ( type== 9) {
         
     }else if ( type== 10) {
-        [self pushController:[ZJActivityViewController class] withInfo:model withTitle:@"通知详情"];
+         [self pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:model.title withOther:@"通知详情"];
+//        [self pushController:[ZJActivityViewController class] withInfo:model withTitle:@"通知详情"];
     }else if ( type== 11) {
         if ([model.content isEqualToString:@"您的孩子还未入园，请填写未到原因！"]) {
             [self pushController:[ZJSignInViewController class] withInfo:model.id withTitle:@"未到原因"];

@@ -8,11 +8,14 @@
 
 #import "ZJHomeDetialViewController.h"
 #import "ZJHomeModel.h"
-@interface ZJHomeDetialViewController ()
+@interface ZJHomeDetialViewController (){
+    ZJHomeModel *_model;
+}
 @property (weak, nonatomic) IBOutlet UILabel *createTime;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *typeImage;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -22,9 +25,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    ZJHomeModel *model = self.userInfo;
+    _model = self.userInfo;
     TimeFormatTools *timeTool = [[TimeFormatTools alloc] init];
-    NSString *timeStr = [timeTool timeToNow:model.createtime];
+    NSString *timeStr = [timeTool timeToNow:_model.createtime];
     
     if (timeStr.length >10) {
         timeStr = [timeStr substringToIndex:10];
@@ -34,21 +37,107 @@
 //    MyLog(@"type:%@   content:%@---%@",model.type,model.content,[timeTool timeToNow:model.createtime]);
     
     //判断通知的类型
-    if ([model.type intValue] == 2) {//全员通知
+    if ([_model.type intValue] == 2) {//全员通知
         _typeImage.image = [UIImage imageNamed:@"youeryuan_notif"];
-    }else if ([model.type intValue] == 6) {//服药提醒
+    }else if ([_model.type intValue] == 6) {//服药提醒
         _typeImage.image = [UIImage imageNamed:@"weiyaoNofifi"];
-    }else if ([model.type intValue] == 8) {//本班通知
+    }else if ([_model.type intValue] == 8) {//本班通知
         _typeImage.image = [UIImage imageNamed:@"classDetialNotifi"];
+    }else if ([_model.type intValue] == 8) {//活动通知
+        _typeImage.image = [UIImage imageNamed:@"huodongtongzhi"];
     }
     
     
-    _heightConstraint.constant = [model.content getHeightByWidth:W(_contentLabel) font:_contentLabel.font];
-
-    _contentLabel.text = model.content;
     
+    CGFloat height = [_model.content getHeightByWidth:280 font:kFont(14)];
+    CGRect frame = _contentLabel.frame;
+    frame.size.height = height;
+    _contentLabel.frame = frame;
+    _contentLabel.text = _model.content;
+    //重新设置高度
+    _scrollView.contentSize = CGSizeMake(W(self.view), YH(_contentLabel)+70+kNavH*2);
+    
+    if ([_model.type intValue] == 10) {
+        //监测报名状态
+        [self baomingStatus];
+    }
     
 }
+
+-(void)baomingBtn
+{
+    //报名
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 0, 50, 25);
+    [btnR addTarget:self action:@selector(baomingAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    [btnR setTitle:@"报名" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
+    
+}
+#pragma mark 报名action
+-(void)baomingAction{
+    //182.18.23.244:8080/kindergarten/service/app!apply.action?username=xuesheng&id=1
+    
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"id":_model.id};
+    [HttpTool getWithPath:@"apply" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue] == 0) {
+            NSDictionary *dict = JSON[@"data"];
+            if ([dict[@"status"] isEqual:@1]) {
+                [self setBaoming];
+                kPS(@"报名成功", 1);
+            }else{
+                kPE(@"报名失败", 1);
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+#pragma mark 报名状态监测
+-(void)baomingStatus
+{
+    /*
+     182.18.23.244:8080/kindergarten/service/app!applystatus.action?username=xuesheng&id=1
+     */
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"id":_model.id};
+    [HttpTool getWithPath:@"applystatus" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"data"][@"status"] isEqual:@2]) {
+            [self baomingBtn];
+        }else{
+            [self setBaoming];
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+-(void)setBaoming
+{
+    //报名
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 0, 60, 25);
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    btnR.enabled = NO;
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    [btnR setTitle:@"已报名" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

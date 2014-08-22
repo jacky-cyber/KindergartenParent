@@ -59,6 +59,10 @@ int page = 1;
     // 集成刷新控件
     [self setupRefresh];
     
+    
+    _commentTextField.layer.cornerRadius = 5;
+    _commentTextField.layer.masksToBounds = YES;
+    
 }
 
 /**

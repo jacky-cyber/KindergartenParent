@@ -18,19 +18,19 @@
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "57icon.png",
+      "filename" : "jiazhangduan57X57.png",
       "scale" : "1x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "57@2x.png",
+      "filename" : "icon_school_114x114@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "60@2x.png",
+      "filename" : "jiazhang120X120@2x.png",
       "scale" : "2x"
     }
   ],

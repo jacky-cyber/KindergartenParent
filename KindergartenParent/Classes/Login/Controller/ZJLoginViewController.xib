@@ -67,7 +67,7 @@
                             </connections>
                         </textField>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoIcon" id="eWr-bU-Jgw">
-                            <rect key="frame" x="90" y="0.0" width="100" height="120"/>
+                            <rect key="frame" x="80" y="0.0" width="120" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                     </subviews>
@@ -81,6 +81,6 @@
     </objects>
     <resources>
         <image name="login_bg" width="20" height="50"/>
-        <image name="logoIcon" width="100" height="120"/>
+        <image name="logoIcon" width="120" height="120"/>
     </resources>
 </document>

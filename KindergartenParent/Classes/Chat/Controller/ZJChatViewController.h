@@ -16,4 +16,8 @@
 @property (strong, nonatomic) NSString *bareImageStr;
 // 我的头像
 @property (strong, nonatomic) NSString *myImageStr;
+
+// 电话
+@property (strong, nonatomic) NSString *tel;
+
 @end

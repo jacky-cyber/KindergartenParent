@@ -62,7 +62,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ReceiverTextNodeBkg" width="66" height="54"/>
+        <image name="ReceiverTextNodeBkg" width="59" height="43"/>
         <image name="profile" width="70" height="70"/>
     </resources>
 </document>

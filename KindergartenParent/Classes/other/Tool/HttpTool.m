@@ -171,7 +171,7 @@
             NSError *error = nil;
             
             //截取出filename
-            NSString *fileName  = [withurl.path substringFromIndex:withurl.path.length-18];
+            NSString *fileName  = [withurl.path substringFromIndex:withurl.path.length-20];
             [formData appendPartWithFileURL:withurl name:@"audio" fileName:fileName mimeType:@"audio/mp3" error:&error];
             
         }

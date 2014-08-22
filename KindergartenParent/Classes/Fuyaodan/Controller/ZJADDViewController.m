@@ -139,21 +139,32 @@
     _YaoNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 141, 230, 40)];
     _YaoNameLabel.text = YaoNameLabelText;
     _YaoNameLabel.font = kFont13;
+    _YaoNameLabel.userInteractionEnabled = YES;
+    [self tap:_YaoNameLabel];
     [self.view addSubview:_YaoNameLabel];
     
     _YaoNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 181, 230, 40)];
     _YaoNumLabel.text = YaoNumLabelText;
+    _YaoNumLabel.tag = 1;
+    _YaoNumLabel.userInteractionEnabled = YES;
     _YaoNumLabel.font = kFont13;
+    [self tap:_YaoNumLabel];
     [self.view addSubview:_YaoNumLabel];
     
     _YaoTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 221, 230, 40)];
     _YaoTimeLabel.text = YaoTimeLabelText;
+    _YaoTimeLabel.tag = 2;
+    _YaoTimeLabel.userInteractionEnabled = YES;
     _YaoTimeLabel.font = kFont13;
+    [self tap:_YaoTimeLabel];
     [self.view addSubview:_YaoTimeLabel];
     
     _YaoCareLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 261, 230, 40)];
     _YaoCareLabel.text = YaoCareLabelText;
+    _YaoCareLabel.tag = 3;
+    _YaoCareLabel.userInteractionEnabled = YES;
     _YaoCareLabel.font = kFont13;
+    [self tap:_YaoCareLabel];
     [self.view addSubview:_YaoCareLabel];
     
     for (int i = 0; i<4; i++)
@@ -180,10 +191,10 @@
     
     //*******添加
     
-    _imageBg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 0)];
+    _imageBg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, H(self.view))];
     //_imageBg.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.5];
     _imageBg.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-    
+    _imageBg.hidden = YES;
     _imageBg.userInteractionEnabled = YES;
     [self.view addSubview:_imageBg];
     
@@ -237,8 +248,8 @@
     
     
     
-    NSArray *Array = [[NSArray alloc]initWithObjects:@"zao_07",@"zhong_09",@"wan_11", nil];
-    NSArray *SArray = [[NSArray alloc]initWithObjects:@"zao1_07",@"zhong1_09",@"wan1_11", nil];
+    NSArray *Array = @[@"zao",@"zhong",@"wan"];
+    NSArray *SArray = @[@"zao_h",@"zhong_h",@"wan_h"];
     for (int i = 0; i<3; i++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -258,44 +269,62 @@
     
 }
 
+-(void)tap:(UIView*)lb
+{
+    [lb addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLabel:)]];
+}
+
+- (void)tapLabel:(UITapGestureRecognizer *)tap
+{
+    UILabel *label = (UILabel*)tap.view;
+    MyLog(@"%d---%@",label.tag,label.text);
+    [self viewWithTagHiden:label.tag];
+
+}
+
+
 -(void)btnClick:(UIButton *)btn
 {
-    
-    [UIView animateWithDuration:0.5 animations:^{
-         _imageBg.frame = CGRectMake(0, 0, 320, H(self.view));
-         _label.hidden = NO;
+    [self viewWithTagHiden:btn.tag];
+}
+-(void)viewWithTagHiden:(NSInteger)tag
+{
+    [UIView animateWithDuration:1.0 animations:^{
+        _imageBg.hidden = NO;
+        _label.hidden = NO;
     }];
-    if (btn.tag == 0)
+    if (tag == 0)
     {
-
-       
+        
+        
         _titleName.text = @"药物名称";
         _contentView.text = _yaowuname?_yaowuname:@"填写药物名称，多个用逗号隔开";
         k =0;
         
     }
-    else if (btn.tag == 1)
+    else if (tag == 1)
     {
-
+        
         _titleName.text = @"服用剂量";
         _contentView.text = _jiliang?_jiliang:@"填写各个药物的服用剂量，多个用逗号隔开";
         k = 1;
     }
-    else if (btn.tag == 2)
+    else if (tag == 2)
     {
-
+        
         _bghongxian.hidden = YES;
         _threeBtnLabel.hidden = NO;
         _titleName.text = @"服药时间";
         k = 2;
         
     }
-    else if (btn.tag == 3)
+    else if (tag == 3)
     {
         _titleName.text = @"注意事项";
         _contentView.text = _remark?_remark:@"请在此处填写注意事项";
         k = 3;
     }
+
 }
 //早中晚 按钮  判断
 -(void)timeBtnClick:(UIButton *)btn
@@ -345,12 +374,12 @@
 {
     
     
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:1.0 animations:^{
         _label.hidden = YES;
         _label.hidden = YES;
         _bghongxian.hidden = NO;
         _threeBtnLabel.hidden = YES;
-        _imageBg.frame = CGRectMake(0, 0, 320, 0);
+        _imageBg.hidden = YES;
     }];
     
 }

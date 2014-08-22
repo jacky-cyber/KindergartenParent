@@ -63,13 +63,13 @@
                 <outlet property="messageButton" destination="TSc-gb-GR5" id="h19-ue-u7p"/>
                 <outlet property="messageHeightConstraint" destination="hhx-ei-aKD" id="2vJ-Br-JIL"/>
                 <outlet property="messageWeightConstraint" destination="Wev-dK-rho" id="tQ8-nP-Jgn"/>
-                <outlet property="soundTimeLabel" destination="iu3-mw-Msd" id="vHW-M2-eLJ"/>
+                <outlet property="soundTimeLabel" destination="iu3-mw-Msd" id="jqq-gO-jwW"/>
                 <outlet property="timestamp" destination="pTh-Kq-CmO" id="tzt-80-4gi"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ReceiverTextNodeBkg" width="66" height="54"/>
+        <image name="ReceiverTextNodeBkg" width="59" height="43"/>
         <image name="profile" width="70" height="70"/>
     </resources>
 </document>

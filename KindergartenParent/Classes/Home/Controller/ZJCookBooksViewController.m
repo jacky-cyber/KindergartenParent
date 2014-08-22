@@ -51,6 +51,16 @@
     [self.view addSubview:_tableView];
     
     [self initData];
+    
+    
+    
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeSystem];
+    btnR.frame = CGRectMake(0, 0, 35,30);
+    [btnR setBackgroundImage:[UIImage imageNamed:@"cookbook_image"] forState:UIControlStateNormal];
+    [btnR addTarget:self action:@selector(imagesAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    ItemR.tag = 10;
+    self.navigationItem.rightBarButtonItem = ItemR;
 }
 #pragma mark 初始化数据
 -(void)initData
@@ -73,15 +83,7 @@
             if (JSON[@"data"][@"images"]) {
                 _images = JSON[@"data"][@"images"];
             
-                UIButton *btnR = [UIButton buttonWithType:UIButtonTypeSystem];
-                btnR.frame = CGRectMake(0, 2, 50, 25);
-                [btnR setBackgroundImage:[UIImage imageNamed:@"nav_rightbackbround_image"] forState:UIControlStateNormal];
-                [btnR addTarget:self action:@selector(imagesAction:) forControlEvents:UIControlEventTouchUpInside];
-                [btnR setTitle:@"图片" forState:UIControlStateNormal];
-                [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
-                UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
-                ItemR.tag = 10;
-                self.navigationItem.rightBarButtonItem = ItemR;
+                
                 
             }
             
@@ -99,13 +101,13 @@
 #pragma mark 跳转到图片页面
 -(void)imagesAction:(UIButton *)sender{
  
-        int count = _images.count;
+    int count = _images.count;
     
     if (!count) {
         kPE(@"本周食谱没有图片", 1);
+        return;
     }
-    
-    
+   
         // 1.封装图片数据
         NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
         for (int i = 0; i<count; i++) {
@@ -154,7 +156,7 @@
 {
     CookBookModel *model = _dataArr[indexPath.row];
     
-    CGFloat height = 60;
+    CGFloat height = 60+17;
     
     height += [self getHeight:model.breakfast];
     height += [self getHeight:model.lunch];

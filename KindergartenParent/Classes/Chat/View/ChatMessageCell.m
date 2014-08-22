@@ -91,9 +91,13 @@
             [imageView setImage:[UIImage imageNamed:@"chat_bottom_voice_press_left"]];
             imageView.frame = CGRectMake(10,6, 25, 25);
         }
+        
+        //截取出filename
+        NSString *fileName  = [[message substringFromIndex:message.length-20] substringFromIndex:2];
+        _soundTimeLabel.text = @"xxx";
         [_messageButton addSubview:imageView];
         
-        [_messageButton addTarget:self action:@selector(bofangSound:) forControlEvents:UIControlEventTouchUpInside];
+//        [_messageButton addTarget:self action:@selector(bofangSound:) forControlEvents:UIControlEventTouchUpInside];
         
         //判断图片是否有有img 如果有，就显示图片
     }else
@@ -147,7 +151,7 @@
             //[_messageButton setTitle:message forState:UIControlStateNormal];
         }
     
-    //NSLog(@"%@",fileName);
+    //MyLog(@"%@",fileName);
     //设置消息时间
     _timestamp.text = [TimeFormatTools timeFormatToDate:messageCoreData.timestamp];
     // 2.4 重新调整布局
@@ -162,7 +166,7 @@
         //_emojiLabel.backgroundColor = [UIColor brownColor];
         _emojiLabel.numberOfLines = 0;
         _emojiLabel.font = [UIFont systemFontOfSize:14.0f];
-        NSLog(@"%f",_emojiLabel.font.lineHeight);
+        MyLog(@"%f",_emojiLabel.font.lineHeight);
         //_emojiLabel.emojiDelegate = self;
         //        _emojiLabel.textAlignment = NSTextAlignmentCenter;
         _emojiLabel.backgroundColor = [UIColor clearColor];
@@ -249,17 +253,17 @@
     [op setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         
         float percent = (float)totalBytesRead / totalBytesExpectedToRead;
-        NSLog(@"%f", percent);
+        MyLog(@"%f", percent);
     }];
     
     // 设置下载完成块代码
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        //NSLog(@"下载完成");
+        //MyLog(@"下载完成");
         //下载完成后开始播放
         // [self soundIng];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"下载失败");
+        MyLog(@"下载失败");
     }];
     [op start];
     
@@ -289,7 +293,7 @@
     NSError *error = nil;
     _player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     if (error != nil) {
-        NSLog(@"%@", error.localizedDescription);
+        MyLog(@"%@", error.localizedDescription);
         return;
     }
     // -1 表示无限循环播放

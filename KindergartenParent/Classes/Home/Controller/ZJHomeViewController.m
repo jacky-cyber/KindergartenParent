@@ -30,6 +30,8 @@
     UIImageView *_profileImageView;//头像
     
     UILabel *_nickName;//昵称
+    
+    InsetsLabel *_parentName;//
 }
 
 @end
@@ -37,6 +39,15 @@
 @implementation ZJHomeViewController
 
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (_parentName !=nil) {
+        [_parentName setAttributedText:[self setParentNameAttrText]];
+    }
+    //设置头像
+    [_profileImageView setImageWithURL:[NSURL URLWithString:[LoginUser sharedLoginUser].profilImg] placeholderImage:[UIImage imageNamed:@"profile"]];
+}
 
 - (void)viewDidLoad
 {
@@ -89,31 +100,43 @@
     }
 }
 
--(void)setProfileImg
+-(NSMutableAttributedString*)setParentNameAttrText
 {
+    NSString *str  = [NSString stringWithFormat:@"%@  %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
+    CGSize size = [str sizeWithFont:kFont(16)];
+    CGRect frame = _parentName.frame;
+    frame.size.width = size.width+10;
+    _parentName.frame = frame;
     
-
-    InsetsLabel * parentName=[[InsetsLabel alloc] initWithFrame:CGRectMake(60,H(_headerImageView)-25,180,25)];
-    parentName.insets = UIEdgeInsetsMake(0, 10, 0, 0);
-    
-    parentName.backgroundColor =  [UIColor colorWithWhite:0.000 alpha:0.200];
-    parentName.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
-    parentName.layer.cornerRadius = 5;
-    parentName.layer.masksToBounds = YES;
-    
-   NSString *str  = [NSString stringWithFormat:@"%@    %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
     //班级的长度
     int classesLeng  = [LoginUser sharedLoginUser].classes.length;
     
     // 如果想要改变部份文本内容的风格，我们就需要用到NSAttributedString NSMutableAttributedString
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:str];
     //设置属性
-    [attributeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0f] range:NSMakeRange(str.length-classesLeng, classesLeng)];
-    parentName.font = kFont(16);
-    [parentName setAttributedText:attributeString];
+    [attributeString addAttribute:NSFontAttributeName value:kFont(12) range:NSMakeRange(str.length-classesLeng, classesLeng)];
+    
+    return attributeString;
+}
+
+-(void)setProfileImg
+{
+    
+    
+    NSString *str  = [NSString stringWithFormat:@"%@  %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
+    CGSize size = [str sizeWithFont:kFont(16)];
+    _parentName=[[InsetsLabel alloc] initWithFrame:CGRectMake(60,H(_headerImageView)-25,size.width+10,25)];
+    _parentName.insets = UIEdgeInsetsMake(0, 15, 0, 0);
+    _parentName.font = kFont(16);
+    _parentName.backgroundColor =  [UIColor colorWithWhite:0.000 alpha:0.200];
+    _parentName.textColor = [UIColor colorWithWhite:0.996 alpha:1.000];
+    _parentName.layer.cornerRadius = 5;
+    _parentName.layer.masksToBounds = YES;
+
+    [_parentName setAttributedText:[self setParentNameAttrText]];
     
     //parentName.text = str;
-    [self.view addSubview:parentName];
+    [self.view addSubview:_parentName];
 
     
     _profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, H(_headerImageView)-40, 60, 60)];
@@ -244,6 +267,7 @@
     
 }
 
+
 #pragma mark 查看个人信息
 -(void)updateProfileAction
 {
@@ -251,6 +275,9 @@
     [self pushController:[ZJUserInfoViewController class] withInfo:nil withTitle:@"详情"];
     
 }
+
+
+
 //#pragma mark 荣誉版
 -(void)honorAction
 {

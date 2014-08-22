@@ -11,7 +11,7 @@
 #import "ZJChatViewController.h"
 #import "DDMenuController.h"
 #import "ZJAppDelegate.h"
-@interface ZJRightSideDrawerViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ZJRightSideDrawerViewController ()<UITableViewDataSource,UITableViewDelegate,DDMenuControllerDelegate>
 {
     UITableView *_tableView;
 
@@ -50,6 +50,7 @@
     if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [_tableView setSeparatorInset:UIEdgeInsetsMake(0, 50, 0, 0)];
     }
+    
     
 //    UILabel *kindergarten = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight*0.9, 200, 21)];
 //    
@@ -124,6 +125,7 @@
      if (!cell) {
          cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
      }
+     cell.selectionStyle = UITableViewCellSelectionStyleNone;
      cell.backgroundColor = [UIColor clearColor];
      if (indexPath.row > 0) {
          NSDictionary *dict = _contactsArr[indexPath.row];
@@ -184,7 +186,7 @@
     chat.bareJID = jid;
     chat.title = dict[@"name"];
 
-
+    chat.tel = @"";
 
    
     
@@ -194,62 +196,22 @@
     
     
     DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    menuController.delegate = self;
+    [menuController pushViewController:chat animated:YES];
     
-    [menuController setRootController:courseNav animated:YES];
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [menuController setRootController:courseNav animated:YES];
+//    
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     
     
     
 }
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+-(void)menuController:(DDMenuController *)controller willShowViewController:(UIViewController *)controllers
+{
+    
+    
+    
+}
 
 @end

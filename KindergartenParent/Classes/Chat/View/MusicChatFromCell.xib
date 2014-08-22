@@ -69,7 +69,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="SenderTextNodeBkg" width="66" height="54"/>
+        <image name="SenderTextNodeBkg" width="59" height="43"/>
         <image name="profile" width="70" height="70"/>
     </resources>
 </document>

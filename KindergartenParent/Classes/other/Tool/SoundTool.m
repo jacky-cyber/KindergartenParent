@@ -89,7 +89,7 @@ single_implementation(SoundTool)
     
     // 2. 设置录音机
     //NSString* path = [[NSBundle mainBundle] pathForResource:@"gaoxiao" ofType:@"caf"];
-    _fileNm = [@"" appendDateTime];
+    
     _fileName = [NSString stringWithFormat:@"%@.caf",_fileNm];
     //_fileName = path;
     _recordURL = [_fileName  appendToDocumentURL];
@@ -111,11 +111,14 @@ single_implementation(SoundTool)
 
 - (void)stopRecord
 {
+     kPBlack(@"正在发送语音");
     // 如果正在录音,才需要停止
     if (_recorder.isRecording) {
         _currentTime = _recorder.currentTime;
+        
         [self audio_PCMtoMP3];
         [_recorder stop];
+       
     }
 }
 
@@ -176,6 +179,19 @@ single_implementation(SoundTool)
 {
     NSString *cafFilePath = [self recordPath];
     
+    CGFloat voiceDuraction = [self getVoiceDurationWithPath:cafFilePath];
+   
+    
+    //获取语音的时常
+    NSString *voiceTimeLong  = [NSString stringWithFormat:@"%.0f",voiceDuraction];
+    if (voiceTimeLong.length<2) {
+      voiceTimeLong = [@"0" appendStr:voiceTimeLong];
+    }
+    //把时长拼接进如文件
+  
+    _fileNm = [voiceTimeLong appendStr:[@"" appendDateTime]];
+
+    
     if (_currentTime <1.0) {
         NSFileManager* fileManager=[NSFileManager defaultManager];
         [fileManager removeItemAtPath:cafFilePath error:nil];
@@ -184,7 +200,7 @@ single_implementation(SoundTool)
     
     
     NSString *mp3FilePath = [[NSString stringWithFormat:@"/%@.mp3",_fileNm] documentsPath];
-    
+   
     @try {
         int read, write;
         
@@ -216,6 +232,8 @@ single_implementation(SoundTool)
         lame_close(lame);
         fclose(mp3);
         fclose(pcm);
+        
+        
     }
     @catch (NSException *exception) {
         NSLog(@"%@",[exception description]);
@@ -227,6 +245,11 @@ single_implementation(SoundTool)
         
     }
 }
-
+- (CGFloat)getVoiceDurationWithPath:(NSString *)path
+{
+    AVAudioPlayer *play = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:nil];
+    
+    return play.duration;
+}
 
 @end

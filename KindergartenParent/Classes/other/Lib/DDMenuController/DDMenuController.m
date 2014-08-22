@@ -683,19 +683,20 @@
     if (_menuFlags.showingRightView) {
         
         // if we're showing the right it works a bit different, we'll make a screen shot of the menu overlay, then push, and move everything over
-        __block CALayer *layer = [CALayer layer];
-        CGRect layerFrame = self.view.bounds;
-        layer.frame = layerFrame;
+//        __block CALayer *layer = [CALayer layer];
+//        CGRect layerFrame = self.view.bounds;
+//        layer.frame = layerFrame;
         
-        UIGraphicsBeginImageContextWithOptions(layerFrame.size, YES, 0);
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        [self.view.layer renderInContext:ctx];
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        layer.contents = (id)image.CGImage;
-        
-        [self.view.layer addSublayer:layer];
+//        UIGraphicsBeginImageContextWithOptions(layerFrame.size, YES, 0);
+//        CGContextRef ctx = UIGraphicsGetCurrentContext();
+//        [self.view.layer renderInContext:ctx];
+//        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        layer.contents = (id)image.CGImage;
+//        
+//        [self.view.layer addSublayer:layer];
         [navController pushViewController:viewController animated:NO];
+        
         CGRect frame = _root.view.frame;
         frame.origin.x = frame.size.width;
         _root.view.frame = frame;
@@ -719,7 +720,7 @@
             
             [self showRootController:NO];
             self.view.transform = CGAffineTransformConcat(currentTransform, CGAffineTransformMakeTranslation(0.0f, 0.0f));
-            [layer removeFromSuperlayer];
+           // [layer removeFromSuperlayer];
             
         }];
         

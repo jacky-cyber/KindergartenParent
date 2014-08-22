@@ -25,11 +25,11 @@
 #import "ZJHomeDetialViewController.h"
 #import "ZJHomeModel.h"
 #import "ZJCookBooksViewController.h"
-#import "ZJActivityViewController.h"
 #import "ZJHonorViewController.h"
 #import "ZJMonthCommentViewController.h"
 #import "OCMobClientSDK.h"
 #import "ffmpeg_h264.h"
+#import "NewfeatureController.h"
 #define kcurrentTIme @"currentTIme"
 // 赋值语句不能够写在.h中，只能写在.m中
 // 使用此种方式，可以保证常量字符串在内存中有且仅有一个地址
@@ -45,6 +45,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     XMPPvCardCoreDataStorage    *_xmppvCardCoreDataStorage; // 电子名片数据存储扩展
     
     ZJHomeViewController *_viewController;
+    BaseNavigationController * _navigationController;
 }
 
 /**
@@ -82,36 +83,61 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [IQKeyboardManager sharedManager];
+    
+    
+    
+    
+    NSString *key = (NSString *)kCFBundleVersionKey;
+    
+    // 1.从Info.plist中取出版本号
+    NSString *version = [NSBundle mainBundle].infoDictionary[key];
+    
+    // 2.从沙盒中取出上次存储的版本号
+    NSString *saveVersion = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    
+    
     ZJLeftSideDrawerViewController * leftSideDrawerViewController = [[ZJLeftSideDrawerViewController alloc] init];
-   
+    
     ZJRightSideDrawerViewController * rightSideDrawerViewController = [[ZJRightSideDrawerViewController alloc] init];
     
     ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
     _viewController = centerViewController;
     BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];
-
+    _navigationController = navigationController;
     
     _menuController = [[DDMenuController alloc] initWithRootViewController:navigationController];
     _menuController.leftViewController = leftSideDrawerViewController;
     _menuController.rightViewController = rightSideDrawerViewController;
     
-
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    if ([LoginUser sharedLoginUser].isLogin) {
-        self.window.rootViewController = _menuController;
-    }else{
-        ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
-        self.window.rootViewController =login ;
+    if ([version isEqualToString:saveVersion]) { // 不是第一次使用这个版本
+        // 显示状态栏
+        application.statusBarHidden = NO;
+        
+        if ([LoginUser sharedLoginUser].isLogin) {
+            self.window.rootViewController = _menuController;
+        }else{
+            ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
+            self.window.rootViewController =login ;
+        }
+        
+    } else { // 版本号不一样：第一次使用新版本
+        // 将新版本号写入沙盒
+        [[NSUserDefaults standardUserDefaults] setObject:version forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        // 显示版本新特性界面
+        self.window.rootViewController = [[NewfeatureController alloc] init];
     }
+
+
     
-    
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     application.statusBarStyle = UIStatusBarStyleLightContent;
   
-    [application setStatusBarHidden:NO];
+    //[application setStatusBarHidden:NO];
     [application setStatusBarStyle:UIStatusBarStyleLightContent];
     
     
@@ -132,7 +158,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     [self setCurrentTime];
     
     
-    [VGMobClientSDK MobClientSDKInit];
+    //[VGMobClientSDK MobClientSDKInit];
     
     
     // 1. 实例化XMPPStream
@@ -214,7 +240,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     }else if(type == 9){//通知公告
         [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"2,8,9,10" withTitle:@"通知公告"];
     }else if(type == 10){//活动通知
-        [_viewController pushController:[ZJActivityViewController class] withInfo:model withTitle:@"活动通知"];
+        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"活动通知"];
     }else if(type == 11){//签到/签退
         [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"11" withTitle:@"签到/签退"];
     }else if(type == 12){//签到/签退
@@ -279,7 +305,7 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     CGFloat differenceTime = (current - lastTime)/3600;
     NSString *hour = nil;
     if (differenceTime > 0.1) {
-        hour = [NSString stringWithFormat:@".1%f",differenceTime];
+        hour = [NSString stringWithFormat:@"%.1f",differenceTime];
     }else{
         hour = @"0.1";
     }
@@ -350,7 +376,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     
     // 1. 实例化
     _xmppStream = [[XMPPStream alloc] init];
-    
+    //容许后台运行
+    _xmppStream.enableBackgroundingOnSocket = YES;
     // 2. 实例化要扩展的模块
     // 1> 重新连接
     _xmppReconnect = [[XMPPReconnect alloc] init];
@@ -565,11 +592,19 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
         // 接受from的请求即可
         [_xmppRoster acceptPresenceSubscriptionRequestFrom:presence.from andAddToRoster:YES];
     }
+    
+    
+    
+   // _navigationController.navigationItem.rightBarButtonItem = button;
+     MyLog(@"<><><>%@",presence.description);
 }
 
 -(void)xmppStream:(XMPPStream*)sender didReceiveMessage:(XMPPMessage *)message
 {
-    //程序运行在前台，消息正常显示
+    UIBarButtonItem *button = _navigationController.navigationItem.rightBarButtonItem;
+    //  topController.navigationItem.leftBarButtonItem = button;
+    [button setBackgroundImage:[UIImage imageNamed:@"chat_bottom_voice_press_left"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    //程序运行在前台，消息正常显示
 //    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
 //    {
 //        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
@@ -578,7 +613,6 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 //        localNotification.soundName = @"crunch.wav";//通知声音
 //        localNotification.applicationIconBadgeNumber = 1;//标记数
 //        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
-//        
 //    }else{//如果程序在后台运行，收到消息以通知类型来显示
 //        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
 //        localNotification.alertAction = @"Ok";
@@ -587,11 +621,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 //        localNotification.applicationIconBadgeNumber = 1;//标记数
 //        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
 //    }
-//    
-//    UIImage *imag = [UIImage imageNamed:@"message"];
-//    
-//    MyLog(@"-----%@",message.to);
 }
+
 
 
 @end

@@ -15,7 +15,8 @@
     CFFmpegH264Decoder ffmpegDecoder;
     UIImageView *_cameraImageView;
     UIImage * _cameraImage;
-    BOOL _flag;
+    
+    NSString *_camerano;//摄像头序列号
 }
 @property (strong , nonatomic) VGUser * user;
 @property (strong , nonatomic) VGView * vgView;
@@ -26,14 +27,7 @@
 
 @implementation ZJVideoViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad
 {
@@ -41,9 +35,9 @@
     // Do any additional setup after loading the view.
     self.title = @"视频";
      if (!_cameraImageView) {
-    _cameraImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
-     _cameraImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _cameraImageView.backgroundColor = [UIColor redColor];
+    _cameraImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, H(self.view))];
+     //_cameraImageView.contentMode = UIViewContentModeScaleAspectFit;
+    //_cameraImageView.backgroundColor = [UIColor redColor];
          MyLog(@"------");
      }
     [self.view addSubview:_cameraImageView];
@@ -51,11 +45,37 @@
     //开启解码库
     ffmpegDecoder.Open();
 
-        self.user = [[VGUser alloc] initWithDelegate:self andUserType:0];
-        //这里写死了用户名密码和服务器
-        [self.user Login:@"202.75.218.139" username:@"vigo" password:@"jama"];
+    self.user = [[VGUser alloc] initWithDelegate:self andUserType:0];
+//        //这里写死了用户名密码和服务器
+//        [self.user Login:@"202.75.218.139" username:@"vigo" password:@"jama"];
 
+    [self getAddress];
+}
 
+#pragma mark 获取视频地址
+-(void)getAddress
+{
+    
+    
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,@"classid":[LoginUser sharedLoginUser].classid};
+    
+    [HttpTool getWithPath:@"videoinfo" params:params success:^(id JSON) {
+        if ([JSON[@"code"] intValue] ==1) {
+            kPE(JSON[@"msg"], 0.5);
+            return ;
+        }else{
+            //这里写死了用户名密码和服务器
+            
+            NSString *urladdress = JSON[@"urladdress"];
+            NSString *username = JSON[@"username"];
+            NSString *password = JSON[@"password"];
+            
+            [self.user Login:urladdress username:username password:password];
+
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void) cameraList
@@ -85,9 +105,7 @@
         CameraInfo * camera = [self.cameraListArray objectAtIndex:5];
         [self.vgView ViewCamera:camera.szCameraSerialNO platformID:0 viewType:0x00 viewSubType:0];
     }
-    
-    
-    //[self.cameraListTableView reloadData];
+
 }
 
 
@@ -203,7 +221,7 @@
     self.cameraListArray = nil;
     _cameraImage = nil;
 //    [VGMobClientSDK MobClientSDKFinish];
-    ffmpegDecoder.Close();
+  //  ffmpegDecoder.Close();
     
     MyLog(@"--dealloc-");
 }
