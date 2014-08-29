@@ -47,7 +47,7 @@ int page = 1;
     // 1. 利用通知中心监听键盘的变化（打开、关闭、中英文切换）
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    _commentTextField.layer.borderColor = [UIColor colorWithRed:0.109 green:0.502 blue:0.273 alpha:1.000].CGColor;
+    _commentTextField.layer.borderColor = [UIColor colorWithRed:0.000 green:0.678 blue:0.424 alpha:1.000].CGColor;
     _commentTextField.layer.borderWidth = 1.0;
     //初始化数组
     _dataArr = [NSMutableArray array];

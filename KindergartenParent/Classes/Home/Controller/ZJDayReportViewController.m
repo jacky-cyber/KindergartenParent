@@ -126,7 +126,7 @@
         
         UIView *otherView = [[UIView alloc] initWithFrame:CGRectMake(20, 10, 280, heigh)];
         otherView.layer.borderWidth = 0.5;
-        otherView.layer.cornerRadius = 1;
+        otherView.layer.cornerRadius = 3;
         otherView.layer.masksToBounds = YES;
         otherView.layer.borderColor = [UIColor colorWithRed:0.945 green:0.333 blue:0.533 alpha:1.000].CGColor;
         [cell.contentView addSubview:otherView];
@@ -136,6 +136,7 @@
          leftBg.backgroundColor = [UIColor colorWithRed:0.945 green:0.333 blue:0.533 alpha:1.000];
         [otherView addSubview:leftBg];
         UIImageView *otherImagView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (H(otherView)-19)/2, 105, 19)];
+  
         otherImagView.image = [UIImage imageNamed:@"other"];
         [otherView addSubview:otherImagView];
   

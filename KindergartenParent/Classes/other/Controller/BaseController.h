@@ -15,7 +15,6 @@
 @property (nonatomic,strong) id  userInfo;
 @property (nonatomic,strong) id  otherInfo;
 @property (nonatomic,assign) int  page;
-@property (nonatomic,strong) UITableView *tableView;
 
 
 

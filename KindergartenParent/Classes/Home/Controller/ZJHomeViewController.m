@@ -19,7 +19,7 @@
 #import "ZJCourseViewController.h"
 #define kBtnW 106.66666
 
-@interface ZJHomeViewController ()
+@interface ZJHomeViewController ()<IChatManagerDelegate>
 {
     UIImageView *_headerImageView;//顶部图片
     
@@ -67,6 +67,8 @@
     //设置头像
     
     [self setProfileImg];
+    
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
     
 }
 
@@ -267,7 +269,21 @@
     
 }
 
-
+//// 实现接收消息的委托
+// int i = 0;
+//#pragma mark - IChatManagerDelegate
+//-(void)didReceiveMessage:(EMMessage *)message{
+//    MyLog(@"-----%@",message.description);
+//    
+//    UILabel *label = [[UILabel alloc] init];
+//    i++;
+//    label.text = [NSString stringWithFormat:@"%d",i];
+//    label.frame = CGRectMake(10, 0, 15, 15);
+//    
+//    [self.navigationController.navigationBar addSubview:label];
+//    
+//    
+//}
 #pragma mark 查看个人信息
 -(void)updateProfileAction
 {

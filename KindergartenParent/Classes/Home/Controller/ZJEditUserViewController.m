@@ -7,8 +7,6 @@
 //
 
 #import "ZJEditUserViewController.h"
-#import "XMPPvCardTemp.h"
-#import "ZJAppDelegate.h"
 @interface ZJEditUserViewController ()
 {
     UITextField *_textField;
@@ -108,22 +106,7 @@
 
 -(void)savevCard:(NSString*)str
 {
-    XMPPvCardTemp *myCard = [xmppDelegate xmppvCardTempModule].myvCardTemp;
-    
-    //myCard.photo = UIImagePNGRepresentation(_headerImagerView.image);
-    myCard.nickname = str;
-    //    myCard.orgName = _orgNameLabel.text;
-    //
-    //    DDLogCInfo(@"%@",_orgUnitLabel.text);
-    //
-    //    myCard.orgUnits = @[_orgUnitLabel.text]?@[_orgUnitLabel.text]:nil;
-    //    myCard.title = _titleLabel.text;
-    //    myCard.note = _telLabel.text;
-    //    myCard.mailer = _emailLabel.text;
-    
-    // 保存名片
-    [[xmppDelegate xmppvCardTempModule] updateMyvCardTemp:myCard];
-    
+      
 }
 - (void)didReceiveMemoryWarning
 {

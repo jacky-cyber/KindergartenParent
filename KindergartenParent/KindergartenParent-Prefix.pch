@@ -28,6 +28,20 @@
 #import "UIImage+ZJ.h"
 #import "MJRefresh.h"
 #import <CoreData/CoreData.h>
+
+
+//#import "ChatDemoUIDefine.h"
+#import "WCAlertView.h"
+#import "TTGlobalUICommon.h"
+#import "UIViewController+HUD.h"
+//#import "UIViewController+DismissKeyboard.h"
+#import "NSString+Valid.h"
+
+#define MR_SHORTHAND
+#import "CoreData+MagicalRecord.h"
+
+#import "EaseMob.h"
+
 #endif
 
 #import <SystemConfiguration/SystemConfiguration.h>

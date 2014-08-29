@@ -31,6 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    [[EaseMob sharedInstance].chatManager asyncLogoff];
+    
     // Do any additional setup after loading the view from its nib.
     UIImage *bgImage = [UIImage imageNamed:@"login_backgroundImage"];
     
@@ -91,7 +95,7 @@
     [HttpTool getWithPath:@"login" params:@{@"username":username,@"pwd":pwd} success:^(id JSON) {
         if (JSON[@"data"]) {
             
-
+           // MyLog(@"%@",JSON);
             
             [SVProgressHUD showSuccessWithStatus:@"登录成功" duration:0.5];
            
@@ -108,25 +112,7 @@
             
            // MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
-            
-            [xmppDelegate connectOnFailed:^(kLoginErrorType type) {
-//                NSString *msg = nil;
-//                if (type == kLoginLogonError) {
-//                    msg = @"用户名或者密码错误";
-//                } else if (type == kLoginNotConnection) {
-//                    msg = @"无法连接到服务器";
-//                } else if (type == kLoginRegisterError) {
-//                    msg = @"用户名重复，无法注册";
-//                }
-                
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                
-//                [alert show];
-                
-                
-            }];
-
-             [APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
+            [APService setAlias:user.username callbackSelector:nil object:nil];
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
             ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
             BaseNavigationController *navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];
@@ -134,13 +120,24 @@
             
             self.view.window.rootViewController = menuController;
             
-            //[[ZJUserInfoModel sharedZJUserInfoModel] setKeyValues:JSON[@"data"]];
+            [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[user.username lowercaseString] password:@"123456" completion:^(NSDictionary *loginInfo, EMError *error) {
+                if (!error) {
+                    NSLog(@"登录成功:%@",loginInfo);
+                    self.view.window.rootViewController = navigationController;
+                }else{
+                    NSLog(@"error:%@",error);
+                }
+                
+                [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:YES];
+                
+                
+            } onQueue:nil];
+            [[ZJUserInfoModel sharedZJUserInfoModel] setKeyValues:JSON[@"data"]];
             
 
         }else{
             [SVProgressHUD showErrorWithStatus:@"用户名/密码错误" duration:1];
         }
-        NSLog(@"%@",JSON);
     } failure:^(NSError *error) {
         kPE(kHttpErrorMsg, 0.5);
         MyLog(@"%@",error);

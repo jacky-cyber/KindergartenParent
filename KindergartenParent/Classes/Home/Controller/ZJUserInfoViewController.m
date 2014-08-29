@@ -10,7 +10,6 @@
 #import "ZJUserInfoModel.h"
 #import "ZJEditPwdViewController.h"
 #import "ZJEditUserViewController.h"
-#import "XMPPvCardTemp.h"
 #import "ZJAppDelegate.h"
 @interface ZJUserInfoViewController ()<EditUserInfoViewControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate>
 {
@@ -199,7 +198,7 @@
     
         //分割线
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, H(parentView)-1, W(parentView), 1)];
-        lineView.backgroundColor = [UIColor lightGrayColor];
+        lineView.backgroundColor = [UIColor colorWithWhite:0.902 alpha:1.000];
         [parentView addSubview:lineView];
         
         if (i == count) {
@@ -367,13 +366,7 @@
 #pragma mark 修改xmpp 头像
 -(void)savevCard:(UIImage*)img
 {
-    XMPPvCardTemp *myCard = [xmppDelegate xmppvCardTempModule].myvCardTemp;
-    
-    myCard.photo = UIImagePNGRepresentation(img);
-    
-    // 保存名片
-    [[xmppDelegate xmppvCardTempModule] updateMyvCardTemp:myCard];
-    
+   
 }
 - (void)didReceiveMemoryWarning
 {

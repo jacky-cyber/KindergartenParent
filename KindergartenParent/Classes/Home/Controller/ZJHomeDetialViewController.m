@@ -11,11 +11,11 @@
 @interface ZJHomeDetialViewController (){
     ZJHomeModel *_model;
 }
-@property (weak, nonatomic) IBOutlet UILabel *createTime;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *typeImage;
+@property (strong, nonatomic)  UILabel *createTime;
+@property (strong, nonatomic)  UILabel *contentLabel;
+@property (strong, nonatomic)  UIImageView *typeImage;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic)  UIScrollView *scrollView;
 
 @end
 
@@ -25,7 +25,33 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _scrollView = [[UIScrollView alloc] init];
+    
+    CGFloat scrollH =kScreenHeight-kNavH-20;
+    
+    _scrollView.frame = CGRectMake(0, 0, W(self.view),scrollH);
+    [self.view addSubview:_scrollView];
     _model = self.userInfo;
+    
+    
+    _typeImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 30)];
+    //判断通知的类型
+    if ([_model.type intValue] == 2) {//全员通知
+        _typeImage.image = [UIImage imageNamed:@"youeryuan_notif"];
+    }else if ([_model.type intValue] == 6) {//服药提醒
+        _typeImage.image = [UIImage imageNamed:@"weiyaoNofifi"];
+    }else if ([_model.type intValue] == 8) {//本班通知
+        _typeImage.image = [UIImage imageNamed:@"classDetialNotifi"];
+    }else if ([_model.type intValue] == 10) {//活动通知
+        _typeImage.image = [UIImage imageNamed:@"huodongtongzhi"];
+    }
+    [_scrollView addSubview:_typeImage];
+    
+    _createTime = [[UILabel alloc] initWithFrame:CGRectMake(195, 25, 105, 21)];
+    _createTime.font = kFont(11);
+    _createTime.textAlignment = NSTextAlignmentRight;
+    _createTime.textColor = [UIColor lightGrayColor];
+    [_scrollView addSubview:_createTime];
     TimeFormatTools *timeTool = [[TimeFormatTools alloc] init];
     NSString *timeStr = [timeTool timeToNow:_model.createtime];
     
@@ -34,28 +60,15 @@
     }
     _createTime.text = timeStr;
     
-//    MyLog(@"type:%@   content:%@---%@",model.type,model.content,[timeTool timeToNow:model.createtime]);
-    
-    //判断通知的类型
-    if ([_model.type intValue] == 2) {//全员通知
-        _typeImage.image = [UIImage imageNamed:@"youeryuan_notif"];
-    }else if ([_model.type intValue] == 6) {//服药提醒
-        _typeImage.image = [UIImage imageNamed:@"weiyaoNofifi"];
-    }else if ([_model.type intValue] == 8) {//本班通知
-        _typeImage.image = [UIImage imageNamed:@"classDetialNotifi"];
-    }else if ([_model.type intValue] == 8) {//活动通知
-        _typeImage.image = [UIImage imageNamed:@"huodongtongzhi"];
-    }
-    
-    
     
     CGFloat height = [_model.content getHeightByWidth:280 font:kFont(14)];
-    CGRect frame = _contentLabel.frame;
-    frame.size.height = height;
-    _contentLabel.frame = frame;
-    _contentLabel.text = _model.content;
-    //重新设置高度
-    _scrollView.contentSize = CGSizeMake(W(self.view), YH(_contentLabel)+70+kNavH*2);
+    _contentLabel = [ZJUIMethods creatLabel:_model.content frame:CGRectMake(20, 70, 280, height) font:kFont(14) textColor:nil];
+    [_scrollView addSubview:_contentLabel];
+    
+    //重新计算scrollview contentsize
+    _scrollView.contentSize = CGSizeMake(W(self.view), YH(_contentLabel)+5);
+ 
+    
     
     if ([_model.type intValue] == 10) {
         //监测报名状态
@@ -63,6 +76,8 @@
     }
     
 }
+
+
 
 -(void)baomingBtn
 {

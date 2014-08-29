@@ -9,7 +9,9 @@
 #import "BaseController.h"
 #import "ZJLeftSideDrawerViewController.h"
 #import "ZJRightSideDrawerViewController.h"
-@interface BaseController ()<UITableViewDelegate,UITableViewDataSource>
+
+
+@interface BaseController ()<IChatManagerDelegate>
 
 @end
 
@@ -30,6 +32,7 @@
     self.page = 1;//默认为1
 //    NSLog(@"bounds:%@",NSStringFromCGRect(self.view.bounds));
 //     NSLog(@"frame:%@",NSStringFromCGRect(self.view.frame));
+     [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return YES;
@@ -124,10 +127,5 @@
     // Dispose of any resources that can be recreated.
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return nil;
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 0;
-}
+
 @end

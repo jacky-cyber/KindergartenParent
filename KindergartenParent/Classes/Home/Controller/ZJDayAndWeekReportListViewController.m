@@ -39,7 +39,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, W(self.view),height) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.rowHeight = 55;
+    _tableView.rowHeight = 57;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //_tableView.sectionFooterHeight = 0;
     //_tableView.rowHeight = [ZJCookBookTableViewCell cellHeight];

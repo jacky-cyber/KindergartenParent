@@ -26,10 +26,12 @@
     //导航
     
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnR.frame = CGRectMake(0, 4, 50, 25);
+    btnR.frame = CGRectMake(0, 0, 50, 25);
     [btnR addTarget:self action:@selector(sendAction) forControlEvents:UIControlEventTouchUpInside];
-    
-    [btnR setImage:[UIImage imageNamed:@"editpwd_save"] forState:UIControlStateNormal];
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    [btnR setTitle:@"保存" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
     UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
     self.navigationItem.rightBarButtonItem = ItemR;
     
@@ -44,8 +46,10 @@
 //设置textfield
 -(void)setupTextFiel:(UITextField*)textField
 {
-    textField.layer.borderColor = [UIColor colorWithRed:0.109 green:0.502 blue:0.273 alpha:1.000].CGColor;
+    textField.layer.borderColor = [UIColor colorWithRed:0.000 green:0.678 blue:0.424 alpha:1.000].CGColor;
     textField.layer.borderWidth = 1.0;
+    textField.layer.cornerRadius = 2;
+    textField.layer.masksToBounds = YES;
     CGRect frame = textField.frame;
     frame.size.height +=20;
     textField.frame = frame;

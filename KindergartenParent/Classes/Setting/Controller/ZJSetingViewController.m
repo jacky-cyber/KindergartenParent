@@ -61,7 +61,7 @@
 {
     ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
     self.view.window.rootViewController =login ;
-    
+    [[EaseMob sharedInstance].chatManager asyncLogoff];
     [[LoginUser sharedLoginUser] loginout];
     
 }

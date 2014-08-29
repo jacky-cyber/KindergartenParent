@@ -22,14 +22,14 @@
     
     [self.causeTextView becomeFirstResponder];
     
-    
-    
-    
     //发送
     UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnR.frame = CGRectMake(0, 2, 50, 25);
+    btnR.frame = CGRectMake(0, 0, 50, 25);
     [btnR addTarget:self action:@selector(sendAction) forControlEvents:UIControlEventTouchUpInside];
-    [btnR setImage:[UIImage imageNamed:@"signin_submit"] forState:UIControlStateNormal];
+    UIImage *backgroundImg= [UIImage resizedImage:@"nav_rightbackbround_image"];
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    [btnR setTitle:@"提交" forState:UIControlStateNormal];
+    [btnR setTitleColor:[UIColor colorWithRed:0.129 green:0.714 blue:0.494 alpha:1.000] forState:UIControlStateNormal];
     UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
     self.navigationItem.rightBarButtonItem = ItemR;
     

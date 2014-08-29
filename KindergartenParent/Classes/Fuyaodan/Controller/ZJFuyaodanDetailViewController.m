@@ -82,11 +82,11 @@
     _scrollView.contentSize = CGSizeMake(320, 700);
     [self.view addSubview:_scrollView];
     
-    UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, 25)];
+    UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, 35)];
     [_scrollView addSubview:label1];
     
     //左边时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 80, 25)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, 80, H(label1))];
     timeLabel.text = [_model.time substringToIndex:10];
     timeLabel.font = kFont13;
     [label1 addSubview:timeLabel];
@@ -95,7 +95,7 @@
     NSArray *imageArrH = @[@"zao_h",@"zhong_h",@"wan_h"];
     for (int i = 0; i<3; i++)
     {
-        UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60, 10, 25, 25)];
+        UIButton *statusBtn = [[UIButton alloc]initWithFrame:CGRectMake(120+i*60,5, 25, 25)];
         [statusBtn setImage:[UIImage imageNamed:imageArr[i]] forState:UIControlStateNormal];
         if (i==0) {
             if (_model.moringstatus.intValue == 1) {
@@ -125,23 +125,14 @@
                 statusBtn.alpha = 0.5;
             }
         }
-        
-//        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateSelected];
-//        [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateHighlighted];
-        //imageV1.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[imageArr objectAtIndex:0]]];
+
         [label1 addSubview:statusBtn];
-//        if (i==0) {//早
-//            _mornImg = statusBtn;
-//        }else if (i==1){//中
-//            _noonImg = statusBtn;
-//        }else if (i==2){//晚
-//            _eveImg = statusBtn;
-//        }
+
     }
 
     
     //学生信息
-    UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, 63, 280, 75)];
+    UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, YH(label1), 280, 70)];
     //修改颜色值
     infobg.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
     for (int i= 0; i<4; i++)

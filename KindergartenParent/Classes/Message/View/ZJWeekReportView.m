@@ -16,6 +16,8 @@
     if (self) {
         self.layer.borderColor = [UIColor colorWithRed:0.945 green:0.333 blue:0.533 alpha:1.000].CGColor;
         self.layer.borderWidth = 1.0;
+        self.layer.cornerRadius = 2;
+        self.layer.masksToBounds = YES;
         [self addSubViews];
         
         //重新设置

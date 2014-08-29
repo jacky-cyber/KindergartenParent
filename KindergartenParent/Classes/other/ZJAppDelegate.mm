@@ -30,54 +30,18 @@
 #import "OCMobClientSDK.h"
 #import "ffmpeg_h264.h"
 #import "NewfeatureController.h"
+#import "ChatViewController.h"
 #define kcurrentTIme @"currentTIme"
-// 赋值语句不能够写在.h中，只能写在.m中
-// 使用此种方式，可以保证常量字符串在内存中有且仅有一个地址
-NSString * const kXMPPLoginUserNameKey = @"xmppUserName";
-NSString * const kXMPPLoginPasswordKey = @"xmppPassword";
-NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 
-@interface ZJAppDelegate() <XMPPStreamDelegate>
+//两次提示的默认间隔
+static const CGFloat kDefaultPlaySoundInterval = 3.0;
+@interface ZJAppDelegate()<IChatManagerDelegate>
 {
-    LoginFailedBlock        _failedBlock;
-    
-    XMPPReconnect           *_xmppReconnect;                // 重新连接的模块
-    XMPPvCardCoreDataStorage    *_xmppvCardCoreDataStorage; // 电子名片数据存储扩展
-    
+
     ZJHomeViewController *_viewController;
     BaseNavigationController * _navigationController;
 }
-
-/**
- *  设置XMPPStream
- */
-- (void)setupXmppStream;
-
-/**
- *  释放XMPPStream
- */
-- (void)teardownXmppStream;
-
-/**
- *  连接到服务器
- */
-- (void)connect;
-
-/**
- *  断开连接
- */
-- (void)disconnect;
-
-/**
- *  用户上线
- */
-- (void)goOnline;
-
-/**
- *  用户下线
- */
-- (void)goOffline;
-
+@property (strong, nonatomic)NSDate *lastPlaySoundDate;
 @end
 @implementation ZJAppDelegate
 
@@ -150,6 +114,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     // Required
     [APService setupWithOption:launchOptions];
     
+    
+    MyLog(@"%@",[LoginUser sharedLoginUser].userName);
 
     [APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
     
@@ -158,12 +124,34 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     [self setCurrentTime];
     
     
-    //[VGMobClientSDK MobClientSDKInit];
+    
+    //#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
+    NSString *apnsCertName = nil;
+#if DEBUG
+    apnsCertName = @"parentpush_dev";
+#else
+    apnsCertName = @"parentpush_pro";
+#endif
+    [[EaseMob sharedInstance] registerSDKWithAppKey:@"kindergarten#kindergartenparent" apnsCertName:apnsCertName];
+    
+#if DEBUG
+    [[EaseMob sharedInstance] enableUncaughtExceptionHandler];
+#endif
+    //以下一行代码的方法里实现了自动登录，异步登录，需要监听[didLoginWithInfo: error:]
+    //demo中此监听方法在MainViewController中
+    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
+    //#warning 注册为SDK的ChatManager的delegate (及时监听到申请和通知)
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+    
+    //#warning 如果使用MagicalRecord, 要加上这句初始化MagicalRecord
+    //demo coredata, .pch中有相关头文件引用
+    [MagicalRecord setupCoreDataStackWithStoreNamed:[NSString stringWithFormat:@"%@.sqlite", @"UIDemo"]];
     
     
-    // 1. 实例化XMPPStream
-    [self setupXmppStream];
-    
+    MyLog(@"loginInfo:%@",[[EaseMob sharedInstance].chatManager loginInfo]);
+
     return YES;
 }
 
@@ -173,12 +161,71 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 {
     // Required
     [APService registerDeviceToken:deviceToken];
-
+    NSLog(@"deviceToken:%@",deviceToken.description);
+    
+    
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-        NSLog(@"Failed to get token, error:%@", error.description);
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
+
+//avoid compile error for sdk under 7.0
+#ifdef __IPHONE_7_0
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [APService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNoData);
+}
+#endif
+
+
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    
+
+   
+    [_viewController pushController:[ChatViewController class] withInfo:notification.userInfo[@"username"] withTitle:notification.userInfo[@"username"]];
+    
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] applicationWillResignActive:application];
+}
+
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] applicationDidBecomeActive:application];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] applicationWillTerminate:application];
+}
+#pragma mark - push
+
+- (void)didBindDeviceWithError:(EMError *)error
+{
+    if (error) {
+        //TTAlertNoTitle(@"消息推送与设备绑定失败");
+    }
+}
+
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     //在此处理接收到的消息。
@@ -186,6 +233,9 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     application.applicationIconBadgeNumber = 0;
     [APService handleRemoteNotification:userInfo];
     
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] application:application didReceiveRemoteNotification:userInfo];
+
     int  type  =  [userInfo[@"type"] intValue];
     
 //    [self pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
@@ -250,10 +300,12 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 }
 
 
-
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationDidEnterBackground" object:nil];
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] applicationDidEnterBackground:application];
     MyLog(@"进入后台");
 
     NSString *hour =  [self getTimedifference];
@@ -274,7 +326,8 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    //#warning SDK方法调用
+    [[EaseMob sharedInstance] applicationWillEnterForeground:application];
  
     //进入前台把当前时间存入用户中心
     [self setCurrentTime];
@@ -312,317 +365,110 @@ NSString * const kXMPPLoginHostNameKey = @"xmppHostName";
     return hour;
 }
 
-//----------------------------------------------------------------------------------------
-
-#pragma mark xmpp 相关设置
 
 
-#pragma mark - 注销激活状态
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    //[self disconnect];
+
+#pragma mark - private
+
+
+// 收到消息回调
+-(void)didReceiveMessage:(EMMessage *)message{
     
-}
-
-#pragma mark - 应用程序被激活
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [self connect];
-}
-
-
-// 系统退出到后台，如果内存不足，系统会自动调用AppDelegate的dealloc方法
-// 可以在此方法中，做内存清理工作
-- (void)dealloc
-{
-    [self teardownXmppStream];
-}
-
-#pragma mark - 成员方法
-#pragma mark 登录&注册
-- (void)connectOnFailed:(LoginFailedBlock)faild
-{
-    // 1. 保存块代码
-    _failedBlock = faild;
+#if !TARGET_IPHONE_SIMULATOR
+    [self playSoundAndVibration];
     
-    // 如果已经存在到服务器的长连接，先断开到服务器的连接
-    // 提示：在使用连接之前，需要首先判断连接是否存在，
-    // 因为再次建立的连接有可能应为MyJID的不同，让服务器无法区分准确的客户端！
-    if (!_xmppStream.isDisconnected) {
-        [_xmppStream disconnect];
+    BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
+    if (!isAppActivity) {
+        [self showNotificationWithMessage:message];
     }
-    
-    // 连接到服务器
-    [self connect];
+#endif
 }
 
-#pragma mark 用户注销
-- (void)logout
-{
-    [self disconnect];
+- (void)playSoundAndVibration{
     
-    // 切换到Login视图控制器
-   // [self showStoryboardWithBoardName:kLoginStoryboardName];
-}
-
-#pragma mark - XMPP相关方法
-- (void)setupXmppStream
-{
-    // 断言！再此程序断言：_xmppStream必须是nil，如果不是nil，程序强行中断！
-    // 要求调用方，必须自觉自律，要求是唯一的，你就应该是唯一的。
-    // 断言针对程序的核心代码区，有重要的保护作用！
-    // 要求在开发过程中，就能够及时的发现错误，而不是去频繁的修改核心代码！
-    NSAssert(_xmppStream == nil, @"XMPPStream被重复实例化！");
-    
-    // 1. 实例化
-    _xmppStream = [[XMPPStream alloc] init];
-    //容许后台运行
-    _xmppStream.enableBackgroundingOnSocket = YES;
-    // 2. 实例化要扩展的模块
-    // 1> 重新连接
-    _xmppReconnect = [[XMPPReconnect alloc] init];
-    // 2> 电子名片
-    _xmppvCardCoreDataStorage = [XMPPvCardCoreDataStorage sharedInstance];
-    _xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_xmppvCardCoreDataStorage];
-    _xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_xmppvCardTempModule];
-    
-    // 3> 花名册
-    _xmppRosterCoreDataStorage = [[XMPPRosterCoreDataStorage alloc] init];
-    _xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:_xmppRosterCoreDataStorage];
-    // 自动接收好友订阅请求，当前版本已经无需设置
-    // 提示后续可以探索，需要认证添加好友的功能！
-    [_xmppRoster setAutoAcceptKnownPresenceSubscriptionRequests:YES];
-    // 自动从服务器加载好友信息
-    [_xmppRoster setAutoFetchRoster:YES];
-    
-    // 4> 消息归档
-    // 提示：不要使用sharedInstance，否则不同账号的聊天记录会保存在同一个CoreData数据库中
-    _xmppMessageArchivingCoreDataStorage = [[XMPPMessageArchivingCoreDataStorage alloc] init];
-    _xmppMessageArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:_xmppMessageArchivingCoreDataStorage];
-    //5>聊天室
-//    _xmppRoomCoreDataStorage = [[XMPPRoomCoreDataStorage alloc] init];
-    //     _xmppStream.myJID = [XMPPJID jidWithUser:@"lisi" domain:@"zhengjing.local" resource:nil];
-    //    _xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:self jid:_xmppStream.myJID];
-    
-    //[_xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-    // 3. 激活扩展模块
-    [_xmppReconnect activate:_xmppStream];
-    [_xmppvCardTempModule activate:_xmppStream];
-    [_xmppvCardAvatarModule activate:_xmppStream];
-    [_xmppRoster activate:_xmppStream];
-    [_xmppMessageArchiving activate:_xmppStream];
-    //[_xmppRoom activate:_xmppStream];
-    //[_xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-    // 4. 设置代理
-    // 提示：使用类似框架时，包括看网络开源代码，大多数会使用dispatch_get_main_queue()
-    // 使用主线程队列通常不容易出错，自己开发时，一定要用多线程。
-    // 一旦出问题，通常是UI更新的问题，此时对于理解多线程的工作非常有帮助！
-    [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-}
-
-- (void)teardownXmppStream
-{
-    // 在做内存清理工作的步骤，与实例化XMPPStream的工作刚好相反
-    // 1. 删除XMPPStream的代理
-    [_xmppStream removeDelegate:self];
-    
-    // 2. 断开XMPPStream的连接
-    [_xmppStream disconnect];
-    
-    // 3. 停止模块
-    [_xmppReconnect deactivate];
-    [_xmppvCardTempModule deactivate];
-    [_xmppvCardAvatarModule deactivate];
-    [_xmppRoster deactivate];
-    [_xmppMessageArchiving deactivate];
-    
-    // 4. 清理内存
-    _xmppReconnect = nil;
-    
-    _xmppvCardAvatarModule = nil;
-    _xmppvCardCoreDataStorage = nil;
-    _xmppvCardTempModule = nil;
-    
-    _xmppRosterCoreDataStorage = nil;
-    _xmppRoster = nil;
-    
-    _xmppMessageArchivingCoreDataStorage = nil;
-    _xmppMessageArchiving = nil;
-    
-    _xmppStream = nil;
-}
-
-
-- (void)connect
-{
-  
-    NSString *hostName = kHostName;
-    NSString *userName = [LoginUser sharedLoginUser].userName;
-    
-    // 如果用户名或者主机为空，不再继续
-    if (hostName.length == 0 || userName.length == 0) {
-        // 用户名和主机都为空说明用户没有登录，通常是第一次运行程序
-        // 直接显示登录窗口
-       // [self showStoryboardWithBoardName:kLoginStoryboardName];
-        
+    //如果距离上次响铃和震动时间太短, 则跳过响铃
+    NSLog(@"%@, %@", [NSDate date], self.lastPlaySoundDate);
+    NSTimeInterval timeInterval = [[NSDate date]
+                                   timeIntervalSinceDate:self.lastPlaySoundDate];
+    if (timeInterval < kDefaultPlaySoundInterval) {
         return;
     }
+    //保存最后一次响铃时间
+    self.lastPlaySoundDate = [NSDate date];
     
-    // 设置XMPPStream的hostName&JID
-    _xmppStream.hostName = hostName;
-    _xmppStream.myJID = [XMPPJID jidWithUser:userName domain:hostName resource:nil];
+    // 收到消息时，播放音频
+    [[EaseMob sharedInstance].deviceManager asyncPlayNewMessageSound];
+    // 收到消息时，震动
+    [[EaseMob sharedInstance].deviceManager asyncPlayVibration];
+}
+
+- (void)showNotificationWithMessage:(EMMessage *)message
+{
+    EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
+    //发送本地推送
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.fireDate = [NSDate date]; //触发通知的时间
     
-    // 连接
-    // GCDAsnycSocket框架中，所有的网络通讯都是异步的
-    NSError *error = nil;
-    if (![_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
-        NSLog(@"%@", error.localizedDescription);
-    } else {
-        NSLog(@"发送连接请求成功");
+    if (options.displayStyle == ePushNotificationDisplayStyle_messageSummary) {
+        id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
+        NSString *messageStr = nil;
+        switch (messageBody.messageBodyType) {
+            case eMessageBodyType_Text:
+            {
+                messageStr = ((EMTextMessageBody *)messageBody).text;
+            }
+                break;
+            case eMessageBodyType_Image:
+            {
+                messageStr = @"[图片]";
+            }
+                break;
+            case eMessageBodyType_Location:
+            {
+                messageStr = @"[位置]";
+            }
+                break;
+            case eMessageBodyType_Voice:
+            {
+                messageStr = @"[音频]";
+            }
+                break;
+            case eMessageBodyType_Video:{
+                messageStr = @"[视频]";
+            }
+                break;
+            default:
+                break;
+        }
+        NSDictionary *userInfo = @{@"username":message.from};
+        notification.userInfo = userInfo;
+        NSString *title = message.from;
+        if (message.isGroup) {
+            NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+            for (EMGroup *group in groupArray) {
+                if ([group.groupId isEqualToString:message.conversation.chatter]) {
+                    title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
+                    break;
+                }
+            }
+        }
+       
+        notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
     }
-}
-
-- (void)disconnect
-{
-    // 通知服务器，我下线了
-    [self goOffline];
-    
-    // 真正的断开连接
-    [_xmppStream disconnect];
-}
-
-- (void)goOnline
-{
-    NSLog(@"用户上线");
-    
-    // 通知服务器用户上线，服务器知道用户上线后，可以根据服务器记录的好友关系，
-    // 通知该用户的其他好友，当前用户上线
-    XMPPPresence *presence = [XMPPPresence presence];
-    NSLog(@"%@", presence);
-    
-    // 将展现状态发送给服务器
-    [_xmppStream sendElement:presence];
-}
-
-- (void)goOffline
-{
-    NSLog(@"用户下线");
-    
-    // 通知服务器用户下线
-    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
-    NSLog(@"%@", presence);
-    
-    [_xmppStream sendElement:presence];
-}
-
-#pragma mark - XMPPStream协议代理方法
-#pragma mark 完成连接
-- (void)xmppStreamDidConnect:(XMPPStream *)sender
-{
-    NSLog(@"连接成功");
-    
-    // 登录到服务器，将用户密码发送到服务器验证身份
-    NSString *password = [LoginUser sharedLoginUser].password;
-    
-    if (_isRegisterUser) {
-        // 注册
-        [_xmppStream registerWithPassword:password error:nil];
-    } else {
-        // 用户登录
-        [_xmppStream authenticateWithPassword:password error:nil];
+    else{
+        notification.alertBody = @"您有一条新消息";
     }
+    //#warning 去掉注释会显示[本地]开头, 方便在开发中区分是否为本地推送
+    //notification.alertBody = [[NSString alloc] initWithFormat:@"[本地]%@", notification.alertBody];
+    NSDictionary *userInfo = @{@"username":message.from};
+    notification.userInfo = userInfo;
+    notification.alertAction = @"打开";
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    //发送通知
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    UIApplication *application = [UIApplication sharedApplication];
+    application.applicationIconBadgeNumber += 1;
 }
-
-#pragma mark 断开连接
-- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
-{
-    NSLog(@"断开连接 %@", error);
-    if (_failedBlock && error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _failedBlock(kLoginNotConnection);
-        });
-    }
-}
-
-
-#pragma mark 身份验证成功
-- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
-{
-    NSLog(@"身份验证成功!");
-    
-    // 通知服务器用户上线，QQ上面自己头像“亮”是客户端干的，只需要通知服务器，上线即可
-    // 后续操作都是客户端针对状态，自行调整的
-    [self goOnline];
-    
-    // 显示Main.storyboard
-    //[self showStoryboardWithBoardName:kMainStroyboardName];
-}
-
-#pragma mark 用户名或者密码错误
-- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(DDXMLElement *)error
-{
-    NSLog(@"用户名或者密码错误");
-    
-    // 判断出错处理块代码是否定义
-    if (_failedBlock) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _failedBlock(kLoginLogonError);
-        });
-    }
-    
-    // 如果用户名或者密码错误，将系统偏好中的内容清除
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [defaults removeObjectForKey:kXMPPLoginHostNameKey];
-    [defaults removeObjectForKey:kXMPPLoginPasswordKey];
-    [defaults removeObjectForKey:kXMPPLoginUserNameKey];
-    
-    [defaults synchronize];
-}
-
-#pragma mark 接收到其他用户的订阅
-- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
-{
-    // 通过跟踪发现，如果展现的类型是subscribe，说明是由其他客户端发起的添加好友请求
-    // 如果展现的类型是subscribe，直接接受用户请求
-    if ([presence.type isEqualToString:@"subscribe"]) {
-        // 订阅我的人是presence.from
-        // 接受from的请求即可
-        [_xmppRoster acceptPresenceSubscriptionRequestFrom:presence.from andAddToRoster:YES];
-    }
-    
-    
-    
-   // _navigationController.navigationItem.rightBarButtonItem = button;
-     MyLog(@"<><><>%@",presence.description);
-}
-
--(void)xmppStream:(XMPPStream*)sender didReceiveMessage:(XMPPMessage *)message
-{
-    UIBarButtonItem *button = _navigationController.navigationItem.rightBarButtonItem;
-    //  topController.navigationItem.leftBarButtonItem = button;
-    [button setBackgroundImage:[UIImage imageNamed:@"chat_bottom_voice_press_left"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//    //程序运行在前台，消息正常显示
-//    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-//    {
-//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//        localNotification.alertAction = @"Ok";
-//        localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",@"test",@"This is a test message"];//通知主体
-//        localNotification.soundName = @"crunch.wav";//通知声音
-//        localNotification.applicationIconBadgeNumber = 1;//标记数
-//        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
-//    }else{//如果程序在后台运行，收到消息以通知类型来显示
-//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//        localNotification.alertAction = @"Ok";
-//        localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",@"test",@"This is a test message"];//通知主体
-//        localNotification.soundName = @"crunch.wav";//通知声音
-//        localNotification.applicationIconBadgeNumber = 1;//标记数
-//        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
-//    }
-}
-
 
 
 @end

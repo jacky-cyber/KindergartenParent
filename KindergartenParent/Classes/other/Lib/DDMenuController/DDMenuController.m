@@ -349,7 +349,7 @@
         UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer*)gestureRecognizer;
         CGPoint translation = [panGesture translationInView:self.view];
 
-        if ([panGesture velocityInView:self.view].x < 600 && translation.x >1 && sqrt(translation.x * translation.x) / sqrt(translation.y * translation.y) > 1) {
+        if ([panGesture velocityInView:self.view].x < 600 && translation.x >2 && sqrt(translation.x * translation.x) / sqrt(translation.y * translation.y) > 1) {
             return YES;
         } 
         

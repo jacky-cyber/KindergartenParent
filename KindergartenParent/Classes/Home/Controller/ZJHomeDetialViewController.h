@@ -1,9 +1,9 @@
 //
 //  ZJHomeDetialViewController.h
-//  ybparents
+//  KindergartenParent
 //
-//  Created by Define on 14-6-9.
-//  Copyright (c) 2014年 Define. All rights reserved.
+//  Created by define on 14-8-25.
+//  Copyright (c) 2014年 define. All rights reserved.
 //
 
 #import "BaseController.h"

@@ -8,20 +8,43 @@
 
 #import "ZJRightSideDrawerViewController.h"
 #import "UIImageView+MJWebCache.h"
-#import "ZJChatViewController.h"
+#import "SRRefreshView.h"
 #import "DDMenuController.h"
 #import "ZJAppDelegate.h"
-@interface ZJRightSideDrawerViewController ()<UITableViewDataSource,UITableViewDelegate,DDMenuControllerDelegate>
+#import "ChatViewController.h"
+#import "EMSearchDisplayController.h"
+#import "EMSearchBar.h"
+#import "NSDate+Category.h"
+#import "ConvertToCommonEmoticonsHelper.h"
+@interface ZJRightSideDrawerViewController ()<UITableViewDataSource,UITableViewDelegate,DDMenuControllerDelegate,SRRefreshDelegate, UISearchBarDelegate,IChatManagerDelegate>
 {
     UITableView *_tableView;
 
     
     NSMutableArray *_contactsArr;//通讯录数组
 }
+@property (strong, nonatomic) NSMutableArray        *dataSource;
+@property (nonatomic, strong) EMSearchBar           *searchBar;
+@property (nonatomic, strong) UIView                *networkStateView;
 
+@property (strong, nonatomic) EMSearchDisplayController *searchController;
 @end
 
 @implementation ZJRightSideDrawerViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self refreshDataSource];
+    [self registerNotifications];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self unregisterNotifications];
+}
+
 
 
 - (void)viewDidLoad
@@ -152,52 +175,20 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZJChatViewController *chat  = [[ZJChatViewController alloc] init];
-       BaseNavigationController *courseNav = [[BaseNavigationController alloc] initWithRootViewController:chat];
     
-       // (DDMenuController*)((ZJAppDelegate*)[UIApplication sharedApplication].delegate).menuController;
-     NSDictionary *dict = _contactsArr[indexPath.row];
+    //[self.navigationController pushViewController:chat animated:YES];
     if (indexPath.row == 0) {
         return;
     }
+    NSDictionary *dict = _contactsArr[indexPath.row];
     
-    
-    NSString *domain = [xmppDelegate.xmppStream.myJID domain];
-    NSString *friendText = [NSString stringWithFormat:@"%@@%@", dict[@"username"], domain];
-    
-    
-    
-    // 1. 如果已经是好友，则无需添加
-    // 如果已经添加成好友，好友的信息会记录在本地数据库中
-    // 在本地数据库中直接查找该好友是否存在即可
-    XMPPJID *jid = [XMPPJID jidWithString:friendText];
-    
-    //如果加好友了，就不需要再添加好友了
-    if (![xmppDelegate.xmppRosterCoreDataStorage userExistsWithJID:jid xmppStream:xmppDelegate.xmppStream]) {
-        // 在XMPP中添加好友的方法，叫做：“订阅”，类似于微博中的关注
-        // 发送订阅请求给指定的用户
-        // 2. 添加好友操作
-        [xmppDelegate.xmppRoster subscribePresenceToUser:jid];
-    }
-    
-    
-    chat.bareImageStr = dict[@"profileimngurl"];
-    
-    chat.bareJID = jid;
-    chat.title = dict[@"name"];
-
-    chat.tel = @"";
-
-   
-    
-    
-    
-    //[self.navigationController pushViewController:chat animated:YES];
-    
+    ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:[dict[@"username"] lowercaseString]];
+    chatVC.title = dict[@"name"];
+    [self.navigationController pushViewController:chatVC animated:YES];
     
     DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
     menuController.delegate = self;
-    [menuController pushViewController:chat animated:YES];
+    [menuController pushViewController:chatVC animated:YES];
     
 //    [menuController setRootController:courseNav animated:YES];
 //    
@@ -207,6 +198,172 @@
     
     
 }
+#pragma mark - getter
+
+- (UISearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        _searchBar.delegate = self;
+        _searchBar.placeholder = @"搜索";
+        _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
+    }
+    
+    return _searchBar;
+}
+
+
+
+- (EMSearchDisplayController *)searchController
+{
+    if (_searchController == nil) {
+        _searchController = [[EMSearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+     
+        _searchController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        __weak ZJRightSideDrawerViewController *weakSelf = self;
+        [_searchController setCellForRowAtIndexPathCompletion:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
+            //EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
+
+            return nil;
+        }];
+        
+//        [_searchController setDidSelectRowAtIndexPathCompletion:^(UITableView *tableView, NSIndexPath *indexPath) {
+//            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//            [weakSelf.searchController.searchBar endEditing:YES];
+//            
+//            EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
+//            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter];
+//            chatVC.title = conversation.chatter;
+//            [weakSelf.navigationController pushViewController:chatVC animated:YES];
+//        }];
+    }
+    
+    return _searchController;
+}
+
+
+#pragma mark - private
+
+- (NSMutableArray *)loadDataSource
+{
+    NSMutableArray *ret = nil;
+    NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
+    NSArray* sorte = [conversations sortedArrayUsingComparator:
+                      ^(EMConversation *obj1, EMConversation* obj2){
+                          EMMessage *message1 = [obj1 latestMessage];
+                          EMMessage *message2 = [obj2 latestMessage];
+                          if(message1.timestamp > message2.timestamp) {
+                              return(NSComparisonResult)NSOrderedAscending;
+                          }else {
+                              return(NSComparisonResult)NSOrderedDescending;
+                          }
+                      }];
+    ret = [[NSMutableArray alloc] initWithArray:sorte];
+    return ret;
+}
+
+// 得到最后消息时间
+-(NSString *)lastMessageTimeByConversation:(EMConversation *)conversation
+{
+    NSString *ret = @"";
+    EMMessage *lastMessage = [conversation latestMessage];;
+    if (lastMessage) {
+        ret = [NSDate formattedTimeFromTimeInterval:lastMessage.timestamp];
+    }
+    
+    return ret;
+}
+
+// 得到未读消息条数
+- (NSInteger)unreadMessageCountByConversation:(EMConversation *)conversation
+{
+    NSInteger ret = 0;
+    ret = conversation.unreadMessagesCount;
+    
+    return  ret;
+}
+
+// 得到最后消息文字或者类型
+-(NSString *)subTitleMessageByConversation:(EMConversation *)conversation
+{
+    NSString *ret = @"";
+    EMMessage *lastMessage = [conversation latestMessage];
+    if (lastMessage) {
+        id<IEMMessageBody> messageBody = lastMessage.messageBodies.lastObject;
+        switch (messageBody.messageBodyType) {
+            case eMessageBodyType_Image:{
+                ret = @"[图片]";
+            } break;
+            case eMessageBodyType_Text:{
+                // 表情映射。
+                NSString *didReceiveText = [ConvertToCommonEmoticonsHelper
+                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
+                ret = didReceiveText;
+            } break;
+            case eMessageBodyType_Voice:{
+                ret = @"[声音]";
+            } break;
+            case eMessageBodyType_Location: {
+                ret = @"[位置]";
+            } break;
+            case eMessageBodyType_Video: {
+                ret = @"[视频]";
+            } break;
+            default: {
+            } break;
+        }
+    }
+    
+    return ret;
+}
+
+
+#pragma mark - IChatMangerDelegate
+
+-(void)didUnreadMessagesCountChanged
+{
+    [self refreshDataSource];
+}
+
+- (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error
+{
+    [self refreshDataSource];
+}
+
+#pragma mark - registerNotifications
+-(void)registerNotifications{
+    [self unregisterNotifications];
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+}
+
+-(void)unregisterNotifications{
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+}
+
+- (void)dealloc{
+    [self unregisterNotifications];
+}
+
+#pragma mark - public
+
+-(void)refreshDataSource
+{
+    self.dataSource = [self loadDataSource];
+    NSLog(@"%d",self.dataSource.count);
+    [_tableView reloadData];
+    [self hideHud];
+    
+    for (int i = 0; i<self.dataSource.count; i++) {
+        EMConversation *conversation = self.dataSource[i];
+        int unreadCount = [self unreadMessageCountByConversation:conversation];
+        MyLog(@"unreadCount:%d---chatter:%@",unreadCount,conversation.chatter);
+    }
+}
+
+
+
+
 -(void)menuController:(DDMenuController *)controller willShowViewController:(UIViewController *)controllers
 {
     
