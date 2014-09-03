@@ -132,7 +132,7 @@
 		4B24805519590DC900C520A9 /* ZJSetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247FA919590DC900C520A9 /* ZJSetingViewController.m */; };
 		4B24805619590DC900C520A9 /* ZJSetingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B247FAC19590DC900C520A9 /* ZJSetingCell.m */; };
 		4B24805719590DC900C520A9 /* ZJSetingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FAD19590DC900C520A9 /* ZJSetingCell.xib */; };
-		4B24805819590DC900C520A9 /* ZJVideoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4B247FB119590DC900C520A9 /* ZJVideoViewController.mm */; };
+		4B24805819590DC900C520A9 /* ZJVideoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4B247FB119590DC900C520A9 /* ZJVideoViewController.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4B24805919590DC900C520A9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FB219590DC900C520A9 /* Images.xcassets */; };
 		4B24805A19590DC900C520A9 /* beijing02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FB619590DC900C520A9 /* beijing02@2x.png */; };
 		4B24805B19590DC900C520A9 /* beijing2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FB719590DC900C520A9 /* beijing2@2x.png */; };
@@ -147,7 +147,7 @@
 		4B24807519590DC900C520A9 /* img02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FD419590DC900C520A9 /* img02@2x.png */; };
 		4B24807619590DC900C520A9 /* img03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FD519590DC900C520A9 /* img03@2x.png */; };
 		4B24807719590DC900C520A9 /* img04@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FD619590DC900C520A9 /* img04@2x.png */; };
-		4B24807919590DC900C520A9 /* img06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FD819590DC900C520A9 /* img06@2x.png */; };
+		4B24807919590DC900C520A9 /* img05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FD819590DC900C520A9 /* img05@2x.png */; };
 		4B24807A19590DC900C520A9 /* 201277441619594489.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FDA19590DC900C520A9 /* 201277441619594489.jpg */; };
 		4B24807B19590DC900C520A9 /* nav_menu_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FDB19590DC900C520A9 /* nav_menu_icon@2x.png */; };
 		4B24807C19590DC900C520A9 /* profile_detial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FDC19590DC900C520A9 /* profile_detial@2x.png */; };
@@ -924,7 +924,7 @@
 		4B247FD419590DC900C520A9 /* img02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img02@2x.png"; sourceTree = "<group>"; };
 		4B247FD519590DC900C520A9 /* img03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img03@2x.png"; sourceTree = "<group>"; };
 		4B247FD619590DC900C520A9 /* img04@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img04@2x.png"; sourceTree = "<group>"; };
-		4B247FD819590DC900C520A9 /* img06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img06@2x.png"; sourceTree = "<group>"; };
+		4B247FD819590DC900C520A9 /* img05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img05@2x.png"; sourceTree = "<group>"; };
 		4B247FDA19590DC900C520A9 /* 201277441619594489.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 201277441619594489.jpg; sourceTree = "<group>"; };
 		4B247FDB19590DC900C520A9 /* nav_menu_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_menu_icon@2x.png"; sourceTree = "<group>"; };
 		4B247FDC19590DC900C520A9 /* profile_detial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_detial@2x.png"; sourceTree = "<group>"; };
@@ -2522,7 +2522,7 @@
 				4B247FD419590DC900C520A9 /* img02@2x.png */,
 				4B247FD519590DC900C520A9 /* img03@2x.png */,
 				4B247FD619590DC900C520A9 /* img04@2x.png */,
-				4B247FD819590DC900C520A9 /* img06@2x.png */,
+				4B247FD819590DC900C520A9 /* img05@2x.png */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -4427,7 +4427,7 @@
 				4BE9CE401999E0F500A70BB5 /* Expression_15@2x.png in Resources */,
 				4BE9CE471999E0F500A70BB5 /* Expression_21@2x.png in Resources */,
 				4BE9CE8E1999E0F500A70BB5 /* Expression_86@2x.png in Resources */,
-				4B24807919590DC900C520A9 /* img06@2x.png in Resources */,
+				4B24807919590DC900C520A9 /* img05@2x.png in Resources */,
 				4BA2D79B19AEDB460066A321 /* chatBar_more_faceSelected.png in Resources */,
 				4BA2D69B19AED5360066A321 /* chatBar_colorMore_photo@2x.png in Resources */,
 				4BE9CE7D1999E0F500A70BB5 /* Expression_70@2x.png in Resources */,
@@ -4987,7 +4987,7 @@
 		4B247EB219590D9200C520A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -5022,7 +5022,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = KindergartenParent;
-				PROVISIONING_PROFILE = "0743e200-3e13-43c1-b19c-2b1e92e432c8";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -5031,7 +5031,7 @@
 		4B247EB319590D9200C520A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -5067,7 +5067,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = KindergartenParent;
-				PROVISIONING_PROFILE = "0743e200-3e13-43c1-b19c-2b1e92e432c8";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

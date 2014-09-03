@@ -43,7 +43,7 @@
     _tableView.bounces = NO;
     _tableView.rowHeight = 50;
     //数据源
-    _dataArr = @[@"",@"家长中心",@"成长记录",@"医务互通",@"设置中心"];
+    _dataArr = @[@"",@"家长中心",@"成长记录",@"视频直播",@"医务互通",@"设置中心"];
     
     
     _tableView.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
@@ -62,7 +62,7 @@
     kindergarten.backgroundColor = [UIColor clearColor];
     kindergarten.textColor = [UIColor whiteColor];
     kindergarten.textAlignment = NSTextAlignmentCenter;
-    kindergarten.text = @"美蒙国际双语幼儿园";
+    kindergarten.text = [LoginUser sharedLoginUser].kindergarten;
     [self.view addSubview:kindergarten];
     
 }
@@ -105,12 +105,12 @@
     if (indexPath.row>0) {
         
         NSString *imagName = [NSString stringWithFormat:@"img0%d",indexPath.row];
-        if (indexPath.row == 3) {
-            imagName = @"img04";
-        }
-        if (indexPath.row == 4) {
-            imagName = @"img06";
-        }
+//        if (indexPath.row == 3) {
+//            imagName = @"img04";
+//        }
+//        if (indexPath.row == 4) {
+//            imagName = @"img06";
+//        }
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 40, 40)];
         imageView.image = [UIImage imageNamed:imagName];
         [cell.contentView addSubview:imageView];
@@ -150,7 +150,7 @@
     BaseNavigationController *setingnav = [[BaseNavigationController alloc] initWithRootViewController:seting];
     BaseNavigationController *courseNav = [[BaseNavigationController alloc] initWithRootViewController:course];
     
-    NSArray *arr = @[homenav,wallnav,fuyaodannav,setingnav];
+    NSArray *arr = @[homenav,wallnav,videonav,fuyaodannav,setingnav];
     
 
     // (DDMenuController*)((ZJAppDelegate*)[UIApplication sharedApplication].delegate).menuController;

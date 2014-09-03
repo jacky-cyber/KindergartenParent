@@ -33,7 +33,7 @@
 
 #define KPageCount 20
 
-@interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate>
+@interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, IDeviceManagerDelegate,UIActionSheetDelegate>
 {
     UIMenuController *_menuController;
     UIMenuItem *_copyMenuItem;
@@ -112,7 +112,7 @@
         self.edgesForExtendedLayout =  UIRectEdgeNone;
     }
     
-    #warning 以下三行代码必须写，注册为SDK的ChatManager的delegate
+   // #warning 以下三行代码必须写，注册为SDK的ChatManager的delegate
     [[[EaseMob sharedInstance] deviceManager] addDelegate:self onQueue:nil];
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     //注册为SDK的ChatManager的delegate
@@ -148,26 +148,37 @@
 
 - (void)setupBarButtonItem
 {
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    [self.navigationItem setLeftBarButtonItem:backItem];
-    
-    if (_isChatGroup) {
-        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-        [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
-        [detailButton addTarget:self action:@selector(showRoomContact:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:detailButton];
+    //报名
+    UIButton *btnR = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnR.frame = CGRectMake(0, 0, 30, 30);
+    [btnR addTarget:self action:@selector(callAction) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *backgroundImg= [UIImage imageNamed:@"icon_call_"];
+    [btnR setBackgroundImage:backgroundImg forState:UIControlStateNormal];
+    UIBarButtonItem *ItemR = [[UIBarButtonItem alloc]initWithCustomView:btnR];
+    self.navigationItem.rightBarButtonItem = ItemR;
+}
+#pragma mark 打电话
+-(void)callAction
+{
+    if (_tel.isEmptyString || _tel ==nil) {
+        kPE(@"老师没有设置电话号码", 0.5);
+        return;
     }
-    else{
-        UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
-        [clearButton addTarget:self action:@selector(removeAllMessages:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:_tel otherButtonTitles:@"拨打", nil];
+    [sheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    MyLog(@"%d", buttonIndex);
+    if (buttonIndex==1) {
+        
+        
+        NSString *telStr = [NSString stringWithFormat:@"tel://%@",_tel];        
+        NSURL *url = [NSURL URLWithString:telStr];
+        [[UIApplication sharedApplication] openURL:url];
+
     }
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -210,7 +221,7 @@
     [[EaseMob sharedInstance].chatManager stopPlayingAudio];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-#warning 以下第一行代码必须写，将self从ChatManager的代理中移除
+//#warning 以下第一行代码必须写，将self从ChatManager的代理中移除
     [[EaseMob sharedInstance].chatManager removeDelegate:self];
     [[[EaseMob sharedInstance] deviceManager] removeDelegate:self];
 }
@@ -389,6 +400,11 @@
         }
         else{
             MessageModel *model = (MessageModel *)obj;
+            if (model.isSender) {
+                model.headImageURL = [NSURL URLWithString:[LoginUser sharedLoginUser].profilImg];
+            }else{
+                model.headImageURL = [NSURL URLWithString:_profileimngurl];
+            }
             NSString *cellIdentifier = [EMChatViewCell cellIdentifierForMessageModel:model];
             EMChatViewCell *cell = (EMChatViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (cell == nil) {

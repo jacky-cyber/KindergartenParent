@@ -7,7 +7,7 @@
 //
 
 #import "ZJADDViewController.h"
-
+#import "ZJFuYaoDanModel.h"
 @interface ZJADDViewController ()
 {
     UIImageView *_imageBg;
@@ -31,6 +31,9 @@
     NSString *_jiliang;//剂量
     NSString *_yaowuname;//药物名称
     
+    
+    ZJFuYaoDanModel *_model;
+    
 }
 @end
 
@@ -49,6 +52,22 @@
 {
     
     [super viewDidLoad];
+    
+    
+    if (self.userInfo) {
+        _model = self.userInfo;
+        
+        _YaoNameLabel.text = [NSString stringWithFormat:@"药物名称：%@",_model.yaowuname];
+        _YaoNumLabel.text = [NSString stringWithFormat:@"服用剂量：%@",_model.jiliang];
+        _YaoTimeLabel.text = [NSString stringWithFormat:@"服药时间：%@",_model.time];
+        _YaoCareLabel.text = [NSString stringWithFormat:@"注意事项：%@",_model.remark];
+        
+        _yaowuname = _model.yaowuname;
+        _remark = _model.remark;
+        _fuyaoTime = _model.fuyaotime;
+        _jiliang = _model.jiliang;
+    }
+    
     self.title = @"添加服药单";
     
     zao = NO;
@@ -64,10 +83,13 @@
     NSString *teleCall = [NSString stringWithFormat:@"联系方式：%@",[LoginUser sharedLoginUser].tel];
     NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,className,parName,teleCall, nil];
     
-    NSString *YaoNameLabelText = @"药物名称: 请填写药物名称";
-    NSString *YaoNumLabelText = @"服用剂量: 请填写服用剂量";
-    NSString *YaoTimeLabelText = @"服药时间: 请选择服药时间";
-    NSString *YaoCareLabelText = @"注意事项: 请填写注意事项";
+    
+    
+    
+    NSString *YaoNameLabelText = _model.yaowuname?[NSString stringWithFormat:@"药物名称: %@",_model.yaowuname]:@"药物名称: 请填写药物名称";
+    NSString *YaoNumLabelText = _model.jiliang?[NSString stringWithFormat:@"服用剂量: %@",_model.jiliang]:@"服用剂量: 请填写服用剂量";
+    NSString *YaoTimeLabelText = _model.fuyaotime?[NSString stringWithFormat:@"服药时间: %@",_model.fuyaotime]:@"服药时间: 请选择服药时间";
+    NSString *YaoCareLabelText = _model.remark?[NSString stringWithFormat:@"注意事项: %@",_model.remark]:@"注意事项: 请填写注意事项";
     
     
     //发送
@@ -112,7 +134,11 @@
     for (int i= 0; i<4; i++)
     {
         
-        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(10+i%2*110, 10+i/2*25, 160, 30)];
+        int marginL = 10;
+        if (i==1 || i== 3) {
+            marginL = 25;
+        }
+        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(marginL+i%2*110, 10+i/2*25, 160, 30)];
         label.font = kFont12;
         label.textColor = [UIColor grayColor];
         label.text = [stuArray objectAtIndex:i];
@@ -457,7 +483,7 @@
 -(void)sendinfo
 {
     
-    MyLog(@"%@-%@---%@-----%@",_yaowuname,_jiliang,_fuyaoTime,_remark);
+   // MyLog(@"%@-%@---%@-----%@",_yaowuname,_jiliang,_fuyaoTime,_remark);
     
     NSString *msg = nil;
     if (_yaowuname.isEmptyString || _yaowuname==nil) {
@@ -502,7 +528,7 @@
             kPE(JSON[@"msg"], 0.5);
         }
     } failure:^(NSError *error) {
-        kPdismiss;
+        kPE(kHttpErrorMsg, 0.5);
     }];
     
     

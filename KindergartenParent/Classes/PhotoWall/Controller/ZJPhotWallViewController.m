@@ -21,6 +21,10 @@
     NSArray *_images;//图片数组
     MPMoviePlayerViewController *_player;//视屏播放器
     
+    BOOL  _lookMe;//看自己或看本班
+    
+    NSString *_catid;//查看分类
+    
 }
 
 @end
@@ -121,17 +125,36 @@
     [self getDataHeadOrFooter:nil];
 }
 -(void)initData:(UIButton*)btn{
+    
+    
+    self.page = 1;
+    [_dataArr removeAllObjects];//进来先删除所有数据
     kPBlack(@"正在加载成长记录");
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     //@{@"classesid":@"1",@"page":@"1"}
     
     //如果有分类
-    if (btn.tag != 100 && btn) {
-        [params setValue:@(btn.tag) forKey:@"catid"];
-        //删除数据并且初始化page
-        [_dataArr removeAllObjects];
-        self.page = 1;
+    if (btn.tag != 100) {
+        _catid = [NSString stringWithFormat:@"%d",btn.tag];
+        
+    }else if(btn.tag==100){//看自己或者看班级
+         _lookMe = !_lookMe;
     }
+    
+    //看自己
+    if (_lookMe) {
+        [btn setTitle:@"看班级" forState:UIControlStateNormal];
+        [params setObject:[LoginUser sharedLoginUser].userName forKey:@"usernme"];
+    }else{
+        [btn setTitle:@"看自己" forState:UIControlStateNormal];
+    }
+    
+    //分类
+    if (!_catid.isEmptyString || _catid != nil) {
+        [params setValue:_catid forKey:@"catid"];
+    }
+    
+    
     [params setObject:[LoginUser sharedLoginUser].classid forKey:@"classesid"];
     [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
     [params setObject:@"1" forKey:@"type"];
@@ -179,6 +202,7 @@
     //    kid	String	幼儿园ID
     if ([str isEqualToString:@"header"]) {
         self.page = 1;
+        _catid = @"";
     }
     
     kPBlack(@"正在加载成长记录");
@@ -187,6 +211,16 @@
     [params setObject:[LoginUser sharedLoginUser].userName forKey:@"username"];
     [params setObject:@"1" forKey:@"type"];
     [params setObject:[LoginUser sharedLoginUser].kindergartenid forKey:@"kid"];
+    //看自己
+    if (_lookMe) {
+      [params setObject:[LoginUser sharedLoginUser].userName forKey:@"usernme"];
+    }
+    
+    //分类
+    if (!_catid.isEmptyString) {
+        [params setValue:_catid forKey:@"catid"];
+    }
+    
     [params setObject:@(self.page) forKey:@"page"];
     
     [HttpTool getWithPath:@"potowall" params:params success:^(id JSON) {
@@ -205,7 +239,10 @@
             //MyLog(@"%@",model.images);
         }
         kPdismiss;
-        self.page ++;
+        if (((NSArray*)JSON[@"data"]).count >0) {
+            self.page ++;
+        }
+        
         [_tableView reloadData];
         if ([str isEqualToString:@"header"]) {
             [_tableView headerEndRefreshing];

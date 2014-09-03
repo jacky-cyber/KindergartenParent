@@ -44,9 +44,7 @@
 #define kScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define kScreenWidth [[UIScreen mainScreen] bounds].size.width
 
-#define kBaseUrl @"http://182.18.23.244:8080/"
+//#define kBaseUrl @"http://182.18.23.244:8080/"
+#define kBaseUrl @"http://115.29.248.127:8080/"
 
-
-#define kHostName @"182.18.23.244"
-
-#define kFileServerURL @"http://182.18.23.244" //文件服务器路径
+#define kHostName @"115.29.248.127"

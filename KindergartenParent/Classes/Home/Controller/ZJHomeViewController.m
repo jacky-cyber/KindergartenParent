@@ -32,6 +32,9 @@
     UILabel *_nickName;//昵称
     
     InsetsLabel *_parentName;//
+    
+    
+    UILabel *_noReadMsgLabel;//未读消息数目
 }
 
 @end
@@ -45,8 +48,19 @@
     if (_parentName !=nil) {
         [_parentName setAttributedText:[self setParentNameAttrText]];
     }
-    //设置头像
-    [_profileImageView setImageWithURL:[NSURL URLWithString:[LoginUser sharedLoginUser].profilImg] placeholderImage:[UIImage imageNamed:@"profile"]];
+    
+    
+    
+    //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
+    [self didUnreadMessagesCountChanged];
+    _noReadMsgLabel.alpha = 1 ;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    _noReadMsgLabel.alpha = 0 ;
+    
+    MyLog(@"viewWillDisappear");
 }
 
 - (void)viewDidLoad
@@ -68,7 +82,10 @@
     
     [self setProfileImg];
     
-    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+    
+//#warning 把self注册为SDK的delegate
+    [self registerNotifications];
+    
     
 }
 
@@ -104,7 +121,10 @@
 
 -(NSMutableAttributedString*)setParentNameAttrText
 {
-    NSString *str  = [NSString stringWithFormat:@"%@  %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
+   // MyLog(@"%@----%@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].name);
+    NSString *name = ![[LoginUser sharedLoginUser].nickname isEqualToString:@""]?[LoginUser sharedLoginUser].nickname:[LoginUser sharedLoginUser].name;
+    
+    NSString *str  = [NSString stringWithFormat:@"%@  %@",name,[LoginUser sharedLoginUser].classes];
     CGSize size = [str sizeWithFont:kFont(16)];
     CGRect frame = _parentName.frame;
     frame.size.width = size.width+10;
@@ -124,8 +144,8 @@
 -(void)setProfileImg
 {
     
-    
-    NSString *str  = [NSString stringWithFormat:@"%@  %@",[LoginUser sharedLoginUser].nickname,[LoginUser sharedLoginUser].classes];
+     NSString *name = ![[LoginUser sharedLoginUser].nickname isEqualToString:@""]?[LoginUser sharedLoginUser].nickname:[LoginUser sharedLoginUser].name;
+    NSString *str  = [NSString stringWithFormat:@"%@  %@",name,[LoginUser sharedLoginUser].classes];
     CGSize size = [str sizeWithFont:kFont(16)];
     _parentName=[[InsetsLabel alloc] initWithFrame:CGRectMake(60,H(_headerImageView)-25,size.width+10,25)];
     _parentName.insets = UIEdgeInsetsMake(0, 15, 0, 0);
@@ -299,6 +319,78 @@
 {
     [self pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
 }
+
+
+
+
+
+
+// 统计未读消息数
+-(void)setupUnreadMessageCount
+{
+    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    //    UIViewController *vc = [self.viewControllers objectAtIndex:0];
+    //    if (unreadCount > 0) {
+    //        vc.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",unreadCount];
+    //    }else{
+    //        vc.tabBarItem.badgeValue = nil;
+    //    }
+    
+    MyLog(@"unreadCount:%d",unreadCount);
+    //设置头像
+    [_profileImageView setImageWithURL:[NSURL URLWithString:[LoginUser sharedLoginUser].profilImg] placeholderImage:[UIImage imageNamed:@"profile"]];
+    if (!_noReadMsgLabel) {
+        _noReadMsgLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 5, 15, 15)];
+        _noReadMsgLabel.backgroundColor = [UIColor redColor];
+        _noReadMsgLabel.layer.cornerRadius = 7;
+        _noReadMsgLabel.font = kFont(11);
+        _noReadMsgLabel.textAlignment = NSTextAlignmentCenter;
+        _noReadMsgLabel.layer.masksToBounds = YES;
+        _noReadMsgLabel.textColor = [UIColor whiteColor];
+        [self.navigationController.navigationBar addSubview:_noReadMsgLabel];
+        MyLog(@"_noReadMsgLabel is nil");
+    }
+    
+//    if (unreadCount==0) {
+//        _noReadMsgLabel.alpha = 0;
+//    }else{
+//       _noReadMsgLabel.alpha = 1;
+//    }
+    _noReadMsgLabel.text = [NSString stringWithFormat:@"%d",unreadCount];
+}
+
+#pragma mark - IChatManagerDelegate 消息变化
+
+// 未读消息数量变化回调
+-(void)didUnreadMessagesCountChanged
+{
+    [self setupUnreadMessageCount];
+}
+
+
+
+-(void)registerNotifications
+{
+    [self unregisterNotifications];
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+}
+
+
+-(void)unregisterNotifications
+{
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+}
+
+
+- (void)dealloc
+{
+    [self unregisterNotifications];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

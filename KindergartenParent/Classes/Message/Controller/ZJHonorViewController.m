@@ -115,7 +115,7 @@
             }else{
                 [_tableView footerEndRefreshing];
             }
-            [SVProgressHUD showErrorWithStatus:@"请求失败" duration:1];
+            kPE(JSON[@"msg"], 0.5);
         }
     } failure:^(NSError *error) {
         kPE(kHttpErrorMsg, 0.5);

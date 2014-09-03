@@ -61,6 +61,7 @@
     
     //重新设置背景
     _bgView = bgView;
+    _bgView.backgroundColor = [UIColor clearColor];
 //    CGRect bgF = bgView.frame;
 //    bgF.size.height = XW(_contentLabel)+10;
 //    bgView.frame = bgF;
@@ -74,7 +75,7 @@
     
     _cmmodel = cmmodel;
     
-    [_imgView setImageWithURL:[NSURL URLWithString:_cmmodel.cmuimgurl]];
+    [_imgView setImageWithURL:[NSURL URLWithString:_cmmodel.cmuimgurl] placeholderImage:[UIImage imageNamed:@"profile"]];
     
     
     //发布人

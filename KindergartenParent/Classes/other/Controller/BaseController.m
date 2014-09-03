@@ -128,4 +128,15 @@
 }
 
 
+//#pragma mark - IChatManagerDelegate 登录状态变化
+//
+//- (void)didLoginFromOtherDevice
+//{
+//    [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你的账号已在其他地方登录base" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        alertView.tag = 100;
+//        [alertView show];
+//    } onQueue:nil];
+//}
+
 @end

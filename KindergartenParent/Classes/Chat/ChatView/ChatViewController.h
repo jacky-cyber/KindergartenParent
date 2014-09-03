@@ -17,5 +17,9 @@
 - (instancetype)initWithChatter:(NSString *)chatter;
 
 - (instancetype)initWithGroup:(EMGroup *)chatGroup;
+// 电话
+@property (strong, nonatomic) NSString *tel;
+// 电话
+@property (strong, nonatomic) NSString *profileimngurl;
 
 @end

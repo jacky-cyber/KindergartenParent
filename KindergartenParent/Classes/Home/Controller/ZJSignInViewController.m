@@ -53,7 +53,7 @@
             
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            kPE(@"系统异常", 1)
+            kPE(JSON[@"msg"], 1);
         }
     } failure:^(NSError *error) {
       //  NSLog(@"%@",error.description);

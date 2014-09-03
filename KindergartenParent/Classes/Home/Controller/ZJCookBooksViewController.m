@@ -69,7 +69,7 @@
     //初始化数组
     _dataArr = [NSMutableArray array];
     kPBlack(@"正在加载本周食谱")
-    [HttpTool getWithPath:@"recipe" params:nil success:^(id JSON) {
+    [HttpTool getWithPath:@"recipe" params:@{@"kid":[LoginUser sharedLoginUser].kindergartenid} success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
             NSArray *data = JSON[@"data"][@"everyday"];
             for (NSDictionary *dict in data) {

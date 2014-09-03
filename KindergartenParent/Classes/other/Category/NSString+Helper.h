@@ -84,5 +84,7 @@
  */
 -(NSString*)appendStr:(NSString*)str;
 
+//MD5加密
++ (NSString*)md5:(NSString *)str;
 
 @end

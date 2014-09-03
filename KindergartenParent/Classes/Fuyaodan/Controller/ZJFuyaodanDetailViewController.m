@@ -8,6 +8,7 @@
 
 #import "ZJFuyaodanDetailViewController.h"
 #import "ZJFuYaoDanModel.h"
+#import "ZJADDViewController.h"
 @interface ZJFuyaodanDetailViewController ()<UIAlertViewDelegate>
 {
     UIScrollView *_scrollView;
@@ -137,8 +138,11 @@
     infobg.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
     for (int i= 0; i<4; i++)
     {
-        
-        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(10+i%2*110, 10+i/2*25, 160, 30)];
+        int marginL = 10;
+        if (i==1 || i== 3) {
+            marginL = 25;
+        }
+        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(marginL+i%2*110, 10+i/2*25, 160, 30)];
         label.font = kFont12;
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor grayColor];
@@ -288,6 +292,8 @@
 -(void)sendinfoAgain
 {
     
+    [self pushController:[ZJADDViewController class] withInfo:_model withTitle:@"添加服药单"];
+    return;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确定再添加一天" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
     [alert show];
     return;

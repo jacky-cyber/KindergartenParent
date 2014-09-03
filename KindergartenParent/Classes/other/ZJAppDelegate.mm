@@ -35,7 +35,7 @@
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
-@interface ZJAppDelegate()<IChatManagerDelegate>
+@interface ZJAppDelegate()<IChatManagerDelegate,UIAlertViewDelegate>
 {
 
     ZJHomeViewController *_viewController;
@@ -50,7 +50,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [IQKeyboardManager sharedManager];
     
-    
+    //初始化体层库(域高视频)
+    [VGMobClientSDK MobClientSDKInit];
     
     
     NSString *key = (NSString *)kCFBundleVersionKey;
@@ -66,9 +67,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     ZJRightSideDrawerViewController * rightSideDrawerViewController = [[ZJRightSideDrawerViewController alloc] init];
     
-    ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
-    _viewController = centerViewController;
-    BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];
+    _viewController = [[ZJHomeViewController alloc] init];
+
+    BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:_viewController];
     _navigationController = navigationController;
     
     _menuController = [[DDMenuController alloc] initWithRootViewController:navigationController];
@@ -113,12 +114,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                                                    UIRemoteNotificationTypeAlert)];
     // Required
     [APService setupWithOption:launchOptions];
-    
-    
-    MyLog(@"%@",[LoginUser sharedLoginUser].userName);
 
-    [APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
-    
+    //[APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
+    [APService setTags:[NSSet setWithObject:@"ios"] callbackSelector:nil object:nil];
     
     //获取当前时间保存沙河
     [self setCurrentTime];
@@ -183,14 +181,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 #endif
 
 
-
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     
-
-   
-    [_viewController pushController:[ChatViewController class] withInfo:notification.userInfo[@"username"] withTitle:notification.userInfo[@"username"]];
-    
+//    if (notification.userInfo[@"username"]) {
+//        [_viewController pushController:[ChatViewController class] withInfo:notification.userInfo[@"username"] withTitle:notification.userInfo[@"username"]];
+//    }
     //#warning SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
 }
@@ -284,6 +280,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         
         [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"6" withTitle:@"服药提醒"];
     }else if(type == 7){//荣誉榜
+        [_navigationController pushViewController:[[ZJHonorViewController alloc] init] animated:YES];
          [_viewController pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
     }else if(type == 8){//本班通知
         [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"本班通知"];
@@ -470,5 +467,25 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     application.applicationIconBadgeNumber += 1;
 }
 
+
+
+#pragma mark - IChatManagerDelegate 登录状态变化
+
+- (void)didLoginFromOtherDevice
+{
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的账号已在其他地方登录" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        alertView.tag = 100;
+        [alertView show];
+        
+    } onQueue:nil];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
+    self.window.rootViewController =login ;
+    
+}
 
 @end

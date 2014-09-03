@@ -34,15 +34,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //加载通讯录
+    [self initContacts];
     
-    [self refreshDataSource];
-    [self registerNotifications];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self unregisterNotifications];
 }
 
 
@@ -84,8 +83,7 @@
 //    [self.view addSubview:kindergarten];
     
     
-    //加载通讯录
-    [self initContacts];
+    
     
 }
 
@@ -94,7 +92,7 @@
 -(void)initContacts{
     
     //182.18.23.244:8080/kindergarten/service/app!addressbook.action?username=LS13436871757&role=1
-    
+    [_contactsArr removeAllObjects];
     NSDictionary *d = [NSDictionary dictionary];
     [_contactsArr addObject:d];
     
@@ -184,6 +182,8 @@
     
     ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:[dict[@"username"] lowercaseString]];
     chatVC.title = dict[@"name"];
+    chatVC.tel = dict[@"tel"];
+    chatVC.profileimngurl = dict[@"profileimngurl"];
     [self.navigationController pushViewController:chatVC animated:YES];
     
     DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
@@ -198,168 +198,9 @@
     
     
 }
-#pragma mark - getter
-
-- (UISearchBar *)searchBar
-{
-    if (!_searchBar) {
-        _searchBar = [[EMSearchBar alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 44)];
-        _searchBar.delegate = self;
-        _searchBar.placeholder = @"搜索";
-        _searchBar.backgroundColor = [UIColor colorWithRed:0.747 green:0.756 blue:0.751 alpha:1.000];
-    }
-    
-    return _searchBar;
-}
 
 
 
-- (EMSearchDisplayController *)searchController
-{
-    if (_searchController == nil) {
-        _searchController = [[EMSearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-     
-        _searchController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        __weak ZJRightSideDrawerViewController *weakSelf = self;
-        [_searchController setCellForRowAtIndexPathCompletion:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
-            //EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-
-            return nil;
-        }];
-        
-//        [_searchController setDidSelectRowAtIndexPathCompletion:^(UITableView *tableView, NSIndexPath *indexPath) {
-//            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//            [weakSelf.searchController.searchBar endEditing:YES];
-//            
-//            EMConversation *conversation = [weakSelf.searchController.resultsSource objectAtIndex:indexPath.row];
-//            ChatViewController *chatVC = [[ChatViewController alloc] initWithChatter:conversation.chatter];
-//            chatVC.title = conversation.chatter;
-//            [weakSelf.navigationController pushViewController:chatVC animated:YES];
-//        }];
-    }
-    
-    return _searchController;
-}
-
-
-#pragma mark - private
-
-- (NSMutableArray *)loadDataSource
-{
-    NSMutableArray *ret = nil;
-    NSArray *conversations = [[EaseMob sharedInstance].chatManager conversations];
-    NSArray* sorte = [conversations sortedArrayUsingComparator:
-                      ^(EMConversation *obj1, EMConversation* obj2){
-                          EMMessage *message1 = [obj1 latestMessage];
-                          EMMessage *message2 = [obj2 latestMessage];
-                          if(message1.timestamp > message2.timestamp) {
-                              return(NSComparisonResult)NSOrderedAscending;
-                          }else {
-                              return(NSComparisonResult)NSOrderedDescending;
-                          }
-                      }];
-    ret = [[NSMutableArray alloc] initWithArray:sorte];
-    return ret;
-}
-
-// 得到最后消息时间
--(NSString *)lastMessageTimeByConversation:(EMConversation *)conversation
-{
-    NSString *ret = @"";
-    EMMessage *lastMessage = [conversation latestMessage];;
-    if (lastMessage) {
-        ret = [NSDate formattedTimeFromTimeInterval:lastMessage.timestamp];
-    }
-    
-    return ret;
-}
-
-// 得到未读消息条数
-- (NSInteger)unreadMessageCountByConversation:(EMConversation *)conversation
-{
-    NSInteger ret = 0;
-    ret = conversation.unreadMessagesCount;
-    
-    return  ret;
-}
-
-// 得到最后消息文字或者类型
--(NSString *)subTitleMessageByConversation:(EMConversation *)conversation
-{
-    NSString *ret = @"";
-    EMMessage *lastMessage = [conversation latestMessage];
-    if (lastMessage) {
-        id<IEMMessageBody> messageBody = lastMessage.messageBodies.lastObject;
-        switch (messageBody.messageBodyType) {
-            case eMessageBodyType_Image:{
-                ret = @"[图片]";
-            } break;
-            case eMessageBodyType_Text:{
-                // 表情映射。
-                NSString *didReceiveText = [ConvertToCommonEmoticonsHelper
-                                            convertToSystemEmoticons:((EMTextMessageBody *)messageBody).text];
-                ret = didReceiveText;
-            } break;
-            case eMessageBodyType_Voice:{
-                ret = @"[声音]";
-            } break;
-            case eMessageBodyType_Location: {
-                ret = @"[位置]";
-            } break;
-            case eMessageBodyType_Video: {
-                ret = @"[视频]";
-            } break;
-            default: {
-            } break;
-        }
-    }
-    
-    return ret;
-}
-
-
-#pragma mark - IChatMangerDelegate
-
--(void)didUnreadMessagesCountChanged
-{
-    [self refreshDataSource];
-}
-
-- (void)didUpdateGroupList:(NSArray *)allGroups error:(EMError *)error
-{
-    [self refreshDataSource];
-}
-
-#pragma mark - registerNotifications
--(void)registerNotifications{
-    [self unregisterNotifications];
-    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
-}
-
--(void)unregisterNotifications{
-    [[EaseMob sharedInstance].chatManager removeDelegate:self];
-}
-
-- (void)dealloc{
-    [self unregisterNotifications];
-}
-
-#pragma mark - public
-
--(void)refreshDataSource
-{
-    self.dataSource = [self loadDataSource];
-    NSLog(@"%d",self.dataSource.count);
-    [_tableView reloadData];
-    [self hideHud];
-    
-    for (int i = 0; i<self.dataSource.count; i++) {
-        EMConversation *conversation = self.dataSource[i];
-        int unreadCount = [self unreadMessageCountByConversation:conversation];
-        MyLog(@"unreadCount:%d---chatter:%@",unreadCount,conversation.chatter);
-    }
-}
 
 
 

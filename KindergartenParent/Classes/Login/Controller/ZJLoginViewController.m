@@ -34,7 +34,7 @@
     
     
     [[EaseMob sharedInstance].chatManager asyncLogoff];
-    
+    [[LoginUser sharedLoginUser] loginout];
     // Do any additional setup after loading the view from its nib.
     UIImage *bgImage = [UIImage imageNamed:@"login_backgroundImage"];
     
@@ -119,8 +119,8 @@
             menuController.rootViewController = navigationController;
             
             self.view.window.rootViewController = menuController;
-            
-            [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[user.username lowercaseString] password:@"123456" completion:^(NSDictionary *loginInfo, EMError *error) {
+            NSString *password = [NSString md5:@"123456"];
+            [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[user.username lowercaseString] password:password completion:^(NSDictionary *loginInfo, EMError *error) {
                 if (!error) {
                     NSLog(@"登录成功:%@",loginInfo);
                     self.view.window.rootViewController = navigationController;
