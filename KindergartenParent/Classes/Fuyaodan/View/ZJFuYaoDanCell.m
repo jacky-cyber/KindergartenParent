@@ -57,26 +57,6 @@
     [self.contentView addSubview:timeLabel];
     
     
-    //早中晚显示 全部显示出来  根据数据 去选择图片实心空心 没有服药 隐藏图片
-
-    if (!_mornImg) {
-        _mornImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
-    }
-    _mornImg.image = [UIImage imageNamed:@"zao"];
-    [self addSubview:_mornImg];
-    
-    
-    if (!_noonImg) {
-        _noonImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+1*60, 10, 25, 25)];
-    }
-    _noonImg.image = [UIImage imageNamed:@"zhong"];
-    [self addSubview:_noonImg];
-    
-    if (!_eveImg) {
-        _eveImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+2*60, 10, 25, 25)];
-    }
-    _eveImg.image = [UIImage imageNamed:@"wan"];
-    [self addSubview:_eveImg];
     
     
 }
@@ -91,26 +71,57 @@
     //设置时间
     _timeLabel.text = [_fydmodel.time substringToIndex:10];
     
-    if (![self isRang:@"早" withModel:fydmodel]) {
-        _mornImg.alpha = kAlpha;
-       
-    }else{
-        _mornImg.alpha = 1;
+    
+    //早中晚显示 全部显示出来  根据数据 去选择图片实心空心 没有服药 隐藏图片
+    
+    if (!_mornImg) {
+        _mornImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
     }
     
-    if (![self isRang:@"中" withModel:fydmodel]) {
-        _noonImg.alpha = kAlpha;
+    if (![self isRang:@"早" withModel:fydmodel]) {
+        //        _mornImg.alpha = kAlpha;
+        _mornImg.image = [UIImage imageNamed:@"fuyao_morning"];
         
     }else{
-        _noonImg.alpha = 1;
+       _mornImg.image = [UIImage imageNamed:@"zao"];
     }
     
-    if (![self isRang:@"晚" withModel:fydmodel]) {
-        _eveImg.alpha = kAlpha;
-       
-    }else{
-        _eveImg.alpha = 1;
+    [self addSubview:_mornImg];
+    
+    
+    if (!_noonImg) {
+        _noonImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+1*60, 10, 25, 25)];
     }
+    if (![self isRang:@"中" withModel:fydmodel]) {
+        //        _noonImg.alpha = kAlpha;
+        _noonImg.image = [UIImage imageNamed:@"fuyao_noon"];
+        
+    }else{
+        _noonImg.image = [UIImage imageNamed:@"zhong"];
+    }
+    
+    [self addSubview:_noonImg];
+    
+    if (!_eveImg) {
+        _eveImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+2*60, 10, 25, 25)];
+    }
+    if (![self isRang:@"晚" withModel:fydmodel]) {
+        //        _eveImg.alpha = kAlpha;
+        _eveImg.image = [UIImage imageNamed:@"fuyao_afternoon"];
+        
+    }else{
+        _eveImg.image = [UIImage imageNamed:@"wan"];
+    }
+    
+    [self addSubview:_eveImg];
+
+    
+    
+    
+    
+   
+    
+    
     
     
     
@@ -140,19 +151,39 @@
     if (_fydmodel.moringstatus.intValue == 1) {
         _mornImg.image = [UIImage imageNamed:@"zao_h"];
     }else{
-        _mornImg.image = [UIImage imageNamed:@"zao"];
+        if (![self isRang:@"中" withModel:_fydmodel]) {
+            //        _noonImg.alpha = kAlpha;
+            _noonImg.image = [UIImage imageNamed:@"fuyao_noon"];
+            
+        }else{
+            _noonImg.image = [UIImage imageNamed:@"zhong"];
+        }
+        //_mornImg.image = [UIImage imageNamed:@"zao"];
     }
     
     if (_fydmodel.noonstatus.intValue == 1) {
         _noonImg.image = [UIImage imageNamed:@"zhong_h"];
     }else{
-        _noonImg.image = [UIImage imageNamed:@"zhong"];
+        if (![self isRang:@"中" withModel:_fydmodel]) {
+            //        _noonImg.alpha = kAlpha;
+            _noonImg.image = [UIImage imageNamed:@"fuyao_noon"];
+            
+        }else{
+            _noonImg.image = [UIImage imageNamed:@"zhong"];
+        }
     }
     
     if (_fydmodel.evestatus.intValue == 1) {
         _eveImg.image = [UIImage imageNamed:@"wan_h"];
     }else{
-        _eveImg.image = [UIImage imageNamed:@"wan"];
+        if (![self isRang:@"晚" withModel:_fydmodel]) {
+            //        _eveImg.alpha = kAlpha;
+            _eveImg.image = [UIImage imageNamed:@"fuyao_afternoon"];
+            
+        }else{
+            _eveImg.image = [UIImage imageNamed:@"wan"];
+        }
+
     }
 
     

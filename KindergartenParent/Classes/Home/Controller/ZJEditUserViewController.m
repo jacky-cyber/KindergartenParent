@@ -68,6 +68,10 @@
         contentStr = _textField.text.trimString;
     }
     
+//    if (contentStr.isEmptyString) {
+//        kPE(@"内容不能为空", 0.5);
+//        return;
+//    }
     //_contentLable.text = [_textView.text trimString];;
     
     //[_delegate editUserInfoViewControllerDidFinished];
@@ -75,7 +79,10 @@
     [self.delegate performSelector:@selector(editUserInfoViewControllerDidFinished:withLabel:) withObject:contentStr withObject:_contentLable];
     //修改xmpp 昵称
     if ([_param isEqualToString:@"nickname"]) {
-        [self savevCard:contentStr];
+        if (contentStr.length>8) {
+            kPE(@"昵称字数不能多于8个字", 1);
+            return;
+        }
     }
     
     

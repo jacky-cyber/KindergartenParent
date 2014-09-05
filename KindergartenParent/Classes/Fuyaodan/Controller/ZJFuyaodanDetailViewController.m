@@ -48,11 +48,11 @@
     //学生信息
     
     NSString *stuName = [NSString stringWithFormat:@"学生姓名：%@",_model.uname];
-    NSString *className = [NSString stringWithFormat:@"所在班级：%@",_model.uclasses];
-    NSString *parName = [NSString stringWithFormat:@"家长姓名：%@",_model.uparentname];
+//    NSString *className = [NSString stringWithFormat:@"所在班级：%@",_model.uclasses];
+//    NSString *parName = [NSString stringWithFormat:@"家长姓名：%@",_model.uparentname];
     NSString *teleCall = [NSString stringWithFormat:@"联系方式：%@",_model.utel];
     
-    NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,className,parName,teleCall, nil];
+    NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,teleCall, nil];
     
     
     //药物数据 string
@@ -104,8 +104,8 @@
                 
             }
             if ([self isRang:@"早"]) {
-                statusBtn.enabled = NO;
-                statusBtn.alpha = 0.5;
+               
+                [statusBtn setImage:[UIImage imageNamed:@"fuyao_morning"] forState:UIControlStateNormal];
             }
         }
         if (i==1) {
@@ -113,8 +113,7 @@
                 [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateNormal];
             }
             if ([self isRang:@"中"]) {
-                statusBtn.enabled = NO;
-                statusBtn.alpha = 0.5;
+                [statusBtn setImage:[UIImage imageNamed:@"fuyao_noon"] forState:UIControlStateNormal];
             }
         }
         if (i==2) {
@@ -122,8 +121,7 @@
                 [statusBtn setImage:[UIImage imageNamed:imageArrH[i]] forState:UIControlStateNormal];
             }
             if ([self isRang:@"晚"]) {
-                statusBtn.enabled = NO;
-                statusBtn.alpha = 0.5;
+                [statusBtn setImage:[UIImage imageNamed:@"fuyao_afternoon"] forState:UIControlStateNormal];
             }
         }
 
@@ -136,13 +134,13 @@
     UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, YH(label1), 280, 70)];
     //修改颜色值
     infobg.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
-    for (int i= 0; i<4; i++)
+    for (int i= 0; i<2; i++)
     {
-        int marginL = 10;
-        if (i==1 || i== 3) {
-            marginL = 25;
+        int marginT = 10;
+        if (i==1) {
+            marginT = 35;
         }
-        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(marginL+i%2*110, 10+i/2*25, 160, 30)];
+        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(10, marginT, 160, 30)];
         label.font = kFont12;
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor grayColor];

@@ -103,6 +103,12 @@
         }
        
     } failure:^(NSError *error) {
+        UIImage *backImg = [UIImage imageNamed:@"video_960"];
+        if (iPhone5) {
+            backImg = [UIImage imageNamed:@"video_1136"];
+        }
+        self.view.backgroundColor = [UIColor colorWithPatternImage:backImg];
+        [backImg release];
         kPE(kHttpErrorMsg, 0.5);
     }];
 }
@@ -284,7 +290,7 @@
     [self.vgSetup Stop];
     self.user.userDelegate = nil;
     self.vgView.viewDelegate = nil;
-    self.vgView.viewDelegate = nil;
+    self.vgSetup.setupDelegate = nil;
     
 }
 -(void)dealloc

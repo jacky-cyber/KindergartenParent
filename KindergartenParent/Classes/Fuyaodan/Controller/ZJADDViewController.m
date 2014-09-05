@@ -78,10 +78,10 @@
     
     //修改数据
     NSString *stuName =[NSString stringWithFormat:@"学生姓名：%@",[LoginUser sharedLoginUser].name];
-    NSString *className = [NSString stringWithFormat:@"所在班级：%@",[LoginUser sharedLoginUser].classes];
-    NSString *parName = [NSString stringWithFormat:@"家长姓名：%@",[LoginUser sharedLoginUser].parentname];
+//    NSString *className = [NSString stringWithFormat:@"所在班级：%@",[LoginUser sharedLoginUser].classes];
+//    NSString *parName = [NSString stringWithFormat:@"家长姓名：%@",[LoginUser sharedLoginUser].parentname];
     NSString *teleCall = [NSString stringWithFormat:@"联系方式：%@",[LoginUser sharedLoginUser].tel];
-    NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,className,parName,teleCall, nil];
+    NSArray *stuArray = [[NSArray alloc]initWithObjects:stuName,teleCall, nil];
     
     
     
@@ -131,19 +131,20 @@
     UILabel *infobg = [[UILabel alloc]initWithFrame:CGRectMake(20, 50, 280, 73)];
     
     infobg.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
-    for (int i= 0; i<4; i++)
+    for (int i= 0; i<2; i++)
     {
         
-        int marginL = 10;
-        if (i==1 || i== 3) {
-            marginL = 25;
+        int marginT = 10;
+        if (i==1) {
+            marginT = 35;
         }
-        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(marginL+i%2*110, 10+i/2*25, 160, 30)];
+        UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(10, marginT, 160, 30)];
         label.font = kFont12;
+        label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor grayColor];
         label.text = [stuArray objectAtIndex:i];
-        label.backgroundColor = [UIColor clearColor];
         [infobg addSubview:label];
+
         
         
     }

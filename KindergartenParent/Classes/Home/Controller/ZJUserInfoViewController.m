@@ -108,7 +108,8 @@
         switch (i) {
             case 0:
             {
-                title = _userModel.nickname;
+                //title = _userModel.nickname;
+                title = !_userModel.nickname.isEmptyString ?_userModel.nickname:@"未填写";
             }
             break;
             case 1:
@@ -128,14 +129,16 @@
                 break;
             case 4:
             {
-                title = _userModel.address;
+                //title = _userModel.address;
+                title = !_userModel.address.isEmptyString ?_userModel.address:@"未填写";
                 btnY = addH<btnY?btnY:addH;
                 parentY = btnY + 20;
             }
                 break;
             case 5:
             {
-                title = _userModel.guominshi;
+                //title = _userModel.guominshi;
+                title = !_userModel.guominshi.isEmptyString ?_userModel.guominshi:@"未填写";
                 btnY = guominshiH<btnY?btnY:guominshiH;
                 parentY = btnY +20;
             }

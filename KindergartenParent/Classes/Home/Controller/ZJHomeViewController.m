@@ -17,6 +17,8 @@
 #import "DockItem.h"
 #import "InsetsLabel.h"
 #import "ZJCourseViewController.h"
+#import "ZJLoginViewController.h"
+#import "APService.h"
 #define kBtnW 106.66666
 
 @interface ZJHomeViewController ()<IChatManagerDelegate>
@@ -86,7 +88,8 @@
 //#warning 把self注册为SDK的delegate
     [self registerNotifications];
     
-    
+//    //进来重新登录一遍
+//    [self loginAction];
 }
 
 -(void)setParentView
@@ -143,11 +146,15 @@
 
 -(void)setProfileImg
 {
+    //单击昵称
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(updateProfileAction)];
     
      NSString *name = ![[LoginUser sharedLoginUser].nickname isEqualToString:@""]?[LoginUser sharedLoginUser].nickname:[LoginUser sharedLoginUser].name;
     NSString *str  = [NSString stringWithFormat:@"%@  %@",name,[LoginUser sharedLoginUser].classes];
     CGSize size = [str sizeWithFont:kFont(16)];
     _parentName=[[InsetsLabel alloc] initWithFrame:CGRectMake(60,H(_headerImageView)-25,size.width+10,25)];
+    _parentName.userInteractionEnabled = YES;
     _parentName.insets = UIEdgeInsetsMake(0, 15, 0, 0);
     _parentName.font = kFont(16);
     _parentName.backgroundColor =  [UIColor colorWithWhite:0.000 alpha:0.200];
@@ -158,8 +165,14 @@
     [_parentName setAttributedText:[self setParentNameAttrText]];
     
     //parentName.text = str;
+    //单击头像
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(updateProfileAction)];
+    [_parentName  addGestureRecognizer:tap1];
     [self.view addSubview:_parentName];
-
+    
+    
+    
     
     _profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, H(_headerImageView)-40, 60, 60)];
     _profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -172,8 +185,6 @@
     _profileImageView.layer.masksToBounds = YES;
     _profileImageView.userInteractionEnabled = YES;
     //单击头像
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self action:@selector(updateProfileAction)];
     [_profileImageView addGestureRecognizer:tap];
     [self.view addSubview:_profileImageView];
     
@@ -396,6 +407,50 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark login
+- (void)loginAction {
+    
+    NSString *username = [LoginUser sharedLoginUser].userName;
+    NSString *pwd = [LoginUser sharedLoginUser].password;
+    
+    
+    [HttpTool getWithPath:@"login" params:@{@"username":username,@"pwd":pwd} success:^(id JSON) {
+        if (JSON[@"data"]) {
+            
+            // MyLog(@"%@",JSON);
+            
+            [SVProgressHUD showSuccessWithStatus:@"登录成功" duration:0.5];
+            
+            //[LoginUser sharedLoginUser].userName = username;
+            
+            ZJUserInfoModel *user = [[ZJUserInfoModel alloc] init];
+            
+            [user setKeyValues:JSON[@"data"]];
+            [LoginUser sharedLoginUser].password = pwd;
+            [[LoginUser sharedLoginUser] saveInfo:user];
+            
+            // MyLog(@"%@",[LoginUser sharedLoginUser].description);
+            
+            [APService setAlias:user.username callbackSelector:nil object:nil];
+                       
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"用户名/密码错误" duration:1];
+            [self gologinControll];
+        }
+    } failure:^(NSError *error) {
+        kPE(kHttpErrorMsg, 0.5);
+        MyLog(@"%@",error);
+    }];
+    
+    
+}
+-(void)gologinControll
+{
+    ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
+    self.view.window.rootViewController =login ;
 }
 
 @end

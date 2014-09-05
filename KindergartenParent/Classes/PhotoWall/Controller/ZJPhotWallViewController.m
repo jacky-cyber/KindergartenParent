@@ -421,7 +421,7 @@
             default:
                 break;
         }
-        UIButton *button = [ZJUIMethods creatButton:title frame:CGRectMake(i*58, 0, 48, 20) delegate:self selector:@selector(initData:) tag:tag];
+        UIButton *button = [ZJUIMethods creatButton:title frame:CGRectMake(i*58, 0, 48, 20) delegate:self selector:nil  tag:tag];
         button.titleLabel.font = kFont(14);
         [button setBackgroundImage:[UIImage imageNamed:@"categor_bg"] forState:UIControlStateNormal];
         [cateView addSubview:button];

@@ -113,6 +113,10 @@
            // MyLog(@"%@",[LoginUser sharedLoginUser].description);
             
             [APService setAlias:user.username callbackSelector:nil object:nil];
+            NSString *str = [APService registrionID];
+            
+            MyLog(@"str:%@",str);
+            
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
             ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
             BaseNavigationController *navigationController = [[BaseNavigationController alloc] initWithRootViewController:centerViewController];

@@ -201,7 +201,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
     
     //#warning SDK方法调用
     [[EaseMob sharedInstance] applicationDidBecomeActive:application];
@@ -226,7 +226,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     //在此处理接收到的消息。
     // Required
-    application.applicationIconBadgeNumber = 0;
     [APService handleRemoteNotification:userInfo];
     
     //#warning SDK方法调用

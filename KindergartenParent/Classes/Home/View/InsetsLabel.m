@@ -13,6 +13,7 @@
 -(id) initWithFrame:(CGRect)frame andInsets:(UIEdgeInsets)insets {
     self = [super initWithFrame:frame];
     if(self){
+        self.userInteractionEnabled = YES;
         self.insets = insets;
     }
     return self;
