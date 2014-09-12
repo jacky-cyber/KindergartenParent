@@ -71,6 +71,7 @@
     kPBlack(@"正在加载本周食谱")
     [HttpTool getWithPath:@"recipe" params:@{@"kid":[LoginUser sharedLoginUser].kindergartenid} success:^(id JSON) {
         if ([JSON[@"code"] intValue] == 0) {
+
             NSArray *data = JSON[@"data"][@"everyday"];
             for (NSDictionary *dict in data) {
         
@@ -82,16 +83,14 @@
             
             if (JSON[@"data"][@"images"]) {
                 _images = JSON[@"data"][@"images"];
-            
-                
-                
+  
             }
             
             kPdismiss;
+        }else{
+            kPE(JSON[@"msg"], 0.5);
         }
-        
-//        CookBookModel *dict = _dataArr[1];
-//        NSLog(@"%d",dict.count);
+
         
     } failure:^(NSError *error) {
         kPE(kHttpErrorMsg, 0.5);
@@ -110,19 +109,23 @@
    
         // 1.封装图片数据
         NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+        NSMutableArray *imgNames = [NSMutableArray arrayWithCapacity:count];
         for (int i = 0; i<count; i++) {
             // 替换为中等尺寸图片
             
             MJPhoto *photo = [[MJPhoto alloc] init];
-            photo.url = [NSURL URLWithString:_images[i]]; // 图片路径
+            photo.url = [NSURL URLWithString:_images[i][@"imgurl"]]; // 图片路径
            // photo.srcImageView = self.view.subviews[i]; // 来源于哪个UIImageView
             [photos addObject:photo];
+            
+            [imgNames addObject:_images[i][@"imgname"]];
         }
         
         // 2.显示相册
         MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
         //browser.currentPhotoIndex = sender.tag; // 弹出相册时显示的第一张图片是？
         browser.photos = photos; // 设置所有的图片
+        browser.imgNames = imgNames;
         [browser show];
     
     

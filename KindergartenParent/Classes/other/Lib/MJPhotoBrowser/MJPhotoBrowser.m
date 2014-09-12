@@ -69,12 +69,13 @@
 #pragma mark 创建工具条
 - (void)createToolbar
 {
-    CGFloat barHeight = 44;
+    CGFloat barHeight = 64;
     CGFloat barY = self.view.frame.size.height - barHeight;
     _toolbar = [[MJPhotoToolbar alloc] init];
     _toolbar.frame = CGRectMake(0, barY, self.view.frame.size.width, barHeight);
     _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     _toolbar.photos = _photos;
+    _toolbar.imgNames = _imgNames;
     [self.view addSubview:_toolbar];
     
     [self updateTollbarState];
@@ -112,6 +113,10 @@
         photo.index = i;
         photo.firstShow = i == _currentPhotoIndex;
     }
+}
+-(void)setImgNames:(NSArray *)imgNames
+{
+    _imgNames = imgNames;
 }
 
 #pragma mark 设置选中的图片

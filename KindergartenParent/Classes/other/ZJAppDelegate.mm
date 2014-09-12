@@ -40,6 +40,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
     ZJHomeViewController *_viewController;
     BaseNavigationController * _navigationController;
+    NSDictionary *_pushDict;
 }
 @property (strong, nonatomic)NSDate *lastPlaySoundDate;
 @end
@@ -114,7 +115,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                                                    UIRemoteNotificationTypeAlert)];
     // Required
     [APService setupWithOption:launchOptions];
-
+    [self saveToDB:launchOptions];
     //[APService setAlias:[LoginUser sharedLoginUser].userName callbackSelector:nil object:nil];
     [APService setTags:[NSSet setWithObject:@"ios"] callbackSelector:nil object:nil];
     
@@ -230,38 +231,87 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     //#warning SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveRemoteNotification:userInfo];
-
-    int  type  =  [userInfo[@"type"] intValue];
     
-//    [self pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
-    NSLog(@"Receive remote notification : %@",userInfo);
+    //接受推送
+    [self saveToDB:userInfo];
 
-//    
-//    
-//      [alert show];
+}
 
-//    1	系统消息
-//    2	幼儿园通知  ---
-//    3	本周食谱 ----
-//    4	每日一报 ----
-//    5	每周一报 ---
-//    6	医务室通知 ------
-//    7	荣誉榜 -----
-//    8	老师通知 ----
-//    9	生日提醒 ----
-//    10	活动通知 ---
-//    11	签到/签退 ----
-//    12	月评 -----
-//    13	回复通知
+- (void)saveToDB:(NSDictionary*)dict
+{
+    if (dict) {
+
+       
+        
+        
+        _pushDict = [NSDictionary dictionary];
+        //如果是离线的推送会
+        if ([dict objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
+            NSDictionary *dict1 = [dict objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+            _pushDict = dict1;
+        }else
+        {
+            _pushDict = dict;
+            
+        }
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"订阅消息" message:_pushDict[@"aps"][@"alert"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
+        [alert show];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     
-//    全园通知（您有一条新的全园通知），点击进入详情页
-//    活动通知（您有一条新的活动通知），点击进入详情页
-//    本班通知（您有一条新的本班通知），点击进入详情页
+    if (_pushDict ==nil) {//如果不是远程推送
+        ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
+        self.window.rootViewController =login ;
+        return;
+    }
+    
+    if (buttonIndex !=1) {
+        return;
+    }
+    
+    
+    int  type  =  [_pushDict[@"type"] intValue];
+    
+    //    [self pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
+    NSLog(@"Receive remote notification : %@",_pushDict);
+    
+    //
+    //
+    //      [alert show];
+    
+    //    1	系统消息
+    //    2	幼儿园通知  ---
+    //    3	本周食谱 ----
+    //    4	每日一报 ----
+    //    5	每周一报 ---
+    //    6	医务室通知 ------
+    //    7	荣誉榜 -----
+    //    8	老师通知 ----
+    //    9	生日提醒 ----
+    //    10	活动通知 ---
+    //    11	签到/签退 ----
+    //    12	月评 -----
+    //    13	回复通知
+    
+    //    全园通知（您有一条新的全园通知），点击进入详情页
+    //    活动通知（您有一条新的活动通知），点击进入详情页
+    //    本班通知（您有一条新的本班通知），点击进入详情页
     
     ZJHomeModel *model = [[ZJHomeModel alloc] init];
-    model.type = userInfo[@"type"];
-    model.id = userInfo[@"id"];
-    model.content = userInfo[@"content"];
+    model.type = _pushDict[@"type"];
+    model.id = _pushDict[@"msgid"];
+    model.content = _pushDict[@"content"];
+    if (!_pushDict[@"msgid"]) {
+        model.createtime = [TimeFormatTools timeFormatToDate:[NSDate date]];
+    }
+    if (_viewController == nil) {
+        
+        _viewController = [[ZJHomeViewController alloc] init];
+    }
+    
     
     
     if(type == 2){
@@ -271,16 +321,16 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }else if(type == 3){//本周食谱
         [_viewController pushController:[ZJCookBooksViewController class] withInfo:model withTitle:@"本周食谱"];
     }else if(type == 4 ) {//每日一报
-        [_viewController pushController:[ZJDayReportViewController class] withInfo:userInfo[@"id"] withTitle:@"每日一报"];
+        [_viewController pushController:[ZJDayReportViewController class] withInfo:_pushDict[@"msgid"] withTitle:@"每日一报"];
         
     }else if(type == 5){//每周一报
-        [_viewController pushController:[ZJWeekReportsViewController class] withInfo:userInfo[@"id"] withTitle:@"每周一报"];
+        [_viewController pushController:[ZJWeekReportsViewController class] withInfo:_pushDict[@"msgid"] withTitle:@"每周一报"];
     }else if(type == 6){//医务通知
         
         [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"6" withTitle:@"服药提醒"];
     }else if(type == 7){//荣誉榜
-        [_navigationController pushViewController:[[ZJHonorViewController alloc] init] animated:YES];
-         [_viewController pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
+
+        [_viewController pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
     }else if(type == 8){//本班通知
         [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"本班通知"];
     }else if(type == 9){//通知公告
@@ -293,8 +343,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [_viewController pushController:[ZJMonthCommentViewController class] withInfo:nil withTitle:@"家长月评"];
     }
     
+    NSLog(@"%d",buttonIndex);
 }
-
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
@@ -479,12 +529,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         
     } onQueue:nil];
 }
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    ZJLoginViewController *login =  [[ZJLoginViewController alloc] init];
-    self.window.rootViewController =login ;
-    
-}
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    
+//    
+//    
+//}
 
 @end

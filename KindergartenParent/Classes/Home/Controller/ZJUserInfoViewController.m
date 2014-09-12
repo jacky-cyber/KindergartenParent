@@ -47,7 +47,7 @@
     //设置头像
     [self.prifileImg setImageWithURL:[NSURL URLWithString:_userModel.profileimg] placeholderImage:[UIImage imageNamed:@"profile"]];
     self.prifileImg.tag = 100;
-    self.prifileImg.layer.cornerRadius = 5;
+    self.prifileImg.layer.cornerRadius = 30;
     self.prifileImg.layer.masksToBounds = YES;
     self.prifileImg.userInteractionEnabled = YES;
     //单击头像

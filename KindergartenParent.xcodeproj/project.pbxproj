@@ -10,7 +10,6 @@
 		4B0676C8198889280031754B /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676C7198889280031754B /* libresolv.dylib */; };
 		4B0676CA198889360031754B /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676C9198889360031754B /* libxml2.dylib */; };
 		4B0676CC1988893F0031754B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0676CB1988893F0031754B /* Security.framework */; };
-		4B0676D919889F550031754B /* SoundTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0676D819889F550031754B /* SoundTool.m */; };
 		4B1B4303195FD71900EDAE1E /* MJPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42F7195FD71900EDAE1E /* MJPhoto.m */; };
 		4B1B4304195FD71900EDAE1E /* MJPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B1B42F8195FD71900EDAE1E /* MJPhotoBrowser.bundle */; };
 		4B1B4305195FD71900EDAE1E /* MJPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1B42FA195FD71900EDAE1E /* MJPhotoBrowser.m */; };
@@ -150,7 +149,6 @@
 		4B24807919590DC900C520A9 /* img05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FD819590DC900C520A9 /* img05@2x.png */; };
 		4B24807A19590DC900C520A9 /* 201277441619594489.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FDA19590DC900C520A9 /* 201277441619594489.jpg */; };
 		4B24807B19590DC900C520A9 /* nav_menu_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FDB19590DC900C520A9 /* nav_menu_icon@2x.png */; };
-		4B24807C19590DC900C520A9 /* profile_detial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B247FDC19590DC900C520A9 /* profile_detial@2x.png */; };
 		4B24808E1959796100C520A9 /* ZJHomeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B24808D1959796100C520A9 /* ZJHomeModel.m */; };
 		4B2C156F1963A6C300BB2335 /* timeline_image_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */; };
 		4B2C15701963A6C300BB2335 /* timeline_image_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B2C156E1963A6C300BB2335 /* timeline_image_loading@2x.png */; };
@@ -249,6 +247,7 @@
 		4B832D14198795F4002BEE63 /* zhong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B832D04198795F4002BEE63 /* zhong@2x.png */; };
 		4B832D15198795F4002BEE63 /* zhong_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B832D05198795F4002BEE63 /* zhong_h@2x.png */; };
 		4B85B34C19A4B7ED00559DF5 /* button_start@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B85B34B19A4B7ED00559DF5 /* button_start@2x.png */; };
+		4B950EC619C14A7E00097C0B /* put out_take pictures_icon_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B950EC519C14A7E00097C0B /* put out_take pictures_icon_delete@2x.png */; };
 		4B998A2D1966B62A00EAECC8 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B998A1D1966B62A00EAECC8 /* MJRefresh.bundle */; };
 		4B998A2E1966B62A00EAECC8 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A201966B62A00EAECC8 /* MJRefreshBaseView.m */; };
 		4B998A2F1966B62A00EAECC8 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B998A221966B62A00EAECC8 /* MJRefreshConst.m */; };
@@ -521,7 +520,6 @@
 		4BA2D7BE19AEDB460066A321 /* chat_sender_audio_playing_full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2D76119AEDB460066A321 /* chat_sender_audio_playing_full@2x.png */; };
 		4BA2D7BF19AEDB460066A321 /* chat_sender_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2D76219AEDB460066A321 /* chat_sender_bg.png */; };
 		4BA2D7C019AEDB460066A321 /* chat_sender_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2D76319AEDB460066A321 /* chat_sender_bg@2x.png */; };
-		4BA318AA199070490039001E /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA318A9199070490039001E /* libmp3lame.a */; };
 		4BC9ECBD19AAFBB700B09B6A /* ZJHomeDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9ECBC19AAFBB700B09B6A /* ZJHomeDetialViewController.m */; };
 		4BC9ECC319AB055300B09B6A /* ZJHomeDetialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BC9ECC219AB055300B09B6A /* ZJHomeDetialViewController.xib */; };
 		4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E11985EE5500405247 /* libPushSDK.a */; };
@@ -675,9 +673,6 @@
 		4B0676C7198889280031754B /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		4B0676C9198889360031754B /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		4B0676CB1988893F0031754B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		4B0676D719889F550031754B /* SoundTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTool.h; sourceTree = "<group>"; };
-		4B0676D819889F550031754B /* SoundTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundTool.m; sourceTree = "<group>"; };
-		4B0676DB1988A17B0031754B /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		4B1B42F6195FD71900EDAE1E /* MJPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPhoto.h; sourceTree = "<group>"; };
 		4B1B42F7195FD71900EDAE1E /* MJPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPhoto.m; sourceTree = "<group>"; };
 		4B1B42F8195FD71900EDAE1E /* MJPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJPhotoBrowser.bundle; sourceTree = "<group>"; };
@@ -927,7 +922,6 @@
 		4B247FD819590DC900C520A9 /* img05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img05@2x.png"; sourceTree = "<group>"; };
 		4B247FDA19590DC900C520A9 /* 201277441619594489.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 201277441619594489.jpg; sourceTree = "<group>"; };
 		4B247FDB19590DC900C520A9 /* nav_menu_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_menu_icon@2x.png"; sourceTree = "<group>"; };
-		4B247FDC19590DC900C520A9 /* profile_detial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_detial@2x.png"; sourceTree = "<group>"; };
 		4B24808C1959796100C520A9 /* ZJHomeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeModel.h; sourceTree = "<group>"; };
 		4B24808D1959796100C520A9 /* ZJHomeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeModel.m; sourceTree = "<group>"; };
 		4B2C156D1963A6C300BB2335 /* timeline_image_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_image_loading.png; sourceTree = "<group>"; };
@@ -1150,6 +1144,7 @@
 		4B832D04198795F4002BEE63 /* zhong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhong@2x.png"; sourceTree = "<group>"; };
 		4B832D05198795F4002BEE63 /* zhong_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhong_h@2x.png"; sourceTree = "<group>"; };
 		4B85B34B19A4B7ED00559DF5 /* button_start@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_start@2x.png"; sourceTree = "<group>"; };
+		4B950EC519C14A7E00097C0B /* put out_take pictures_icon_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "put out_take pictures_icon_delete@2x.png"; sourceTree = "<group>"; };
 		4B998A1D1966B62A00EAECC8 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		4B998A1E1966B62A00EAECC8 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		4B998A1F1966B62A00EAECC8 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
@@ -1623,7 +1618,6 @@
 		4BA2D76119AEDB460066A321 /* chat_sender_audio_playing_full@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_audio_playing_full@2x.png"; sourceTree = "<group>"; };
 		4BA2D76219AEDB460066A321 /* chat_sender_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_sender_bg.png; sourceTree = "<group>"; };
 		4BA2D76319AEDB460066A321 /* chat_sender_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_bg@2x.png"; sourceTree = "<group>"; };
-		4BA318A9199070490039001E /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		4BC1060E19B07F2E004FD253 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		4BC1060F19B07F2E004FD253 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		4BC9ECBB19AAFBB700B09B6A /* ZJHomeDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeDetialViewController.h; sourceTree = "<group>"; };
@@ -1788,7 +1782,6 @@
 				4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */,
 				4B382998199B6A4C00595557 /* libavfilter.a in Frameworks */,
 				4B247E8319590D9200C520A9 /* Foundation.framework in Frameworks */,
-				4BA318AA199070490039001E /* libmp3lame.a in Frameworks */,
 				4B382996199B6A4C00595557 /* libavcodec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1806,15 +1799,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4B0676DA1988A17B0031754B /* lame */ = {
-			isa = PBXGroup;
-			children = (
-				4B0676DB1988A17B0031754B /* lame.h */,
-				4BA318A9199070490039001E /* libmp3lame.a */,
-			);
-			path = lame;
-			sourceTree = "<group>";
-		};
 		4B1B42F5195FD71900EDAE1E /* MJPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -2210,7 +2194,6 @@
 			children = (
 				4BA2D4AB19AED3ED0066A321 /* EaseMobSDK */,
 				4B3828C4199B6A4C00595557 /* YuGaoVideo */,
-				4B0676DA1988A17B0031754B /* lame */,
 				4BE4B0DE1985EE5500405247 /* jPush */,
 				4B998A1C1966B62A00EAECC8 /* MJRefresh */,
 				4B1B42F5195FD71900EDAE1E /* MJPhotoBrowser */,
@@ -2367,8 +2350,6 @@
 		4B247F8F19590DC900C520A9 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				4B0676D719889F550031754B /* SoundTool.h */,
-				4B0676D819889F550031754B /* SoundTool.m */,
 				4B247F9019590DC900C520A9 /* HttpTool.h */,
 				4B247F9119590DC900C520A9 /* HttpTool.m */,
 				4B247F9219590DC900C520A9 /* Singletons.h */,
@@ -2532,7 +2513,6 @@
 			children = (
 				4B247FDA19590DC900C520A9 /* 201277441619594489.jpg */,
 				4B247FDB19590DC900C520A9 /* nav_menu_icon@2x.png */,
-				4B247FDC19590DC900C520A9 /* profile_detial@2x.png */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -3844,6 +3824,7 @@
 		4BA2D70019AEDB460066A321 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				4B950EC519C14A7E00097C0B /* put out_take pictures_icon_delete@2x.png */,
 				4BA2D70119AEDB460066A321 /* audio */,
 				4BA2D73219AEDB460066A321 /* chat_video_play.png */,
 				4BA2D73319AEDB460066A321 /* ChatBarImages */,
@@ -4190,6 +4171,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = define;
 				TargetAttributes = {
+					4B247E7E19590D9200C520A9 = {
+						DevelopmentTeam = QWEGSB7W86;
+					};
 					4B247E9F19590D9200C520A9 = {
 						TestTargetID = 4B247E7E19590D9200C520A9;
 					};
@@ -4321,6 +4305,7 @@
 				4BE9CE731999E0F500A70BB5 /* Expression_61@2x.png in Resources */,
 				4BE9CE4B1999E0F500A70BB5 /* Expression_25@2x.png in Resources */,
 				4BE9CE7C1999E0F500A70BB5 /* Expression_6@2x.png in Resources */,
+				4B950EC619C14A7E00097C0B /* put out_take pictures_icon_delete@2x.png in Resources */,
 				4BC9ECC319AB055300B09B6A /* ZJHomeDetialViewController.xib in Resources */,
 				4BA2D6A019AED5360066A321 /* chatBar_more_camera@2x.png in Resources */,
 				4B24800C19590DC900C520A9 /* ZJDrugStatusController.xib in Resources */,
@@ -4386,7 +4371,6 @@
 				4BA2D7A019AEDB460066A321 /* chatListCellHead@2x.png in Resources */,
 				4B7111521982537700C77B42 /* ZJNotificationListCell.xib in Resources */,
 				4B24801119590DC900C520A9 /* ZJSystemMsgViewController.xib in Resources */,
-				4B24807C19590DC900C520A9 /* profile_detial@2x.png in Resources */,
 				4BA2D7BE19AEDB460066A321 /* chat_sender_audio_playing_full@2x.png in Resources */,
 				4BA2D79D19AEDB460066A321 /* chatBar_textBg.png in Resources */,
 				4BE9CE941999E0F500A70BB5 /* Expression_91@2x.png in Resources */,
@@ -4615,7 +4599,6 @@
 				4B24802A19590DC900C520A9 /* IQSegmentedNextPrevious.m in Sources */,
 				4BE9CEA21999E0F500A70BB5 /* MLEmojiLabel.m in Sources */,
 				4BA2D6AD19AED5360066A321 /* EMChatBaseBubbleView.m in Sources */,
-				4B0676D919889F550031754B /* SoundTool.m in Sources */,
 				4BA2D6E319AED5360066A321 /* BaseViewController.m in Sources */,
 				4BA2D6D019AED5360066A321 /* NSManagedObjectContext+MagicalObserving.m in Sources */,
 				4BA2D6E019AED5360066A321 /* EMSearchBar.m in Sources */,
@@ -4987,7 +4970,7 @@
 		4B247EB219590D9200C520A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
@@ -5032,7 +5015,7 @@
 		4B247EB319590D9200C520A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";

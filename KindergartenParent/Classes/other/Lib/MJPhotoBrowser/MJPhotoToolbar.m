@@ -37,12 +37,15 @@
         _indexLabel = [[UILabel alloc] init];
         _indexLabel.font = [UIFont boldSystemFontOfSize:20];
         _indexLabel.frame = self.bounds;
+        _indexLabel.numberOfLines = 0;
         _indexLabel.backgroundColor = [UIColor clearColor];
         _indexLabel.textColor = [UIColor whiteColor];
         _indexLabel.textAlignment = NSTextAlignmentCenter;
         _indexLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:_indexLabel];
     }
+    
+    
     
     // 保存图片按钮
     CGFloat btnWidth = self.bounds.size.height;
@@ -54,7 +57,24 @@
     [_saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_saveImageBtn];
 }
+-(void)setImgNames:(NSArray *)imgNames
+{
+    _imgNames = imgNames;
+    if (_imgNames.count>0) {
+        if (!_indexLabel) {
+            _indexLabel = [[UILabel alloc] init];
+            _indexLabel.frame = self.bounds;
+            _indexLabel.numberOfLines = 0;
+            _indexLabel.backgroundColor = [UIColor clearColor];
+            _indexLabel.textColor = [UIColor whiteColor];
+            _indexLabel.textAlignment = NSTextAlignmentCenter;
+            _indexLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            [self addSubview:_indexLabel];
+        }
+        _indexLabel.font = [UIFont boldSystemFontOfSize:18];
+    }
 
+}
 - (void)saveImage
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -79,8 +99,14 @@
 {
     _currentPhotoIndex = currentPhotoIndex;
     
+    NSString *name = @"";
+    
+    if (_imgNames.count>0) {
+        name = [_imgNames[_currentPhotoIndex] appendStr:@"\n"];
+    }
+    
     // 更新页码
-    _indexLabel.text = [NSString stringWithFormat:@"%d / %d", _currentPhotoIndex + 1, _photos.count];
+    _indexLabel.text = [NSString stringWithFormat:@"%@ %d / %d",name, _currentPhotoIndex + 1, _photos.count];
     
     MJPhoto *photo = _photos[_currentPhotoIndex];
     // 按钮

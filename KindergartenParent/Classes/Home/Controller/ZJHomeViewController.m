@@ -55,15 +55,9 @@
     
     //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
     [self didUnreadMessagesCountChanged];
-    _noReadMsgLabel.alpha = 1 ;
+    _noReadMsgLabel.hidden = NO;
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    _noReadMsgLabel.alpha = 0 ;
-    
-    MyLog(@"viewWillDisappear");
-}
+
 
 - (void)viewDidLoad
 {
@@ -181,7 +175,7 @@
 
     //设置头像
     [_profileImageView setImageWithURL:[NSURL URLWithString:[LoginUser sharedLoginUser].profilImg] placeholderImage:[UIImage imageNamed:@"profile"]];
-    _profileImageView.layer.cornerRadius = 10;
+    _profileImageView.layer.cornerRadius = 30;
     _profileImageView.layer.masksToBounds = YES;
     _profileImageView.userInteractionEnabled = YES;
     //单击头像
@@ -363,17 +357,21 @@
         _noReadMsgLabel.layer.masksToBounds = YES;
         _noReadMsgLabel.textColor = [UIColor whiteColor];
         [self.navigationController.navigationBar addSubview:_noReadMsgLabel];
-        MyLog(@"_noReadMsgLabel is nil");
+       // MyLog(@"_noReadMsgLabel is nil");
     }
-    
-//    if (unreadCount==0) {
-//        _noReadMsgLabel.alpha = 0;
-//    }else{
-//       _noReadMsgLabel.alpha = 1;
-//    }
+    if (unreadCount==0) {
+        _noReadMsgLabel.alpha = 0;
+    }else{
+        _noReadMsgLabel.alpha = 1;
+    }
+
     _noReadMsgLabel.text = [NSString stringWithFormat:@"%d",unreadCount];
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    _noReadMsgLabel.hidden = YES;
+}
 #pragma mark - IChatManagerDelegate 消息变化
 
 // 未读消息数量变化回调

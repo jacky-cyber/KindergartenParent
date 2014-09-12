@@ -79,14 +79,10 @@
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,@"classid":[LoginUser sharedLoginUser].classid};
     
     [HttpTool getWithPath:@"videoinfo" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue] ==1) {
             kPE(JSON[@"msg"], 1);
-            UIImage *backImg = [UIImage imageNamed:@"video_960"];
-            if (iPhone5) {
-                backImg = [UIImage imageNamed:@"video_1136"];
-            }
-            self.view.backgroundColor = [UIColor colorWithPatternImage:backImg];
-            [backImg release];
+            [self setViewBackground];
             return ;
         }else{
             
@@ -103,12 +99,7 @@
         }
        
     } failure:^(NSError *error) {
-        UIImage *backImg = [UIImage imageNamed:@"video_960"];
-        if (iPhone5) {
-            backImg = [UIImage imageNamed:@"video_1136"];
-        }
-        self.view.backgroundColor = [UIColor colorWithPatternImage:backImg];
-        [backImg release];
+        [self setViewBackground];
         kPE(kHttpErrorMsg, 0.5);
     }];
 }
@@ -142,7 +133,7 @@
         //MyLog(@"%@",self.userData);
         for (CameraInfo *camera in self.cameraListArray) {
             
-            //MyLog(@"szCameraSerialNO：%@---%@",camera.szCameraSerialNO,[self.userData objectForKey:@"camerano"]);
+            MyLog(@"szCameraSerialNO：%@---%@",camera.szCameraSerialNO,[self.userData objectForKey:@"camerano"]);
             if ([camera.szCameraSerialNO isEqualToString:[_userData objectForKey:@"camerano"]]) {
 //                MyLog(@"szCameraSerialNO：%@---%@",camera.szCameraSerialNO,_userData[@"camerano"]);
                 if (camera.IsOnline) {
@@ -191,6 +182,8 @@
 
 - (int)OnUserError:         (VGUser *)user eno:(int)nErrNo
 {
+    kPE(@"视频系统错误",0.5);
+    [self setViewBackground];
     NSLog(@"user有错误");
     return 1;
 }
@@ -293,6 +286,17 @@
     self.vgSetup.setupDelegate = nil;
     
 }
+
+-(void)setViewBackground
+{
+    UIImage *backImg = [UIImage imageNamed:@"video_960"];
+    if (iPhone5) {
+        backImg = [UIImage imageNamed:@"video_1136"];
+    }
+    self.view.backgroundColor = [UIColor colorWithPatternImage:backImg];
+    [backImg release];
+}
+
 -(void)dealloc
 {
     [super dealloc];

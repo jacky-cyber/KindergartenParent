@@ -155,7 +155,7 @@
          [cell addSubview:imageView];
          
          [imageView setImageURLStr:dict[@"profileimngurl"] placeholder:[UIImage imageNamed:@"profile"]];
-         imageView.layer.cornerRadius = 5;
+         imageView.layer.cornerRadius = 25;
          imageView.layer.masksToBounds = YES;
          imageView.layer.borderColor = [UIColor whiteColor].CGColor;
          imageView.layer.borderWidth = 2.0;

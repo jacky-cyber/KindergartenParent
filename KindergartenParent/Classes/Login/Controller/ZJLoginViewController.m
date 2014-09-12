@@ -15,6 +15,7 @@
 #import "ZJAppDelegate.h"
 #import "ZJHomeViewController.h"
 #import "APService.h"
+#import <AdSupport/AdSupport.h>
 @interface ZJLoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameText;
 @property (weak, nonatomic) IBOutlet UITextField *pwdText;
@@ -35,6 +36,7 @@
     
     [[EaseMob sharedInstance].chatManager asyncLogoff];
     [[LoginUser sharedLoginUser] loginout];
+    [APService setAlias:@"" callbackSelector:nil object:nil];
     // Do any additional setup after loading the view from its nib.
     UIImage *bgImage = [UIImage imageNamed:@"login_backgroundImage"];
     
@@ -102,17 +104,18 @@
             //[LoginUser sharedLoginUser].userName = username;
             
             ZJUserInfoModel *user = [[ZJUserInfoModel alloc] init];
+            [user setKeyValues:JSON[@"data"]];
             if ([user.role intValue]!=0) {
                 kPE(@"用户名/密码错误", 0.5);
                 return ;
             }
-            [user setKeyValues:JSON[@"data"]];
+            
             [LoginUser sharedLoginUser].password = pwd;
             [[LoginUser sharedLoginUser] saveInfo:user];
+            //绑定ID
+            [self bindIdentifier];
+
             
-           // MyLog(@"%@",[LoginUser sharedLoginUser].description);
-            
-            [APService setAlias:user.username callbackSelector:nil object:nil];
             NSString *str = [APService registrionID];
             
             MyLog(@"str:%@",str);
@@ -159,6 +162,24 @@
 - (IBAction)wangjipwdAction:(id)sender {
     kPS(@"请联系管理员", 2);
 }
+
+-(void)bindIdentifier
+{
+    NSString *idfa = [[[ASIdentifierManager sharedManager]advertisingIdentifier]UUIDString];
+    NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,
+                             @"identifier":idfa};
+    [HttpTool getWithPath:@"bindidentifier" params:params success:^(id JSON) {
+        MyLog(@"%@",JSON);
+        if ([JSON[@"code"] intValue]== 0) {
+            [APService setAlias:params[@"username"] callbackSelector:nil object:nil];
+
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

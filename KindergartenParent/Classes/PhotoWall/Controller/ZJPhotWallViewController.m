@@ -287,7 +287,9 @@
     superView.layer.borderWidth = 1;
     [view addSubview:superView];
     //标题
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(kMargin, kMargin, 280, 21)];
+    CGFloat titleH = [model.title getHeightByWidth:280 font:kFont(17)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(kMargin, kMargin, 280, titleH)];
+    title.numberOfLines = 0;
     title.text = model.title;
     [superView addSubview:title];
     
@@ -528,10 +530,16 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    ZJPotoWallModel *model = _dataArr[section];
+    
+    CGFloat titleH = [model.title getHeightByWidth:280 font:kFont(17)]-21;
+    
     CGFloat h = 285;
     if (section >0) {
+        
         h = 275;
     }
+    h+=titleH;
     return h;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
