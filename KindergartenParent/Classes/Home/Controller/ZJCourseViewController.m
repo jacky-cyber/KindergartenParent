@@ -9,6 +9,7 @@
 #import "ZJCourseViewController.h"
 #import "ZJCookBookTableViewCell.h"
 #import "ZJCourseModel.h"
+#import "ZJCourseCell.h"
 @interface ZJCourseViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *_tableView;
@@ -34,15 +35,13 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     //_tableView.sectionHeaderHeight = 30;
-    _tableView.sectionFooterHeight = 0;
+    _tableView.sectionFooterHeight = 1;
     
     //设置背景，ios6里面不然就很乱
     UIView *backView = [[UIView alloc] init];
-    backView.backgroundColor = [UIColor whiteColor];
-    [_tableView setBackgroundView:backView];
-    
-    _tableView.backgroundColor = [UIColor clearColor];
-    _tableView.rowHeight = [ZJCookBookTableViewCell cellHeight];
+     backView.backgroundColor = [UIColor whiteColor];
+    _tableView.backgroundView = backView;
+   
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
@@ -67,26 +66,33 @@
         
         
         if (data[@"monday"]) {//周1
-            
-            [_dataArr addObject:data[@"monday"]];
+            NSArray *arr = data[@"monday"];
+            [self addDataSource:arr];
         }
         if (data[@"tuesday"]) {//周2
-            [_dataArr addObject:data[@"tuesday"]];
+            
+            NSArray *arr = data[@"tuesday"];
+            [self addDataSource:arr];
+
         }
         if (data[@"thursday"]) {
-            [_dataArr addObject:data[@"thursday"]];
+            NSArray *arr = data[@"thursday"];
+            [self addDataSource:arr];
+
         }
         if (data[@"wednesday"]) {
-            [_dataArr addObject:data[@"wednesday"]];
+            NSArray *arr = data[@"wednesday"];
+            [self addDataSource:arr];
         }
         if (data[@"friday"]) {
-            [_dataArr addObject:data[@"friday"]];
-        }
+            NSArray *arr = data[@"friday"];
+            [self addDataSource:arr];        }
         if (data[@"saturday"]) {
-            [_dataArr addObject:data[@"saturday"]];
-        }
+            NSArray *arr = data[@"saturday"];
+            [self addDataSource:arr];        }
         if (data[@"sunday"]) {
-            [_dataArr addObject:data[@"sunday"]];
+            NSArray *arr = data[@"sunday"];
+            [self addDataSource:arr];
         }
         
         [_tableView reloadData];
@@ -103,6 +109,21 @@
     
     
 }
+
+-(void)addDataSource:(NSArray*)arr
+{
+    NSMutableArray *data = [NSMutableArray array];
+    for (int i=0; i<arr.count; i++) {
+        NSDictionary *dict = arr[i];
+        if (![dict[@"content"] isEqualToString:@""]) {
+            [data addObject:dict];
+        }
+    }
+    if (arr.count>0) {
+        [_dataArr addObject:data];
+    }
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return _dataArr.count;
 }
@@ -110,14 +131,14 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *bgView = [[UIView alloc] init];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, 280, 30)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 30)];
     NSString *imageName = [NSString stringWithFormat:@"caurse0%d",section+1];
     imageView.image = [UIImage imageNamed:imageName];
     [bgView addSubview:imageView];
     return bgView;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    return 50;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -129,44 +150,37 @@
     return daycourse.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
+
     static NSString *ID = @"Cell";
     
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-//    }
+    ZJCourseCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[ZJCourseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //设置背景，ios6里面不然就很乱
-    UIView *backView = [[UIView alloc] init];
-    [cell setBackgroundView:backView];
+//    UIView *backView = [[UIView alloc] init];
+//    [cell setBackgroundView:backView];
 
     
     NSDictionary *dict = _dataArr[indexPath.section][indexPath.row];
     ZJCourseModel *cModel = [[ZJCourseModel alloc] init];
     [cModel setKeyValues:dict];
-    //时间段
     
-    UILabel *timeLabel = [ZJUIMethods creatLabel:cModel.timestamp frame:CGRectMake(20, 0, 80, 20) font:kFont(14) textColor:nil];
-    
-    timeLabel.textAlignment = NSTextAlignmentRight;
-    //timeLabel.backgroundColor = [UIColor brownColor];
-    [cell.contentView addSubview:timeLabel];
-    
-    //课程内容
-    UILabel *contentLabel =[ZJUIMethods creatLabel:cModel.content frame:CGRectMake(XW(timeLabel)+10, Y(timeLabel), 280-W(timeLabel)-10, H(timeLabel)) font:kFont(14) textColor:nil];
-    
-    contentLabel.textAlignment = NSTextAlignmentLeft;
-    //contentLabel.backgroundColor = [UIColor brownColor];
-    [cell.contentView addSubview:contentLabel];
-    
+    cell.model = cModel;
+
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 30;
+    
+    NSDictionary *dict = _dataArr[indexPath.section][indexPath.row];
+    ZJCourseModel *cModel = [[ZJCourseModel alloc] init];
+    [cModel setKeyValues:dict];
+     CGFloat contentH = [cModel.content getHeightByWidth:200 font:kFont(14)];
+    contentH = contentH<20?20:contentH;
+    return contentH+10;
 }
 - (void)didReceiveMemoryWarning
 {

@@ -38,6 +38,9 @@
 -(void)sendAction
 {
     NSString *causeStr = self.causeTextView.text.trimString;
+    
+    causeStr = [NSString stringWithFormat:@"%@ - %@",causeStr,[LoginUser sharedLoginUser].name];
+    
     [_causeTextView resignFirstResponder];
     
    

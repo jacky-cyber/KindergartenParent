@@ -34,7 +34,11 @@
     if (cha/3600<1) {
         timeString = [NSString stringWithFormat:@"%f", cha/60];
         timeString = [timeString substringToIndex:timeString.length-7];
-        timeString=[NSString stringWithFormat:@"%@ 分前", timeString];
+        if ([timeString isEqualToString:@"0"]) {
+            timeString= @"刚刚";
+        }else{
+            timeString=[NSString stringWithFormat:@"%@ 分前", timeString];
+        }
         
     }else if (cha/3600>1 && cha/3600<24) {
         timeString = [NSString stringWithFormat:@"%f", cha/3600];
@@ -83,7 +87,11 @@
     if (cha/3600<1) {
         timeString = [NSString stringWithFormat:@"%f", cha/60];
         timeString = [timeString substringToIndex:timeString.length-7];
-        timeString=[NSString stringWithFormat:@"%@ 分", timeString];
+        if ([timeString isEqualToString:@"0"]) {
+            timeString= @"刚刚";
+        }else{
+            timeString=[NSString stringWithFormat:@"%@ 分前", timeString];
+        }
         
     }else if (cha/3600>1 && cha/3600<24) {
         timeString = [NSString stringWithFormat:@"%f", cha/3600];

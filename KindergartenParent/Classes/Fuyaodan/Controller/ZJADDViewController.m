@@ -408,6 +408,7 @@
         _threeBtnLabel.hidden = YES;
         _imageBg.hidden = YES;
     }];
+    [_contentView resignFirstResponder];
     
 }
 -(void)btnadd
@@ -467,6 +468,8 @@
         _remark = _contentView.text.trimString;
     }
     [self btnBack];
+    
+    [_contentView resignFirstResponder];
 }
 #pragma mark-----UiTextViewDelegate
 

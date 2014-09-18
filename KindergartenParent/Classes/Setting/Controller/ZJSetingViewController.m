@@ -98,8 +98,7 @@
         
         // 1.从Info.plist中取出版本号
         NSString *version = [NSBundle mainBundle].infoDictionary[key];
-        
-        cell.versionLabel.text = version;
+        cell.versionLabel.text = [@"V" appendStr:version];
         cell.versionLabel.alpha = 1;
     }else if (indexPath.row == 4){
         cell.titleLb.alpha = 0;
@@ -107,6 +106,7 @@
         cell.bgView.layer.backgroundColor = [UIColor redColor].CGColor;
         cell.bgView.layer.cornerRadius = 5;
         cell.bgView.layer.masksToBounds = YES;
+        cell.bgView.layer.borderWidth = 0;
         UILabel *lael = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 120, 21)];
         lael.text = _dataArr[indexPath.row];
         [lael setTextColor:[UIColor whiteColor]];

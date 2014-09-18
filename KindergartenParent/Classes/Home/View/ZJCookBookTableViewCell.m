@@ -21,7 +21,7 @@
     {
 
         //设置子视图frame
-        [self settingSubviewFrame];
+        //[self settingSubviewFrame];
     }
     return self;
 }
@@ -48,10 +48,11 @@
     int dinerW = 230;
     
     //设置早餐高度
-    CGFloat breakFirstH  = [_model.breakfast getHeightByWidth:dinerW font:kFont(17)];
+    CGFloat breakFirstH  = [_model.breakfast getHeightByWidth:230 font:kFont(17)];
     CGRect bFrame = _breakFirstLabel.frame;
     bFrame.size.height = breakFirstH;
     _breakFirstLabel.frame = bFrame;
+    
     
     CGRect bVFrame = _breakfirstV.frame;
     bVFrame.size.height = H(_breakFirstLabel);

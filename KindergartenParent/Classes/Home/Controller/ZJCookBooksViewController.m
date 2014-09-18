@@ -151,7 +151,8 @@
     cell.weekImg.image = [UIImage imageNamed:imageName];
     CookBookModel *model = _dataArr[indexPath.row];
     
-    [cell setModel:model];  
+    cell.model = model;
+    //[cell setModel:model];
     return cell;
 }
 

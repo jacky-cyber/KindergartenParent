@@ -520,8 +520,10 @@
 		4BA2D7BE19AEDB460066A321 /* chat_sender_audio_playing_full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2D76119AEDB460066A321 /* chat_sender_audio_playing_full@2x.png */; };
 		4BA2D7BF19AEDB460066A321 /* chat_sender_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2D76219AEDB460066A321 /* chat_sender_bg.png */; };
 		4BA2D7C019AEDB460066A321 /* chat_sender_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2D76319AEDB460066A321 /* chat_sender_bg@2x.png */; };
+		4BBDFBC319CACB86006C9D95 /* ZJCourseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFBC219CACB86006C9D95 /* ZJCourseCell.m */; };
 		4BC9ECBD19AAFBB700B09B6A /* ZJHomeDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9ECBC19AAFBB700B09B6A /* ZJHomeDetialViewController.m */; };
 		4BC9ECC319AB055300B09B6A /* ZJHomeDetialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BC9ECC219AB055300B09B6A /* ZJHomeDetialViewController.xib */; };
+		4BD1B3FE19C959410043FEDA /* icon_call_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD1B3FD19C959410043FEDA /* icon_call_@2x.png */; };
 		4BE4B0E21985EE5500405247 /* libPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E11985EE5500405247 /* libPushSDK.a */; };
 		4BE4B0E41985EECC00405247 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E31985EECC00405247 /* CFNetwork.framework */; };
 		4BE4B0E61985EED600405247 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4B0E51985EED600405247 /* CoreFoundation.framework */; };
@@ -1618,11 +1620,14 @@
 		4BA2D76119AEDB460066A321 /* chat_sender_audio_playing_full@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_audio_playing_full@2x.png"; sourceTree = "<group>"; };
 		4BA2D76219AEDB460066A321 /* chat_sender_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_sender_bg.png; sourceTree = "<group>"; };
 		4BA2D76319AEDB460066A321 /* chat_sender_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_bg@2x.png"; sourceTree = "<group>"; };
+		4BBDFBC119CACB86006C9D95 /* ZJCourseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJCourseCell.h; sourceTree = "<group>"; };
+		4BBDFBC219CACB86006C9D95 /* ZJCourseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJCourseCell.m; sourceTree = "<group>"; };
 		4BC1060E19B07F2E004FD253 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		4BC1060F19B07F2E004FD253 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		4BC9ECBB19AAFBB700B09B6A /* ZJHomeDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJHomeDetialViewController.h; sourceTree = "<group>"; };
 		4BC9ECBC19AAFBB700B09B6A /* ZJHomeDetialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJHomeDetialViewController.m; sourceTree = "<group>"; };
 		4BC9ECC219AB055300B09B6A /* ZJHomeDetialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZJHomeDetialViewController.xib; sourceTree = "<group>"; };
+		4BD1B3FD19C959410043FEDA /* icon_call_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_call_@2x.png"; sourceTree = "<group>"; };
 		4BE4B0E01985EE5500405247 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
 		4BE4B0E11985EE5500405247 /* libPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPushSDK.a; sourceTree = "<group>"; };
 		4BE4B0E31985EECC00405247 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -1977,8 +1982,6 @@
 			children = (
 				4B247EC819590DC900C520A9 /* ZJCookBooksViewController.h */,
 				4B247EC919590DC900C520A9 /* ZJCookBooksViewController.m */,
-				4B247ECA19590DC900C520A9 /* ZJCourseViewController.h */,
-				4B247ECB19590DC900C520A9 /* ZJCourseViewController.m */,
 				4B247ECC19590DC900C520A9 /* ZJDayReportViewController.h */,
 				4B247ECD19590DC900C520A9 /* ZJDayReportViewController.m */,
 				4B7111421982367300C77B42 /* ZJDayAndWeekReportListViewController.h */,
@@ -2001,6 +2004,8 @@
 				4BC9ECBB19AAFBB700B09B6A /* ZJHomeDetialViewController.h */,
 				4BC9ECBC19AAFBB700B09B6A /* ZJHomeDetialViewController.m */,
 				4BC9ECC219AB055300B09B6A /* ZJHomeDetialViewController.xib */,
+				4B247ECA19590DC900C520A9 /* ZJCourseViewController.h */,
+				4B247ECB19590DC900C520A9 /* ZJCourseViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2023,6 +2028,8 @@
 		4B247EE519590DC900C520A9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4BBDFBC119CACB86006C9D95 /* ZJCourseCell.h */,
+				4BBDFBC219CACB86006C9D95 /* ZJCourseCell.m */,
 				71650C32198353670049BB3F /* DockItem.h */,
 				71650C33198353670049BB3F /* DockItem.m */,
 				4B247EE619590DC900C520A9 /* ZJCookBookTableViewCell.h */,
@@ -3824,6 +3831,7 @@
 		4BA2D70019AEDB460066A321 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				4BD1B3FD19C959410043FEDA /* icon_call_@2x.png */,
 				4B950EC519C14A7E00097C0B /* put out_take pictures_icon_delete@2x.png */,
 				4BA2D70119AEDB460066A321 /* audio */,
 				4BA2D73219AEDB460066A321 /* chat_video_play.png */,
@@ -4172,7 +4180,11 @@
 				ORGANIZATIONNAME = define;
 				TargetAttributes = {
 					4B247E7E19590D9200C520A9 = {
-						DevelopmentTeam = QWEGSB7W86;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					4B247E9F19590D9200C520A9 = {
 						TestTargetID = 4B247E7E19590D9200C520A9;
@@ -4413,6 +4425,7 @@
 				4BE9CE8E1999E0F500A70BB5 /* Expression_86@2x.png in Resources */,
 				4B24807919590DC900C520A9 /* img05@2x.png in Resources */,
 				4BA2D79B19AEDB460066A321 /* chatBar_more_faceSelected.png in Resources */,
+				4BD1B3FE19C959410043FEDA /* icon_call_@2x.png in Resources */,
 				4BA2D69B19AED5360066A321 /* chatBar_colorMore_photo@2x.png in Resources */,
 				4BE9CE7D1999E0F500A70BB5 /* Expression_70@2x.png in Resources */,
 				4BA2D78519AEDB460066A321 /* VoiceSearchFeedback013@2x.png in Resources */,
@@ -4719,6 +4732,7 @@
 				4B3829B6199B6A4C00595557 /* nalu.c in Sources */,
 				4B24805619590DC900C520A9 /* ZJSetingCell.m in Sources */,
 				4B1B4305195FD71900EDAE1E /* MJPhotoBrowser.m in Sources */,
+				4BBDFBC319CACB86006C9D95 /* ZJCourseCell.m in Sources */,
 				4BA2D6E119AED5360066A321 /* EMTextView.m in Sources */,
 				4BA2D65B19AED5350066A321 /* PSTCollectionViewUpdateItem.m in Sources */,
 				4BA2D6AC19AED5360066A321 /* EMChatAudioBubbleView.m in Sources */,
@@ -4994,7 +5008,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/jPush/lib",
-					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/lame",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/YuGaoVideo/VideoCodec/ffmpeg_h264_codec/ffmpeg_lib",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/YuGaoVideo",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/EaseMobSDK/lib",
@@ -5039,7 +5052,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/jPush/lib",
-					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/lame",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/YuGaoVideo/VideoCodec/ffmpeg_h264_codec/ffmpeg_lib",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/YuGaoVideo",
 					"$(PROJECT_DIR)/KindergartenParent/Classes/other/Lib/EaseMobSDK/lib",

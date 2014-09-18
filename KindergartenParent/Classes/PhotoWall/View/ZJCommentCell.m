@@ -18,7 +18,7 @@
     UILabel *_unameLabel;//评论人
     UILabel *_commTime;//评论时间
     UILabel *_contentLabel;//评论内容
-   
+    UIView *_lineView;//分割线
     
 }
 @end
@@ -42,7 +42,7 @@
     UIView *bgView = [ZJUIMethods creatView:CGRectMake(kMargin,0, 300, 44) bgColor:[UIColor colorWithWhite:0.969 alpha:1.000]];
     [self.contentView addSubview:bgView];
     //头像
-    _imgView = [ZJUIMethods creatImageView:CGRectMake(kMargin, kMargin, 40, 40) imageName:@"201277441619594489.jpg"];
+    _imgView = [ZJUIMethods creatImageView:CGRectMake(kMargin, kMargin, 40, 40) imageName:nil];
     [bgView addSubview:_imgView];
     //发布人
     _unameLabel = [[UILabel alloc] initWithFrame:CGRectMake( XW(_imgView)+kMargin, Y(_imgView),120,20)];
@@ -65,7 +65,10 @@
 //    CGRect bgF = bgView.frame;
 //    bgF.size.height = XW(_contentLabel)+10;
 //    bgView.frame = bgF;
-    
+    _lineView = [[UIView alloc] initWithFrame:CGRectMake(kMargin, H(_bgView), 280, 0.5)];
+    [_bgView addSubview:_lineView];
+    _lineView.backgroundColor = [UIColor lightGrayColor];
+
     
     
     
@@ -84,6 +87,9 @@
     //发布时间
     TimeFormatTools *timef = [[TimeFormatTools alloc] init];
     NSString *timeStr = [timef timeToNow:_cmmodel.cmtime];
+    if (timeStr.length>10) {
+        timeStr = [timeStr substringToIndex:10];
+    }
     _commTime.text = timeStr;
     
     //内容
@@ -100,12 +106,10 @@
     bgF.size.height = YH(_contentLabel)+10;
     _bgView.frame = bgF;
     
-    //判断是否最后一段，不加分割线
-    if (_isLast == false) {
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(kMargin, H(_bgView), 280, 0.5)];
-        [_bgView addSubview:lineView];
-        lineView.backgroundColor = [UIColor lightGrayColor];
-    }
+    CGRect lineFrame = _lineView.frame;
+    lineFrame.origin.y = YH(_contentLabel)+9;
+    _lineView.frame = lineFrame;
+
     
     
 }

@@ -70,10 +70,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     _viewController = [[ZJHomeViewController alloc] init];
 
-    BaseNavigationController * navigationController = [[BaseNavigationController alloc] initWithRootViewController:_viewController];
-    _navigationController = navigationController;
+    _navigationController = [[BaseNavigationController alloc] initWithRootViewController:_viewController];
+
     
-    _menuController = [[DDMenuController alloc] initWithRootViewController:navigationController];
+    _menuController = [[DDMenuController alloc] initWithRootViewController:_navigationController];
     _menuController.leftViewController = leftSideDrawerViewController;
     _menuController.rightViewController = rightSideDrawerViewController;
     
@@ -316,10 +316,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     if(type == 2){
         
-        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"幼儿园通知"];
+        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"全园通知" withOther:model];
         
     }else if(type == 3){//本周食谱
-        [_viewController pushController:[ZJCookBooksViewController class] withInfo:model withTitle:@"本周食谱"];
+        [_viewController pushController:[ZJCookBooksViewController class] withInfo:nil withTitle:@"本周食谱"];
     }else if(type == 4 ) {//每日一报
         [_viewController pushController:[ZJDayReportViewController class] withInfo:_pushDict[@"msgid"] withTitle:@"每日一报"];
         
@@ -332,11 +332,14 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
         [_viewController pushController:[ZJHonorViewController class] withInfo:nil withTitle:@"荣誉榜"];
     }else if(type == 8){//本班通知
-        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"本班通知"];
+        
+               
+       // [_navigationController pushViewController:home animated:YES];
+        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"本班通知" withOther:model];
     }else if(type == 9){//通知公告
         [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"2,8,9,10" withTitle:@"通知公告"];
     }else if(type == 10){//活动通知
-        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:model withTitle:@"活动通知"];
+        [_viewController pushController:[ZJHomeDetialViewController class] withInfo:nil withTitle:@"活动通知" withOther:model];
     }else if(type == 11){//签到/签退
         [_viewController pushController:[ZJNotificationListViewController class] withInfo:@"11" withTitle:@"签到/签退"];
     }else if(type == 12){//签到/签退
@@ -358,6 +361,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
     NSLog(@"---applicationDidEnterBackground----");
     //182.18.23.244:8080/kindergarten/service/app!onlinetime.action?hour=2&username=xuesheng
+    
+    if ([LoginUser sharedLoginUser].userName.isEmptyString || [LoginUser sharedLoginUser].userName == nil) {
+        return;
+    }
     
     NSDictionary *params = @{@"username":[LoginUser sharedLoginUser].userName,@"hour":hour};
     

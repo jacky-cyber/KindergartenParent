@@ -21,6 +21,8 @@
     
     NSArray *_dataArr;
     NSArray *_imgArr;
+    
+    UILabel *_kindergarten;
 }
 @end
 
@@ -57,14 +59,26 @@
         [_tableView setSeparatorInset:UIEdgeInsetsMake(0, 50, 0, 0)];
     }
     
-    UILabel *kindergarten = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight*0.9, 200, 21)];
+    if (!_kindergarten) {
+        _kindergarten = [[UILabel alloc] initWithFrame:CGRectMake(0, kScreenHeight*0.9, 200, 21)];
+        _kindergarten.backgroundColor = [UIColor clearColor];
+        _kindergarten.textColor = [UIColor whiteColor];
+        _kindergarten.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:_kindergarten];
+    }
     
-    kindergarten.backgroundColor = [UIColor clearColor];
-    kindergarten.textColor = [UIColor whiteColor];
-    kindergarten.textAlignment = NSTextAlignmentCenter;
-    kindergarten.text = [LoginUser sharedLoginUser].kindergarten;
-    [self.view addSubview:kindergarten];
+    _kindergarten.text = [LoginUser sharedLoginUser].kindergarten;
     
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (_kindergarten) {
+         _kindergarten.text = [LoginUser sharedLoginUser].kindergarten;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,13 +156,13 @@
     ZJFuyaodanViewController *fuyaodan = [[ZJFuyaodanViewController alloc] init];
     ZJVideoViewController *video = [[ZJVideoViewController alloc] init];
     ZJSetingViewController *seting = [[ZJSetingViewController alloc] init];
-    ZJCourseViewController *course = [[ZJCourseViewController alloc] init];
+
     BaseNavigationController *homenav = [[BaseNavigationController alloc] initWithRootViewController:home];
     BaseNavigationController *wallnav = [[BaseNavigationController alloc] initWithRootViewController:photowall];
     BaseNavigationController *videonav = [[BaseNavigationController alloc] initWithRootViewController:video];
     BaseNavigationController *fuyaodannav = [[BaseNavigationController alloc] initWithRootViewController:fuyaodan];
     BaseNavigationController *setingnav = [[BaseNavigationController alloc] initWithRootViewController:seting];
-    BaseNavigationController *courseNav = [[BaseNavigationController alloc] initWithRootViewController:course];
+   
     
     NSArray *arr = @[homenav,wallnav,videonav,fuyaodannav,setingnav];
     

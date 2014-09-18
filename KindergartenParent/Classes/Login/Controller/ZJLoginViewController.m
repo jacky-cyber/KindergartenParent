@@ -109,16 +109,16 @@
                 kPE(@"用户名/密码错误", 0.5);
                 return ;
             }
+             [[ZJUserInfoModel sharedZJUserInfoModel] setKeyValues:JSON[@"data"]];
             
             [LoginUser sharedLoginUser].password = pwd;
             [[LoginUser sharedLoginUser] saveInfo:user];
             //绑定ID
             [self bindIdentifier];
 
-            
-            NSString *str = [APService registrionID];
-            
-            MyLog(@"str:%@",str);
+            //环信登陆
+            [self hxlogin];
+           
             
             DDMenuController *menuController = ((ZJAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
             ZJHomeViewController * centerViewController  = [[ZJHomeViewController alloc] init];
@@ -126,20 +126,8 @@
             menuController.rootViewController = navigationController;
             
             self.view.window.rootViewController = menuController;
-            NSString *password = [NSString md5:@"123456"];
-            [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[user.username lowercaseString] password:password completion:^(NSDictionary *loginInfo, EMError *error) {
-                if (!error) {
-                    NSLog(@"登录成功:%@",loginInfo);
-                    self.view.window.rootViewController = navigationController;
-                }else{
-                    NSLog(@"error:%@",error);
-                }
-                
-                [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:YES];
-                
-                
-            } onQueue:nil];
-            [[ZJUserInfoModel sharedZJUserInfoModel] setKeyValues:JSON[@"data"]];
+           
+            
             
 
         }else{
@@ -172,6 +160,7 @@
         MyLog(@"%@",JSON);
         if ([JSON[@"code"] intValue]== 0) {
             [APService setAlias:params[@"username"] callbackSelector:nil object:nil];
+            
 
         }
         
@@ -179,7 +168,23 @@
         
     }];
 }
-
+#pragma mark 环信登陆
+-(void)hxlogin
+{
+    NSString *password = [NSString md5:@"123456"];
+    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:[[LoginUser sharedLoginUser].userName lowercaseString] password:password completion:^(NSDictionary *loginInfo, EMError *error) {
+        if (!error) {
+            NSLog(@"登录成功:%@",loginInfo);
+           
+        }else{
+            NSLog(@"error:%@",error);
+        }
+        
+        [[EaseMob sharedInstance].chatManager setIsAutoLoginEnabled:YES];
+        
+        
+    } onQueue:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {

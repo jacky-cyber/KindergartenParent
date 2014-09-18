@@ -31,9 +31,38 @@
     
     _scrollView.frame = CGRectMake(0, 0, W(self.view),scrollH);
     [self.view addSubview:_scrollView];
-    _model = self.userInfo;
+    
+    if (self.userInfo) {
+        _model = self.userInfo;
+        [self addSubVies];
+    }else{
+        _model = self.otherInfo;
+        [self loadData];
+    }
+   
     
     
+  
+}
+
+-(void)loadData
+{
+    
+    NSDictionary *params = @{@"type":_model.type,@"msgid":_model.id};
+    
+    [HttpTool getWithPath:@"msgdetial" params:params success:^(id JSON) {
+        if ([JSON[@"code"] intValue] ==0) {
+            _model.content = JSON[@"data"][@"content"];
+            _model.createtime = JSON[@"data"][@"createtime"];
+            [self addSubVies];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+-(void)addSubVies
+{
     _typeImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 280, 30)];
     //判断通知的类型
     if ([_model.type intValue] == 2) {//全员通知
@@ -67,7 +96,7 @@
     
     //重新计算scrollview contentsize
     _scrollView.contentSize = CGSizeMake(W(self.view), YH(_contentLabel)+5);
- 
+    
     
     
     if ([_model.type intValue] == 10) {

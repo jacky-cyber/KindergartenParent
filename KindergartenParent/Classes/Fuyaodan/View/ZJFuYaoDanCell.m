@@ -41,7 +41,7 @@
     
     
     
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(20, 5, 280, 35)];
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(20, 10, 280, 35)];
     bgView.layer.borderColor = [UIColor redColor].CGColor;
     bgView.userInteractionEnabled = YES;
     bgView.layer.borderWidth = 0.5;
@@ -50,7 +50,7 @@
     
     
     //左边时间
-    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, 80, 25)];
+    UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 15, 80, 25)];
     //timeLabel.text = @"2014-06-21";
     timeLabel.font = kFont13;
     _timeLabel = timeLabel;
@@ -75,7 +75,7 @@
     //早中晚显示 全部显示出来  根据数据 去选择图片实心空心 没有服药 隐藏图片
     
     if (!_mornImg) {
-        _mornImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+0*60, 10, 25, 25)];
+        _mornImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+0*60, 15, 25, 25)];
     }
     
     if (![self isRang:@"早" withModel:fydmodel]) {
@@ -90,7 +90,7 @@
     
     
     if (!_noonImg) {
-        _noonImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+1*60, 10, 25, 25)];
+        _noonImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+1*60, 15, 25, 25)];
     }
     if (![self isRang:@"中" withModel:fydmodel]) {
         //        _noonImg.alpha = kAlpha;
@@ -103,7 +103,7 @@
     [self addSubview:_noonImg];
     
     if (!_eveImg) {
-        _eveImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+2*60, 10, 25, 25)];
+        _eveImg = [[UIImageView alloc] initWithFrame:CGRectMake(120+2*60, 15, 25, 25)];
     }
     if (![self isRang:@"晚" withModel:fydmodel]) {
         //        _eveImg.alpha = kAlpha;

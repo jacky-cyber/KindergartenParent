@@ -356,7 +356,15 @@
     [toolView addSubview:timeImg];
     //时间
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(XW(timeImg)+5, 0, 80, 16)];
-    timeLabel.text = model.createtime;
+    
+    //发布时间
+    TimeFormatTools *timef = [[TimeFormatTools alloc] init];
+    NSString *timeStr = [timef timeToNow:model.createtime];
+    if (timeStr.length>10) {
+        timeStr = [model.createtime substringToIndex:10];
+    }
+    
+    timeLabel.text = timeStr;
     timeLabel.textColor = [UIColor colorWithWhite:0.725 alpha:1.000];
     timeLabel.font = kFont(12);
     [toolView addSubview:timeLabel];
@@ -666,6 +674,12 @@
     //MyLog(@"%f------",height);
     
     return height;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     ZJPotoWallModel *model = _dataArr[indexPath.section];
+    
 }
 
 #pragma 返回每个rtlable的高度

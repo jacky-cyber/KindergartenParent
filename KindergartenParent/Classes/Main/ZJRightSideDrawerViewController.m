@@ -35,6 +35,9 @@
 {
     [super viewWillAppear:animated];
     //加载通讯录
+//    if (_contactsArr.count==0) {//如果不为空就不用加载了
+//        
+//    }
     [self initContacts];
     
 }
